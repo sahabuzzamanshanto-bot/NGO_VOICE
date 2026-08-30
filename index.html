@@ -8,6 +8,7 @@
     <!-- ফায়ারবেস কম্প্যাট লাইব্রেরি -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1175,9 +1176,25 @@
     document.getElementById('searchDate').value = activeWorkDate;
     document.getElementById('workDateInput').value = activeWorkDate;
 
-    initFirebaseRefs();
-    initConnectionMonitor();
-    initOverdueThresholdSync();
+    /* ---- Firebase Authentication (anonymous) — ডেটাবেজ rules এখন থেকে auth != null চাইবে, তাই এই সাইন-ইন না হওয়া পর্যন্ত কোনো read/write চলবে না ---- */
+    let authReady = false;
+    let authStatusEl = document.getElementById('syncStatus');
+    if (authStatusEl) { authStatusEl.innerText = "🟡 প্রমাণীকরণ হচ্ছে..."; authStatusEl.style.background = "#b07f23"; }
+
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user && !authReady) {
+            authReady = true;
+            initFirebaseRefs();
+            initConnectionMonitor();
+            initOverdueThresholdSync();
+        }
+    });
+
+    firebase.auth().signInAnonymously().catch(function (err) {
+        console.error("Firebase Auth failed:", err);
+        alert("⚠️ সার্ভারে প্রমাণীকরণ ব্যর্থ হয়েছে। ইন্টারনেট সংযোগ চেক করে পেজটি রিলোড করুন।\n\n(" + err.message + ")");
+        if (authStatusEl) { authStatusEl.innerText = "🔴 প্রমাণীকরণ ব্যর্থ"; authStatusEl.style.background = "#a23c26"; }
+    });
 
     /* ---- বকেয়া-তালিকার থ্রেশহোল্ড ফায়ারবেসে সিঙ্ক (যাতে ব্রাউজার ক্যাশ মুছে গেলেও বা অন্য ডিভাইসে খুললেও আগের মানটাই থাকে) ---- */
     function initOverdueThresholdSync() {
