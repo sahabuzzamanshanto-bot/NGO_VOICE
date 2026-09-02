@@ -1613,13 +1613,33 @@
             }
         }
 
-        let lower = val.toLowerCase();
+        // নাম মেলানোর জন্য নরমালাইজ করা — ভয়েস সার্চে বানান/স্পেস/অদৃশ্য ক্যারেক্টার
+        // একটু এদিক-ওদিক হলেও যেন গ্রাহক খুঁজে পাওয়া যায়
+        function normalizeBn(s) {
+            return (s || '')
+                .toLowerCase()
+                .replace(/[\u200B\u200C\u200D\uFEFF]/g, '')      // অদৃশ্য জিরো-উইথ ক্যারেক্টার বাদ
+                .replace(/[।,.?!\-()]/g, ' ')                     // যতিচিহ্ন স্পেস দিয়ে বদলানো
+                .replace(/ী/g, 'ি').replace(/ূ/g, 'ু')            // দীর্ঘ ঈ-কার/ঊ-কার কে হ্রস্ব বানানোর সাথে মেলানো
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+        let normQuery = normalizeBn(val);
+        let queryWords = normQuery.split(' ').filter(Boolean);
+        let digitsVal = val.replace(/\D/g, '');
+
+        function isMatch(name, phone) {
+            let n = normalizeBn(name);
+            let nameMatch = n && queryWords.length && queryWords.every(w => n.includes(w));
+            let phoneMatch = phone && digitsVal && phone.replace(/\D/g, '').includes(digitsVal);
+            return nameMatch || phoneMatch;
+        }
 
         // ধাপ ১: আগে বর্তমান ফান্ডে খোঁজা
         for (let i = 1; i <= 300; i++) {
-            let n = (db[i]?.name || '').toLowerCase();
+            let n = db[i]?.name || '';
             let p = db[i]?.phone || '';
-            if ((n && n.includes(lower)) || (p && p.includes(val))) {
+            if (isMatch(n, p)) {
                 jump(i);
                 inputEl.value = '';
                 return;
@@ -1647,9 +1667,9 @@
                 let data = found.data;
                 for (let i = 1; i <= 300; i++) {
                     let d = data[i] || {};
-                    let n = (d.name || '').toLowerCase();
+                    let n = d.name || '';
                     let p = d.phone || '';
-                    if ((n && n.includes(lower)) || (p && p.includes(val))) {
+                    if (isMatch(n, p)) {
                         document.getElementById('fundSelect').value = fk;
                         pendingCrossFundJump = i;
                         switchFund(fk);
