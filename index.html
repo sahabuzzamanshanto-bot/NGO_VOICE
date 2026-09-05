@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#123a3d">
     <title>মাল্টি-ফান্ড ও ৩০০ জন গ্রাহকের হিসাব ড্যাশবোর্ড</title>
-    <!-- ফায়ারবেস কম্প্যাট লাইব্রেরি -->
+    <!-- ফায়ারবেস (Firebase) কম্প্যাট লাইব্রেরি -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -262,6 +262,12 @@
             flex-shrink: 0; white-space: nowrap;
         }
 
+        /* --- পলাতক গ্রাহক: হালকা লাল ব্যাকগ্রাউন্ড, তালিকায়/সার্চে সাথে সাথে চোখে পড়বে --- */
+        .cp-row.fugitive { background: #fbe4e1; border-color: #c0392b; }
+        .cp-row.fugitive .cp-name { color: #7a2415; }
+        .cp-row.fugitive .cp-sub { color: #9c4a3a; }
+        .cp-row.fugitive .cp-num-badge { background: #f6cfc9; color: #7a2415; border-color: #c0392b; }
+
         /* --- সক্রিয়/নির্বাচিত গ্রাহক সারি: নীল→সবুজ গ্রেডিয়েন্ট, গ্লো-ডট, শাইন --- */
         .cp-row.active {
             background: linear-gradient(100deg, var(--info) 0%, var(--deep) 45%, var(--paid) 100%);
@@ -302,6 +308,62 @@
         .dash-card-highlight .dash-val { color: #7a5a1a; }
         .filter-row { display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 10px; flex-wrap: wrap; }
         .total-amount-badge { background: var(--paid); color: #fff; padding: 6px 14px; border-radius: 15px; font-weight: 800; font-size: 18px; }
+        .target-round-badge { display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:50%; color:#fff; font-weight:800; font-size:12.5px; text-align:center; line-height:1.15; background:var(--ink-soft); flex-shrink:0; }
+        .target-amount-text { font-size:11.5px; font-weight:800; color:var(--ink-soft); background:var(--paper-2); padding:5px 9px; border-radius:8px; border:1.5px dashed var(--gold); }
+        .profit-dashboard { background: var(--card); border: 1.5px solid var(--line); border-left: 5px solid var(--paid); border-radius: 10px; padding: 12px; box-shadow: var(--shadow); }
+        .profit-dashboard-title { text-align:center; font-size:15px; font-weight:900; color:var(--deep); margin-bottom:9px; }
+        .profit-dashboard-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(145px,1fr)); gap:8px; }
+        .profit-card { background:var(--paper); border:1px solid var(--line); border-radius:9px; padding:10px 8px; text-align:center; }
+        .profit-card h5 { margin:0 0 5px; font-size:11.5px; color:var(--ink-soft); font-weight:800; }
+        .profit-card small { display:block; font-size:9.5px; color:var(--ink-soft); margin-top:3px; }
+        .profit-value { font-size:19px; font-weight:900; color:var(--deep); }
+        .profit-earned { border-color:var(--paid); background:var(--paid-soft); }
+        .profit-earned .profit-value { color:var(--paid); }
+        .profit-net { border:2px solid var(--paid); background:var(--paid-soft); }
+        .profit-net.loss { border-color:var(--due); background:var(--due-soft); }
+        .profit-net.loss .profit-value { color:var(--due); }
+        .profit-note { margin-top:8px; padding:8px 10px; border-radius:8px; background:var(--paper-2); color:var(--ink-soft); font-size:10.5px; line-height:1.55; text-align:center; }
+        .profit-dashboard-header { display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:9px; flex-wrap:wrap; }
+        .profit-dashboard-header .profit-dashboard-title { margin-bottom:0; text-align:left; }
+        .profit-updated { font-size:9.5px; color:var(--ink-soft); white-space:nowrap; }
+        .profit-cash-card { margin-bottom:9px; border:2px solid var(--gold); background:var(--paper); }
+        .profit-cash-card .profit-value { color:var(--deep); font-size:21px; }
+        .profit-status-banner { text-align:center; font-weight:900; font-size:13px; padding:10px 8px; border-radius:8px; margin-bottom:9px; line-height:1.5; }
+        .profit-status-banner.profit { background:var(--paid-soft); color:var(--paid); border:1.5px solid var(--paid); }
+        .profit-status-banner.loss { background:var(--due-soft); color:var(--due); border:1.5px solid var(--due); }
+        .profit-capital-card { margin-bottom:9px; }
+        .profit-capital-editbtn { margin-top:6px; background:var(--paper-2); color:var(--deep); border:1.5px dashed var(--deep); border-radius:6px; padding:6px 10px; font-size:10.5px; font-weight:700; cursor:pointer; min-height:32px; }
+        .profit-capital-edit { display:flex; gap:6px; margin-top:6px; }
+        .profit-capital-edit input { flex:1; padding:8px; border-radius:6px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font-family:inherit; font-size:13px; text-align:center; }
+        .profit-capital-edit button { background:var(--deep); color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:700; font-size:12px; cursor:pointer; }
+        .profit-growth-card { margin-bottom:9px; }
+        .profit-growth-card.loss .profit-value { color:var(--due); }
+        .profit-growth-card.profit .profit-value { color:var(--paid); }
+        .profit-progress-wrap { margin-bottom:9px; }
+        .profit-progress-label { display:flex; justify-content:space-between; font-size:10px; font-weight:700; color:var(--ink-soft); margin-bottom:4px; gap:6px; }
+        .profit-progress-bar { width:100%; height:10px; border-radius:6px; background:var(--paper-2); border:1px solid var(--line); overflow:hidden; }
+        .profit-progress-fill { height:100%; background:linear-gradient(90deg, var(--info), var(--paid)); border-radius:6px; transition:width 0.4s ease; }
+        .profit-roi-pct { font-size:12.5px; font-weight:700; opacity:0.82; }
+        .profit-target-line { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px; margin-bottom:9px; padding:6px 8px; border-radius:8px; background:var(--paper-2); font-size:10.5px; font-weight:700; color:var(--ink-soft); text-align:center; }
+        .profit-target-line input[type="number"] { width:80px; padding:5px 6px; border-radius:6px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); font-family:inherit; font-size:12px; text-align:center; }
+        .profit-target-line button { border:none; border-radius:6px; padding:5px 8px; font-size:10.5px; font-weight:700; cursor:pointer; background:var(--deep); color:#fff; min-height:26px; }
+        .profit-target-line .ptl-edit { background:var(--paper); color:var(--deep); border:1.5px dashed var(--deep); }
+        .profit-period-section { margin-top:10px; padding-top:8px; border-top:1px dashed var(--line); }
+        .profit-period-title { text-align:center; font-size:12.5px; font-weight:800; color:var(--deep); margin-bottom:7px; }
+        .profit-period-buttons { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:9px; }
+        .profit-period-btn { flex:1 1 auto; min-width:70px; padding:9px 8px; border-radius:20px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink-soft); font-family:inherit; font-size:11.5px; font-weight:700; cursor:pointer; min-height:38px; transition:background 0.15s, color 0.15s, border-color 0.15s; }
+        .profit-period-btn.active { background:var(--deep); border-color:var(--deep); color:#fff; }
+        .profit-period-net { border:2px solid var(--paid); background:var(--paid-soft); }
+        .profit-period-net.loss { border-color:var(--due); background:var(--due-soft); }
+        .profit-period-net.loss .profit-value { color:var(--due); }
+        .profit-io-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+        .profit-earned-period { border-color:var(--paid); }
+        .profit-earned-period .profit-value { color:var(--paid); }
+        .profit-income-card { border-color:var(--paid); background:var(--paid-soft); }
+        .profit-income-card .profit-value { color:var(--paid); }
+        .profit-expense-card { border-color:var(--due); background:var(--due-soft); }
+        .profit-expense-card .profit-value { color:var(--due); }
+
         .collection-date-inline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .collection-list-box { background: var(--card); border: 1.5px solid var(--line); border-radius: 8px; padding: 10px; max-height: 160px; overflow-y: auto; text-align: left; font-size: 12px; margin-bottom: 8px; }
         .collection-item { display: flex; justify-content: space-between; padding: 7px 8px; border-bottom: 1px dashed var(--line); transition: background 0.15s; }
@@ -316,14 +378,28 @@
         .collection-toggle-btn { background-color: var(--info); color: white; border: none; padding: 11px 8px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600; flex: 1; min-height: 44px; }
         .cashbook-toggle-btn { background-color: var(--gold); color: white; border: none; padding: 11px 8px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600; flex: 1; min-height: 44px; }
 
+        /* ---- লাভ ড্যাশবোর্ড: মোবাইলে বাটনের ভেতরে, পিসিতে সবসময় খোলা ---- */
+        .profit-toggle-btn { display: none; }
+        @media (max-width: 768px) {
+            .profit-toggle-btn {
+                display: flex; align-items: center; justify-content: center; gap: 6px;
+                width: 100%; background-color: var(--paid); color: #fff; border: none;
+                padding: 12px 10px; border-radius: 8px; font-size: 13.5px; font-weight: 700;
+                cursor: pointer; min-height: 46px; margin-bottom: 8px;
+            }
+            #profitDashboard { display: none; margin-top: 0 !important; }
+            #profitDashboard.profit-open { display: block; margin-top: 8px !important; }
+        }
+
         /* ---- ক্যাশ বই ---- */
         .cashbook-box { background: var(--card); border: 1.5px solid var(--gold); border-radius: 8px; padding: 12px; }
         .cashbook-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--ink); flex-wrap: wrap; }
         .cb-amount-input { width: 130px; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 14px; font-weight: 700; text-align: right; min-height: 40px; background: var(--paper); color: var(--deep); }
         .cashbook-section-title { font-family: 'Tiro Bangla', serif; font-weight: 700; color: var(--deep); font-size: 14px; margin: 12px 0 6px 0; border-bottom: 1px dashed var(--line); padding-bottom: 4px; }
-        .cb-item-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; }
-        .cb-item-row input[type="text"] { flex: 2; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13px; min-height: 40px; background: var(--paper); color: var(--ink); min-width: 0; }
-        .cb-item-row input[type="number"] { flex: 1; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13px; text-align: right; min-height: 40px; background: var(--paper); color: var(--ink); min-width: 0; }
+        .cb-item-row { display: flex; gap: 6px; margin-bottom: 6px; align-items: center; flex-wrap: wrap; }
+        .cb-item-row input[type="text"] { flex: 2; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13px; min-height: 40px; background: var(--paper); color: var(--ink); min-width: 110px; }
+        .cb-item-row input[type="number"] { flex: 1; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13px; text-align: right; min-height: 40px; background: var(--paper); color: var(--ink); min-width: 90px; }
+        .cb-item-row .cb-link-note { flex-basis: 100%; font-size: 11px; color: var(--paid); font-weight: 700; }
         .cb-remove-btn { background: var(--due-soft); color: var(--due); border: 1.5px solid var(--due); border-radius: 6px; width: 36px; height: 36px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
         .cb-add-btn { background: var(--paper-2); color: var(--deep); border: 1.5px dashed var(--deep); border-radius: 6px; padding: 8px 12px; font-size: 12.5px; font-weight: 700; cursor: pointer; width: 100%; min-height: 40px; }
         .cb-empty { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 6px 0; }
@@ -400,6 +476,26 @@
             0%{background-position:0% 50%}
             50%{background-position:100% 50%}
             100%{background-position:0% 50%}
+        }
+        /* ---- আজকের কিস্তি সেভ হওয়ার সাথে সাথে চোখে পড়ার মতো একটা flash — যাতে বোঝা যায় কিস্তি উঠে গেছে ---- */
+        .cust-name-wrapper { position: relative; }
+        .paid-flash-tick {
+            position:absolute; top:-11px; left:2px; z-index:6; font-size:32px;
+            opacity:0; transform:scale(.4); pointer-events:none;
+            filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));
+        }
+        .paid-flash-tick.show { animation: paidTickPop 0.9s ease-out forwards; }
+        @keyframes paidTickPop {
+            0% { opacity:0; transform:scale(.3) rotate(-15deg); }
+            30% { opacity:1; transform:scale(1.4) rotate(8deg); }
+            55% { opacity:1; transform:scale(1) rotate(0deg); }
+            100% { opacity:1; transform:scale(1) rotate(0deg); }
+        }
+        .customer-name-badge.paid-flash { animation: cnbColorShift 9s ease infinite, paidFlashGlow 0.4s ease-out 2; }
+        @keyframes paidFlashGlow {
+            0% { box-shadow:0 0 0 0 rgba(47,107,76,1), 0 8px 22px rgba(20,126,153,.23), inset 0 1px 1px rgba(255,255,255,.3); }
+            60% { box-shadow:0 0 0 22px rgba(47,107,76,0), 0 8px 22px rgba(20,126,153,.23), inset 0 1px 1px rgba(255,255,255,.3); }
+            100% { box-shadow:0 0 0 0 rgba(47,107,76,0), 0 8px 22px rgba(20,126,153,.23), inset 0 1px 1px rgba(255,255,255,.3); }
         }
         @media(min-width:901px){
             .customer-name-badge{min-width:320px; min-height:54px; padding:8px 18px 8px 8px; gap:11px;}
@@ -517,6 +613,7 @@
 <div id="overdueOverlay">
     <div class="archive-card">
         <h3>⏰ দীর্ঘদিন কিস্তি দেয় না এমন গ্রাহক</h3>
+        <p style="font-size:12.5px; color:var(--muted); margin:0 0 8px;">🟡 ৩+ দিন = সতর্কতা &nbsp;→&nbsp; 🟠 ৭+ দিন = বকেয়া &nbsp;→&nbsp; 🔴 ১৫+ দিন = পলাতক-ঝুঁকি। নিচের সেটিংস দিয়ে তালিকায় সর্বনিম্ন কতদিন থেকে দেখাবে তা ঠিক করুন।</p>
         <div class="overdue-settings-row">
             <span>কতদিন বন্ধ থাকলে দেখাবে:</span>
             <input type="number" id="overdueThresholdInput" min="1" max="99">
@@ -590,13 +687,14 @@
 
     <div class="work-date-bar">
         <span>🌙 আজকের কাজের তারিখ:</span>
-        <input type="date" id="workDateInput" class="input-date" style="width:140px;" onchange="activeWorkDate=this.value">
+        <input type="date" id="workDateInput" class="input-date" style="width:140px;" onchange="activeWorkDate=this.value; if (typeof updateProfitDashboard === 'function') updateProfitDashboard();">
         <button type="button" class="tool-btn" style="padding:6px 10px; min-height:36px; font-size:12px; background:var(--gold);" onclick="setTodayWorkDate()" title="আজকের তারিখ সেট করুন">আজ</button>
         <span id="saveStatus" style="color: var(--paid); font-weight: bold; background: var(--paid-soft); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--paid);">✅ সংরক্ষিত</span>
     </div>
 
     <span id="syncStatus" class="status-badge">🔄 ফায়ারবেস কানেক্ট হচ্ছে...</span>
     <span id="autoBackupStatus" class="auto-backup-status">🗄️ অটো-ব্যাকআপ: চেক করা হচ্ছে...</span>
+    <div id="settingsHealthBanner" style="display:none; margin:8px 0; padding:10px 12px; border-radius:8px; background:#fde8e4; border:1.5px solid #a23c26; color:#7a2415; font-size:12.5px; font-weight:700; line-height:1.5;"></div>
 
     <div class="dashboard-section">
         <h4 style="margin: 0 0 8px 0; color: var(--paid); text-align: center; font-size: 14px;">📊 ড্যাশবোর্ড ও কালেকশন রিপোর্ট</h4>
@@ -606,6 +704,133 @@
             <div class="dash-card"><h5>বাজারে বাকি</h5><div id="dashTotalDue" class="dash-val" style="color: var(--due);">০ ৳</div></div>
             <div class="dash-card" style="background:var(--paid-soft); border-color:var(--paid);"><h5>অতিরিক্ত জমা (ফেরতযোগ্য)</h5><div id="dashTotalExtra" class="dash-val" style="color: var(--paid);">০ ৳</div></div>
             <div class="dash-card"><h5>লোন সম্পন্ন</h5><div id="dashCompleteCount" class="dash-val" style="color: var(--paid);">০</div></div>
+        </div>
+        <button type="button" class="profit-toggle-btn" id="profitToggleBtn" onclick="toggleProfitDashboard()">💹 লাভ/ক্ষতি ড্যাশবোর্ড দেখুন</button>
+        <div class="profit-dashboard" id="profitDashboard" style="margin-top:10px;">
+            <div class="profit-dashboard-header">
+                <div class="profit-dashboard-title">💹 বর্তমান মেয়াদভিত্তিক লাভ/ক্ষতি</div>
+                <div class="profit-updated" id="profitUpdatedAt">—</div>
+            </div>
+
+            <div class="profit-status-banner" id="profitStatusBanner">হিসাব করা হচ্ছে...</div>
+
+            <div class="profit-card profit-cash-card">
+                <h5>🏦 বর্তমান হাতে থাকা ক্যাশ</h5>
+                <div id="dashCashOnHand" class="profit-value">— ৳</div>
+                <small id="dashCashOnHandNote">সর্বশেষ ক্যাশ বই এন্ট্রি অনুযায়ী হিসাব হচ্ছে</small>
+            </div>
+
+            <div class="profit-card profit-capital-card">
+                <h5>🏁 প্রারম্ভিক মূলধন</h5>
+                <div id="dashStartingCapital" class="profit-value">সেট করা হয়নি</div>
+                <div class="profit-capital-edit" id="profitCapitalEditRow" style="display:none;">
+                    <input type="number" id="startingCapitalInput" min="0" placeholder="যেমনঃ ৫০০০০" onfocus="reqPin(event)">
+                    <input type="date" id="fundStartDateInput" class="input-date" style="margin-top:6px;" onfocus="reqPin(event)" placeholder="ফান্ড শুরুর তারিখ">
+                    <button type="button" id="startingCapitalSaveBtn" onclick="saveStartingCapital()">সেভ</button>
+                </div>
+                <button type="button" class="profit-capital-editbtn" id="profitCapitalEditBtn" onclick="toggleCapitalEdit()">✏️ মূলধন সেট/পরিবর্তন করুন</button>
+                <small id="dashFundStartDateNote">এই ফান্ডের শুরুর মূলধন — একবার সেট করলেই হবে</small>
+            </div>
+
+            <div class="profit-card profit-growth-card" id="dashGrowthCard">
+                <h5>📈 মূলধন থেকে প্রবৃদ্ধি</h5>
+                <div id="dashCapitalGrowth" class="profit-value">— ৳</div>
+                <small id="dashRoiPct" class="profit-roi-pct" style="display:none;"></small>
+                <small id="dashAnnualRoiPct" class="profit-roi-pct" style="display:none;"></small>
+                <small>(হাতে থাকা ক্যাশ + বাজারে বকেয়া মূল আসল) − প্রারম্ভিক মূলধন</small>
+            </div>
+
+            <div class="profit-card profit-growth-card" id="dashSonchoyNetProfitCard">
+                <h5>💎 প্রকৃত নীট লাভ</h5>
+                <div id="dashSonchoyNetProfit" class="profit-value">— ৳</div>
+                <small id="dashSonchoyLiabilityNote">সঞ্চয়ের টাকা প্রায় কখনো ফেরত দিতে হয় না বলে এটি লাভ থেকে বাদ দেওয়া হচ্ছে না — মূলধন থেকে প্রবৃদ্ধির সমান</small>
+            </div>
+
+            <div class="profit-target-line" id="profitTargetLine">
+                <span id="profitTargetText">🎯 আজকের কালেকশন লক্ষ্য নির্ধারণ করা হয়নি</span>
+                <input type="number" id="dailyTargetInput" min="0" placeholder="যেমনঃ ৫০০০" style="display:none;" onfocus="reqPin(event)">
+                <button type="button" id="dailyTargetSaveBtn" style="display:none;" onclick="saveDailyTarget()">সেভ</button>
+                <button type="button" class="ptl-edit" onclick="toggleDailyTargetEdit()">✏️</button>
+            </div>
+
+            <div class="profit-target-line" id="autoTargetLine" style="background:var(--paid-soft);">
+                <span id="autoTargetText">🧮 পলাতক বাদে সক্রিয় গ্রাহকদের কিস্তি+সঞ্চয় (অটো): হিসাব হচ্ছে...</span>
+                <button type="button" class="ptl-edit" onclick="applyAutoDailyTarget()" title="এই অটো-হিসাবকৃত মানটাকে আজকের টার্গেট হিসেবে সেভ করুন">🎯 এটাই টার্গেট করুন</button>
+            </div>
+
+            <div class="profit-progress-wrap">
+                <div class="profit-progress-label">
+                    <span>মোট সম্ভাব্য লাভের কতটা এখন পর্যন্ত অর্জিত হয়েছে</span>
+                    <span id="profitProgressPct">০%</span>
+                </div>
+                <div class="profit-progress-bar"><div class="profit-progress-fill" id="profitProgressFill" style="width:0%;"></div></div>
+            </div>
+
+            <div class="profit-dashboard-grid">
+                <div class="profit-card profit-earned">
+                    <h5>🟢 এখন পর্যন্ত অর্জিত লাভ</h5>
+                    <div id="dashEarnedProfit" class="profit-value">০ ৳</div>
+                    <small>বাস্তবে আদায় হওয়া কিস্তির লাভ</small>
+                </div>
+                <div class="profit-card">
+                    <h5>📌 মোট সম্ভাব্য লাভ</h5>
+                    <div id="dashPotentialProfit" class="profit-value">০ ৳</div>
+                    <small>১০০ কর্মদিবস সম্পূর্ণ হলে</small>
+                </div>
+                <div class="profit-card">
+                    <h5>⏳ বাকি সম্ভাব্য লাভ</h5>
+                    <div id="dashRemainingProfit" class="profit-value">০ ৳</div>
+                    <small>এখনও আদায় হয়নি</small>
+                    <small id="dashBadDebtLine" style="display:none; color:var(--due); font-weight:700;"></small>
+                </div>
+                <div class="profit-card profit-net" id="dashNetProfitCard">
+                    <h5>🏆 বর্তমান নিট লাভ/ক্ষতি</h5>
+                    <div id="dashNetProfit" class="profit-value">০ ৳</div>
+                    <small>অর্জিত লাভ + অন্যান্য আয় − খরচ</small>
+                </div>
+            </div>
+
+            <div class="profit-period-section">
+                <div class="profit-period-title">🗓️ নির্দিষ্ট সময়ের লাভ/ক্ষতি</div>
+                <div class="profit-period-buttons">
+                    <button type="button" class="profit-period-btn active" data-range="today" onclick="setProfitPeriod('today')">আজ</button>
+                    <button type="button" class="profit-period-btn" data-range="week" onclick="setProfitPeriod('week')">সপ্তাহ</button>
+                    <button type="button" class="profit-period-btn" data-range="month" onclick="setProfitPeriod('month')">মাস</button>
+                    <button type="button" class="profit-period-btn" data-range="all" onclick="setProfitPeriod('all')">সম্পূর্ণ সাইকেল</button>
+                </div>
+                <div id="profitPeriodPickerRow" style="display:none; margin-top:6px; text-align:center;">
+                    <input type="date" id="weekPickerInput" class="input-date" style="display:none; width:150px;" onfocus="reqPin(event)" onchange="onWeekPickerChange(this.value)">
+                    <input type="month" id="monthPickerInput" class="input-date" style="display:none; width:150px;" onfocus="reqPin(event)" onchange="onMonthPickerChange(this.value)">
+                    <div id="pickedRangeLabel" style="font-size:11px; color:var(--ink-soft); margin-top:4px;"></div>
+                </div>
+                <div class="profit-io-grid">
+                    <div class="profit-card profit-earned-period">
+                        <h5>🟢 এই সময়ের অর্জিত লাভ</h5>
+                        <div id="dashPeriodEarned" class="profit-value">০ ৳</div>
+                        <small>কিস্তি থেকে আদায় হওয়া লাভ (নির্বাচিত সময়ে)</small>
+                        <small id="dashPeriodDelta" style="display:none; font-weight:700;"></small>
+                    </div>
+                    <div class="profit-card profit-income-card">
+                        <h5>💸 অন্যান্য আয়</h5>
+                        <div id="dashOtherIncome" class="profit-value">০ ৳</div>
+                        <small>ক্যাশবুকের অতিরিক্ত আয় + সার্ভিস চার্জ (নির্বাচিত সময়ে)</small>
+                    </div>
+                    <div class="profit-card profit-expense-card">
+                        <h5>➖ ব্যবসার খরচ</h5>
+                        <div id="dashExpenses" class="profit-value">০ ৳</div>
+                        <small>ক্যাশবুকের খরচ (নির্বাচিত সময়ে)</small>
+                    </div>
+                    <div class="profit-card profit-period-net" id="dashPeriodNetCard">
+                        <h5>🏆 এই সময়ের নিট লাভ/ক্ষতি</h5>
+                        <div id="dashPeriodNet" class="profit-value">০ ৳</div>
+                        <small>অর্জিত লাভ + অন্যান্য আয় − খরচ</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profit-note" id="profitDashboardNote">
+                হিসাবটি বর্তমান সাইকেলের বাস্তবে আদায় হওয়া কিস্তি ও ১০০ কর্মদিবসের মেয়াদ অনুযায়ী করা হচ্ছে। শুক্রবার কর্মদিবস হিসেবে ধরা হয় না।
+            </div>
         </div>
         <div id="loanAuditBox" style="display:none; margin-top:8px;">
             <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:bold; color:var(--paid); margin-bottom:4px;">
@@ -651,7 +876,7 @@
                 <div id="cbIncomeRows"></div>
                 <button class="cb-add-btn" onfocus="reqPin(event)" onclick="addCashbookRow('income')">+ আয়/লাভ যোগ করুন</button>
 
-                <div class="cashbook-section-title">➖ নতুন লোন প্রদান (কার নামে গেল)</div>
+                <div class="cashbook-section-title">➖ নতুন লোন প্রদান (নাম লিখলে অটো নতুন গ্রাহক প্রোফাইল তৈরি হবে)</div>
                 <div id="cbLoanRows"></div>
                 <button class="cb-add-btn" onfocus="reqPin(event)" onclick="addCashbookRow('loan')">+ লোন যোগ করুন</button>
 
@@ -662,6 +887,7 @@
                 <div class="cashbook-summary">
                     <div>মোট আয়/লাভ: <span id="cbIncomeTotal">০ ৳</span></div>
                     <div>মোট লোন প্রদান: <span id="cbLoanTotal">০ ৳</span></div>
+                    <div>মোট সার্ভিস চার্জ (লাভ): <span id="cbServiceChargeTotal">০ ৳</span></div>
                     <div>মোট খরচ: <span id="cbExpenseTotal">০ ৳</span></div>
                     <div class="cb-closing">সমাপনী ক্যাশ ব্যালেন্স: <span id="cbClosing">০ ৳</span></div>
                 </div>
@@ -696,11 +922,15 @@
                         <input type="text" id="custName" class="cust-name-input" placeholder="নাম..." onfocus="reqPin(event)" oninput="syncInfo()">
                         <span class="cnb-subrow">
                             <span class="cnb-subline" id="custBadgeSub">গ্রাহক #১ · সাইকেল ১</span>
-                            <span id="tagBadge" class="cnb-tag" style="display:none;">🏷️</span>
+                            <span style="display:flex; align-items:center; gap:5px; margin-left:auto; flex-shrink:0;">
+                                <span id="reliabilityBadge" class="cnb-tag" style="display:none;" title="পেমেন্ট নিয়মিততা (মোট চলমান কর্মদিবসের কতটায় কিস্তি পড়েছে)"></span>
+                                <span id="tagBadge" class="cnb-tag" style="display:none; margin-left:0;">🏷️</span>
+                            </span>
                         </span>
                     </span>
                     <span class="cnb-blink-dot"></span>
                 </span>
+                <span class="paid-flash-tick" id="paidFlashTick">✅</span>
             </div>
             <button class="nav-btn" style="background: var(--due);" onclick="skipToday()">⏭️ আজ স্কিপ</button>
             <button class="nav-btn" id="fugitiveBtn" style="background:#7a1f1f; font-size:11px; padding:6px 9px;" onclick="toggleFugitive()">🚩 পলাতক চিহ্নিত করুন</button>
@@ -739,6 +969,8 @@
                 <input type="date" id="searchDate" class="input-date" style="width:130px;" onchange="calcOverall()">
                 <button type="button" class="tool-btn" style="padding:5px 9px; min-height:32px; font-size:11px; background:var(--gold);" onclick="setTodayWorkDate()">আজ</button>
                 <span>মোট: <span id="overallCollection" class="total-amount-badge">০ ৳</span></span>
+                <span id="overallTargetBadge" class="target-round-badge" title="টার্গেটের কত % আদায় হয়েছে" style="display:none;">০%</span>
+                <span id="overallTargetAmount" class="target-amount-text" style="display:none;">🎯 টার্গেট: ০ ৳</span>
             </span>
             <span id="extraSummary" style="color:var(--paid); font-weight:bold; display:none;"></span>
             <span id="pCount">সমতুল্য কিস্তি: ০ কিস্তি</span>
@@ -806,6 +1038,14 @@
         return Math.round(parseFloat(val) * 100) / 100;
     }
 
+    // কিছু মোবাইল কীবোর্ড/ব্রাউজারে সংখ্যা ইনপুটে বাংলা অংক (০-৯) ঢুকে গেলে parseFloat কাজ করে না —
+    // এই ফাংশনটা বাংলা অংককে ইংরেজি অংকে রূপান্তর করে দেয়, তারপর parseFloat নির্ভরযোগ্যভাবে কাজ করে।
+    function bnDigitsToEn(str) {
+        if (str === null || str === undefined) return str;
+        const bn = '০১২৩৪৫৬৭৮৯';
+        return String(str).replace(/[০-৯]/g, ch => String(bn.indexOf(ch)));
+    }
+
     /* ============================================================
        টাকার ইনপুট ভ্যালিডেশন — নেগেটিভ মান আটকানো এবং অস্বাভাবিক
        বড় মান (টাইপো, যেমন ভুলে বাড়তি শূন্য) সম্পর্কে সতর্ক করা।
@@ -867,6 +1107,38 @@
         }
     }, true);
 
+    // কিস্তির "পেমেন্ট সংখ্যা"-তে ভুলবশত বাড়তি অঙ্ক (যেমন ১-এর বদলে ১১) বসে গেলে সতর্ক করে —
+    // প্রায় সব গ্রাহক একটা করেই কিস্তি দেন, তাই স্বাভাবিকের চেয়ে বেশি হলে একবার নিশ্চিত হয়ে নেয়।
+    const INSTALLMENT_NO_SANITY_MAX = 3; // প্রয়োজনে বাড়ানো/কমানো যাবে
+    function sanitizeInstallmentNo(rawValue) {
+        if (rawValue === '' || rawValue === null || rawValue === undefined) return rawValue;
+        let n = parseFloat(rawValue);
+        if (isNaN(n) || n <= INSTALLMENT_NO_SANITY_MAX) return rawValue;
+        let ok = confirm(
+            `⚠️ "পেমেন্ট সংখ্যা"-তে আপনি ${n.toLocaleString('bn-BD')} লিখেছেন — এটা কি সঠিক?\n\n` +
+            `সাধারণত একজন গ্রাহক একবারে ১টা কিস্তিই দেন। তাড়াহুড়ায় ১-এর জায়গায় ${n.toLocaleString('bn-BD')} হয়ে থাকলে "বাতিল" চাপুন এবং আবার সঠিক সংখ্যা লিখুন।`
+        );
+        return ok ? rawValue : '';
+    }
+
+    // আজকের কিস্তি সেভ হওয়ার সাথে সাথে গ্রাহকের নামের উপর একটা চোখে পড়ার মতো flash/টিক দেখায় —
+    // যাতে বোঝা যায় কিস্তি উঠে গেছে এবং তাড়াতাড়ি পরের গ্রাহকে চলে যাওয়া যায়।
+    function flashPaidToday() {
+        let badge = document.querySelector('.customer-name-badge');
+        let tick = document.getElementById('paidFlashTick');
+        if (badge) {
+            badge.classList.remove('paid-flash');
+            void badge.offsetWidth; // অ্যানিমেশন রিস্টার্ট করার জন্য রিফ্লো
+            badge.classList.add('paid-flash');
+            setTimeout(() => badge.classList.remove('paid-flash'), 850);
+        }
+        if (tick) {
+            tick.classList.remove('show');
+            void tick.offsetWidth;
+            tick.classList.add('show'); // পরের গ্রাহকের পেজে না যাওয়া পর্যন্ত এটা স্থায়ীভাবে দেখাবে (loadPage-এ ক্লিয়ার হয়)
+        }
+    }
+
     function calcPaidAmount(d) {
         if (!d) return 0;
         let paid = 0;
@@ -892,7 +1164,16 @@
     }
 
     /* ---- দীর্ঘদিন কিস্তি বন্ধ (বকেয়া) থাকা গ্রাহক শনাক্তকরণ ---- */
-    let overdueThreshold = parseInt(localStorage.getItem('kisti_overdue_days'), 10) || 7;
+    let overdueThreshold = parseInt(localStorage.getItem('kisti_overdue_days'), 10) || 3;
+
+    // স্তরভিত্তিক আর্লি-ওয়ার্নিং: ৩ দিন (হলুদ) → ৭ দিন (কমলা) → ১৫ দিন (লাল, "পলাতক-ঝুঁকি")
+    // যাতে কেউ পুরোপুরি পালানোর আগেই ধাপে ধাপে সতর্কতা পাওয়া যায়
+    function getOverdueTier(days) {
+        if (days >= 15) return { level: 3, label: '🔴 পলাতক-ঝুঁকি', barColor: '#c0392b', badgeBg: '#f6cfc9', badgeColor: '#7a2415' };
+        if (days >= 7) return { level: 2, label: '🟠 বকেয়া', barColor: '#c07a00', badgeBg: '#fbe4c2', badgeColor: '#7a4e00' };
+        if (days >= 3) return { level: 1, label: '🟡 সতর্কতা', barColor: '#b8a000', badgeBg: '#f7f0b8', badgeColor: '#6b5e00' };
+        return { level: 0, label: '', barColor: 'var(--due)', badgeBg: 'var(--due-soft)', badgeColor: 'var(--due)' };
+    }
 
     function workingDaysBetween(fromStr, toStr) {
         // fromStr-এর পরদিন থেকে toStr পর্যন্ত (শুক্রবার বাদে) মোট কতদিন গণনা করে
@@ -933,6 +1214,7 @@
             let tot = parseFloat(d.total) || 0;
             if (tot <= 0) continue;               // সক্রিয় লোন নেই এমন স্লট বাদ
             if (isCustComplete(d)) continue;       // ইতিমধ্যে সম্পন্ন হয়ে গেছে এমন গ্রাহক বাদ
+            if (d.fugitive) continue;              // পলাতক চিহ্নিত গ্রাহক এই তালিকায় আসবে না
             let lastDate = getLastActivityDate(d);
             let days = workingDaysBetween(lastDate, today);
             if (days === null) continue;           // হিসাব করার মতো কোনো তারিখ নেই
@@ -947,10 +1229,14 @@
     function updateOverdueBadge() {
         let badge = document.getElementById('overdueBadgeCount');
         if (!badge) return;
-        let count = computeOverdueList().length;
+        let list = computeOverdueList();
+        let count = list.length;
         if (count > 0) {
             badge.innerText = count.toLocaleString('bn-BD');
             badge.style.display = 'inline-block';
+            let worst = list.reduce((max, e) => Math.max(max, getOverdueTier(e.days).level), 0);
+            let tierColors = { 1: '#b8a000', 2: '#c07a00', 3: '#c0392b' };
+            badge.style.background = tierColors[worst] || 'var(--due)';
         } else {
             badge.style.display = 'none';
         }
@@ -985,18 +1271,27 @@
             box.innerHTML = `<div class="archive-empty">🎉 বর্তমানে ${overdueThreshold.toLocaleString('bn-BD')} কর্মদিবসের বেশি বকেয়া কোনো গ্রাহক নেই।</div>`;
             return;
         }
+        let t1 = list.filter(e => getOverdueTier(e.days).level === 1).length;
+        let t2 = list.filter(e => getOverdueTier(e.days).level === 2).length;
+        let t3 = list.filter(e => getOverdueTier(e.days).level === 3).length;
+        let totalDue = roundTwo(list.reduce((sum, e) => sum + Math.max(0, (parseFloat(e.d.total) || 0) - calcPaidAmount(e.d)), 0));
+        let summaryHtml = `<div class="overdue-item" style="border-left-color: var(--line); text-align:center; cursor:default;">
+            <div class="od-name" style="font-size:13px;">🟡 সতর্কতা (৩+ দিন): ${t1.toLocaleString('bn-BD')} জন &nbsp;|&nbsp; 🟠 বকেয়া (৭+ দিন): ${t2.toLocaleString('bn-BD')} জন &nbsp;|&nbsp; 🔴 পলাতক-ঝুঁকি (১৫+ দিন): ${t3.toLocaleString('bn-BD')} জন</div>
+            <div class="od-name" style="font-size:13px; margin-top:4px;">👥 মোট গ্রাহক: ${list.length.toLocaleString('bn-BD')} জন &nbsp;|&nbsp; 💰 মোট বকেয়া: ${totalDue.toLocaleString('bn-BD')} ৳</div>
+        </div>`;
         let html = '';
         list.forEach(entry => {
             let { i, d, days, lastDate } = entry;
+            let tier = getOverdueTier(days);
             let name = d.name || `গ্রাহক-${i}`;
             let phone = d.phone || '-';
             let address = d.address || '-';
             let due = roundTwo((parseFloat(d.total) || 0) - calcPaidAmount(d));
             let tagVal = (d.tag || '').replace(/"/g, '&quot;');
-            html += `<div class="overdue-item" onclick="if(!event.target.closest('.overdue-tag-input')){document.getElementById('overdueOverlay').style.display='none'; jump(${i});}">
+            html += `<div class="overdue-item" style="border-left-color:${tier.barColor};" onclick="if(!event.target.closest('.overdue-tag-input')){document.getElementById('overdueOverlay').style.display='none'; jump(${i});}">
                 <div class="od-top">
                     <div class="od-name">👤 #${i} - ${name}</div>
-                    <div class="od-days">${days.toLocaleString('bn-BD')} কর্মদিবস বন্ধ</div>
+                    <div class="od-days" style="background:${tier.badgeBg}; color:${tier.badgeColor};">${tier.label} · ${days.toLocaleString('bn-BD')} কর্মদিবস বন্ধ</div>
                 </div>
                 <div class="od-meta">
                     📞 ${phone} &nbsp;|&nbsp; 🏠 ${address}<br>
@@ -1005,7 +1300,7 @@
                 <input type="text" class="overdue-tag-input" placeholder="🏷️ নোট/ট্যাগ লিখুন (যেমন: সমস্যাযুক্ত, পলাতক, বাড়িতে নেই...)" value="${tagVal}" onchange="setCustomerTag(${i}, this.value)">
             </div>`;
         });
-        box.innerHTML = html;
+        box.innerHTML = summaryHtml + html;
     }
 
     function setCustomerTag(i, val) {
@@ -1032,6 +1327,7 @@
         db[cur].fugitive = !db[cur].fugitive;
         updateFugitiveBtn();
         updateFugitiveBadge();
+        updateReliabilityBadge(db[cur]);
         scheduleDropdownUpdate();
 
         firebase.database().ref(currentFund + '_data').child(cur).child('fugitive').set(!!db[cur].fugitive).catch(() => {
@@ -1059,10 +1355,17 @@
     function updateFugitiveBadge() {
         let badge = document.getElementById('fugitiveBadgeCount');
         if (!badge) return;
-        let count = computeFugitiveList().length;
+        let list = computeFugitiveList();
+        let count = list.length;
         if (count > 0) {
             badge.innerText = count.toLocaleString('bn-BD');
             badge.style.display = 'inline-block';
+            let totalDue = 0;
+            list.forEach(entry => {
+                totalDue = roundTwo(totalDue + Math.max(0, roundTwo((parseFloat(entry.d.total) || 0) - calcPaidAmount(entry.d))));
+            });
+            let btn = badge.closest('button');
+            if (btn) btn.title = `মোট বাকি: ${totalDue.toLocaleString('bn-BD')} ৳`;
         } else {
             badge.style.display = 'none';
         }
@@ -1085,12 +1388,14 @@
             return;
         }
         let html = '';
+        let totalDue = 0;
         list.forEach(entry => {
             let { i, d } = entry;
             let name = d.name || `গ্রাহক-${i}`;
             let phone = d.phone || '-';
             let address = d.address || '-';
-            let due = roundTwo((parseFloat(d.total) || 0) - calcPaidAmount(d));
+            let due = Math.max(0, roundTwo((parseFloat(d.total) || 0) - calcPaidAmount(d)));
+            totalDue = roundTwo(totalDue + due);
             let lastDate = getLastActivityDate(d) || '-';
             html += `<div class="overdue-item" onclick="if(!event.target.closest('.fugitive-unmark-btn')){document.getElementById('fugitiveOverlay').style.display='none'; jump(${i});}">
                 <div class="od-top">
@@ -1099,12 +1404,16 @@
                 </div>
                 <div class="od-meta">
                     📞 ${phone} &nbsp;|&nbsp; 🏠 ${address}<br>
-                    💰 বাকি: ${Math.max(0, due).toLocaleString('bn-BD')} ৳
+                    💰 বাকি: ${due.toLocaleString('bn-BD')} ৳
                 </div>
                 <button type="button" class="fugitive-unmark-btn tool-btn" style="margin-top:7px; width:100%; background: var(--paid);" onclick="unmarkFugitiveFromList(${i})">✅ পলাতক তালিকা থেকে বাদ দিন (ফিরে এসেছে/কিস্তি দিয়েছে)</button>
             </div>`;
         });
-        box.innerHTML = html;
+        let summaryHtml = `<div class="overdue-item" style="background:#4a1010; border-color:#7a1f1f; text-align:center;">
+            <div class="od-name" style="color:#ff8a80; font-size:14px;">🚩 মোট পলাতক গ্রাহক: ${list.length.toLocaleString('bn-BD')} জন</div>
+            <div class="od-name" style="color:#ff8a80; font-size:14px; margin-top:4px;">💰 সর্বমোট বাকি: ${totalDue.toLocaleString('bn-BD')} ৳</div>
+        </div>`;
+        box.innerHTML = summaryHtml + html;
     }
 
     function unmarkFugitiveFromList(i) {
@@ -1114,7 +1423,7 @@
         firebase.database().ref(currentFund + '_data').child(i).child('fugitive').set(false).catch(() => {
             alert("⚠️ সেভ করতে সমস্যা হয়েছে, ইন্টারনেট সংযোগ চেক করুন।");
         });
-        if (i === cur) updateFugitiveBtn();
+        if (i === cur) { updateFugitiveBtn(); updateReliabilityBadge(db[i]); }
         scheduleDropdownUpdate();
         renderFugitiveList();
     }
@@ -1128,16 +1437,51 @@
         apiKey: "AIzaSyCPg_56wGn7XXlkuWdPG00QR1ys1ElnLF8",
         authDomain: "kisti-app-cf2af.firebaseapp.com",
         databaseURL: "https://kisti-app-cf2af-default-rtdb.firebaseio.com",
-        projectId: "kisti-app-cf2af",
-        storageBucket: "kisti-app-cf2af.appspot.com",
-        messagingSenderId: "818843692893",
-        appId: "1:818843692893:web:926787d46c3184f96b02b4"
+        projectId: "kisti-app-cf2af"
     });
 
     let currentDbRef = null;
     let currentBackupRef = null;
     let childListeners = {};
     let syncSettleTimer = null;
+
+    // ============================================================
+    // ডাউনলোড ব্যান্ডউইথ অপটিমাইজেশন: cashbook/starting-capital/start-date/
+    // daily-target — এই ৪টা প্রতিবার updateProfitDashboard() চলার সময়
+    // (যা প্রতিটা এডিটের পর ৩৫০ms ডিবাউন্স হয়ে ট্রিগার হয়) আলাদাভাবে
+    // .once('value') দিয়ে নতুন করে ডাউনলোড হতো। এখন ফান্ড লোড হওয়ার
+    // সময় একবারই .on('value') লাইভ লিসেনার বসানো হয় — তারপর থেকে শুধু
+    // আসল পরিবর্তন হলেই (অন্য ডিভাইস থেকে বা নিজের সেভ থেকে) নতুন ডেটা
+    // আসে, বাকি সময় লোকাল ক্যাশ থেকেই কাজ চলে — বারবার নেটওয়ার্ক
+    // রিকোয়েস্ট যায় না।
+    let cachedCashbookSnap = null;
+    let cachedCapitalSnap = null;
+    let cachedStartDateSnap = null;
+    let cachedTargetSnap = null;
+    let fundSettingsRefs = { cashbook: null, capital: null, startDate: null, target: null };
+
+    function initFundSettingsSync() {
+        // আগের ফান্ডের লিসেনার বন্ধ করা এবং ক্যাশ রিসেট (নতুন ফান্ড না লোড হওয়া পর্যন্ত
+        // পুরনো ফান্ডের সংখ্যা দিয়ে ভুল হিসাব দেখানো এড়াতে)
+        if (fundSettingsRefs.cashbook) fundSettingsRefs.cashbook.off('value');
+        if (fundSettingsRefs.capital) fundSettingsRefs.capital.off('value');
+        if (fundSettingsRefs.startDate) fundSettingsRefs.startDate.off('value');
+        if (fundSettingsRefs.target) fundSettingsRefs.target.off('value');
+        cachedCashbookSnap = null;
+        cachedCapitalSnap = null;
+        cachedStartDateSnap = null;
+        cachedTargetSnap = null;
+
+        fundSettingsRefs.cashbook = firebase.database().ref(currentFund + '_cashbook');
+        fundSettingsRefs.capital = firebase.database().ref('app_settings/' + currentFund + '_starting_capital');
+        fundSettingsRefs.startDate = firebase.database().ref('app_settings/' + currentFund + '_start_date');
+        fundSettingsRefs.target = firebase.database().ref('app_settings/' + currentFund + '_daily_target');
+
+        fundSettingsRefs.cashbook.on('value', snap => { cachedCashbookSnap = snap; scheduleDashboardUpdate(); });
+        fundSettingsRefs.capital.on('value', snap => { cachedCapitalSnap = snap; scheduleDashboardUpdate(); });
+        fundSettingsRefs.startDate.on('value', snap => { cachedStartDateSnap = snap; scheduleDashboardUpdate(); });
+        fundSettingsRefs.target.on('value', snap => { cachedTargetSnap = snap; scheduleDashboardUpdate(); });
+    }
 
     function applyIncomingCustomer(fundKey, custId, val) {
         if (fundKey !== currentFund) return;
@@ -1181,7 +1525,7 @@
         console.error(err);
     }
 
-    function initFirebaseRefs() {
+    function initDbRefs() {
         if (currentDbRef) {
             ['child_added', 'child_changed', 'child_removed'].forEach(ev => {
                 if (childListeners[ev]) currentDbRef.off(ev, childListeners[ev]);
@@ -1192,7 +1536,7 @@
         currentBackupRef = firebase.database().ref(currentFund + '_backups');
 
         let statusEl = document.getElementById('syncStatus');
-        statusEl.innerText = "🔄 ফায়ারবেস কানেক্ট হচ্ছে...";
+        statusEl.innerText = "🔄 ফায়ারবেস কানেক্ট হচ্ছে...";
         statusEl.style.background = "#b07f23";
 
         childListeners.child_added = currentDbRef.on('child_added', snap => {
@@ -1210,6 +1554,8 @@
             if (pendingTimers[key] === undefined) delete db[snap.key];
             scheduleSyncSettle();
         }, handleSyncError);
+
+        initFundSettingsSync();
     }
 
     function callCustomer() {
@@ -1233,6 +1579,10 @@
         window.open("https://wa.me/" + cleanP, '_blank');
     }
 
+    // আগে এই ফাংশনটা "fire-and-forget" ছিল — সেভ ফেইল করলেও (নেটওয়ার্ক সমস্যা, RLS ইত্যাদি)
+    // কোনো Promise/এরর ফেরত না দেওয়ায় caller (changePage/switchFund) সেটা টেরই পেত না,
+    // আর তারপরই db রিসেট/নেভিগেট হয়ে গেলে ডেটা চিরতরে হারিয়ে যেত। এখন এটা একটা Promise ফেরত দেয়
+    // যা caller await করে বুঝতে পারে সেভ সফল হয়েছে কিনা।
     function flushCurrentCustSave() {
         let key = currentFund + '_' + cur;
         if (pendingTimers[key]) {
@@ -1240,21 +1590,35 @@
             delete pendingTimers[key];
             let saveData = db[cur];
             if (saveData) {
-                firebase.database().ref(currentFund + '_data').child(cur).set(saveData);
+                let savedCust = cur;
+                return firebase.database().ref(currentFund + '_data').child(cur).set(saveData).catch((err) => {
+                    console.error('গ্রাহক #' + savedCust + '-এর তথ্য সেভ ব্যর্থ (flushCurrentCustSave):', err);
+                    throw err;
+                });
             }
         }
+        return Promise.resolve();
     }
 
-    function switchFund(fundKey) {
-        flushCurrentCustSave();
-        flushPendingSaves(currentFund);
-        currentFund = fundKey;
+    async function switchFund(fundKey) {
         let selectEl = document.getElementById('fundSelect');
+        try {
+            await flushCurrentCustSave();
+            await flushPendingSaves(currentFund);
+        } catch (err) {
+            alert(
+                '⚠️ ফান্ড পরিবর্তনের আগে কিছু গ্রাহকের তথ্য ফায়ারবেসে সেভ করা যায়নি (ইন্টারনেট চেক করুন)!\n\n' +
+                'ডেটা হারিয়ে যাওয়া ঠেকাতে ফান্ড পরিবর্তন বাতিল করা হলো। আবার চেষ্টা করুন।\n\nএরর: ' + ((err && err.message) || 'অজানা')
+            );
+            if (selectEl) selectEl.value = currentFund; // ড্রপডাউন আগের ফান্ডেই ফিরিয়ে দেওয়া হলো
+            return;
+        }
+        currentFund = fundKey;
         document.getElementById('fundTitleDisplay').innerText = "৩০০ জন গ্রাহকের হিসাব (" + selectEl.options[selectEl.selectedIndex].text + ")";
         cur = 1;
         forceReloadOnSnapshot = true;
         selectEl.blur();
-        initFirebaseRefs();
+        initDbRefs();
         let cbContainer = document.getElementById('cashbookContainer');
         if (cbContainer && cbContainer.style.display === 'block') { loadCashbook(); loadMonthlySummary(); }
     }
@@ -1262,9 +1626,24 @@
     document.getElementById('searchDate').value = activeWorkDate;
     document.getElementById('workDateInput').value = activeWorkDate;
 
-    initFirebaseRefs();
+    initDbRefs();
     initConnectionMonitor();
     initOverdueThresholdSync();
+
+    // app_settings টেবিল-সংক্রান্ত (মূলধন, বকেয়া-থ্রেশহোল্ড ইত্যাদি) যেকোনো এরর একবার দেখা গেলে
+    // একটা স্পষ্ট, স্থায়ী ব্যানারে দেখানো হয় — আগে এগুলো নীরবে চেপে যাওয়া হতো বলেই
+    // "মূলধন সেভ হচ্ছে না" সমস্যাটা বোঝা কঠিন ছিল।
+    function showAppSettingsHealthWarning(err) {
+        console.error('app_settings টেবিল এরর:', err);
+        let banner = document.getElementById('settingsHealthBanner');
+        if (!banner) return;
+        let detail = (err && (err.message || err.error_description || err.hint)) || 'অজানা ত্রুটি';
+        banner.style.display = 'block';
+        banner.innerText =
+            '⚠️ সেটিংস (মূলধন / বকেয়া-থ্রেশহোল্ড) ফায়ারবেসে সেভ/লোড করা যাচ্ছে না।\n' +
+            'কারণ: ' + detail + '\n' +
+            'সম্ভবত ফায়ারবেস ডেটাবেজ রুলস (Rules) ডেটা লিখতে/পড়তে অনুমতি দিচ্ছে না — Firebase Console-এ Realtime Database → Rules চেক করুন।';
+    }
 
     /* ---- বকেয়া-তালিকার থ্রেশহোল্ড ফায়ারবেসে সিঙ্ক (যাতে ব্রাউজার ক্যাশ মুছে গেলেও বা অন্য ডিভাইসে খুললেও আগের মানটাই থাকে) ---- */
     function initOverdueThresholdSync() {
@@ -1279,7 +1658,7 @@
                     renderOverdueList();
                 }
             }
-        });
+        }, showAppSettingsHealthWarning);
     }
 
     /* ---- প্রকৃত কানেকশন স্ট্যাটাস মনিটর (আগে শুধু ডেটা সিঙ্কের উপর ভিত্তি করে ধারণা করা হতো, যা কানেকশন দুর্বল/বন্ধ থাকলে "কানেক্ট হচ্ছে..." তে আটকে থাকত) ---- */
@@ -1416,18 +1795,27 @@
         } 
     }
 
+    // আগে এটাও fire-and-forget ছিল — এখন Promise.all ফেরত দেয় যাতে caller প্রতিটা পেন্ডিং
+    // সেভ সত্যিই সফল হয়েছে কিনা নিশ্চিত হয়ে তারপর পরবর্তী ধাপে (যেমন db রিসেট) যেতে পারে।
     function flushPendingSaves(fundKey) {
         let prefix = fundKey + '_';
+        let promises = [];
         Object.keys(pendingTimers).forEach(key => {
             if (key.startsWith(prefix)) {
                 clearTimeout(pendingTimers[key]);
                 let custId = key.substring(prefix.length);
                 if (db[custId] !== undefined) {
-                    firebase.database().ref(fundKey + '_data').child(custId).set(db[custId]);
+                    promises.push(
+                        firebase.database().ref(fundKey + '_data').child(custId).set(db[custId]).catch((err) => {
+                            console.error('গ্রাহক #' + custId + '-এর তথ্য সেভ ব্যর্থ (flushPendingSaves):', err);
+                            throw err;
+                        })
+                    );
                 }
                 delete pendingTimers[key];
             }
         });
+        return Promise.all(promises);
     }
 
     function autoSave() {
@@ -1534,7 +1922,7 @@
         let fugitive = d.fugitive ? `<span class="cp-tag" style="background:#4a1010; color:#ff8a80;">🚩 পলাতক</span>` : '';
         let sub = (d.address ? d.address : '') + phoneStr;
         let dot = isActive ? '<span class="cp-glow-dot"></span>' : '';
-        return `<div class="cp-row${isActive ? ' active' : ''}" data-i="${i}" onclick="pickCust(${i})">
+        return `<div class="cp-row${isActive ? ' active' : ''}${d.fugitive ? ' fugitive' : ''}" data-i="${i}" onclick="pickCust(${i})">
             <span class="cp-avatar">${avatar}</span>
             <span class="cp-num-badge">${mark}গ্রাহক #${i}</span>
             <span class="cp-info">
@@ -1737,17 +2125,30 @@
         }
     }
 
-    function changePage(d) { 
+    // এখন async — পাতা পাল্টানোর আগে বর্তমান গ্রাহকের সেভ সত্যিই সফল হয়েছে কিনা নিশ্চিত হয়ে
+    // তারপর নেভিগেট করে। এটা বিশেষভাবে জরুরি কিস্তি তোলার পর অটো-নেক্সট-পেজ ফিচারের জন্য —
+    // আগে সেভ ব্যর্থ হলেও নিঃশব্দে পরের গ্রাহকের পাতায় চলে যেত।
+    async function changePage(d) {
         let n = cur + d;
-        // পলাতক হিসেবে চিহ্নিত গ্রাহকদের এড়িয়ে পরের/আগেরজনে চলে যাওয়া
+        // পলাতক হিসেবে চিহ্নিত গ্রাহক এবং নাম-এন্ট্রি-না-থাকা খালি স্লট — দুটোই এড়িয়ে পরের/আগেরজনে চলে যাওয়া
         let steps = 0;
-        while (n >= 1 && n <= 300 && db[n] && db[n].fugitive && steps < 300) {
+        while (n >= 1 && n <= 300 && (!db[n] || !db[n].name || db[n].fugitive) && steps < 300) {
             n += d;
             steps++;
         }
         if (n >= 1 && n <= 300) {
-            flushCurrentCustSave();
-            loadPage(n); 
+            try {
+                await flushCurrentCustSave();
+            } catch (err) {
+                alert(
+                    '⚠️ বর্তমান গ্রাহকের তথ্য ফায়ারবেসে সেভ করা যায়নি (ইন্টারনেট চেক করুন)!\n\n' +
+                    'ডেটা হারিয়ে যাওয়া ঠেকাতে পাতা পাল্টানো বাতিল করা হলো — একই পাতায় থাকা হলো। আবার চেষ্টা করুন।\n\nএরর: ' + ((err && err.message) || 'অজানা')
+                );
+                let s = document.getElementById('saveStatus');
+                if (s) { s.innerText = "⚠️ ফেইল্ড ঠিক করুন"; s.style.color = "#a23c26"; s.style.borderColor = "#a23c26"; }
+                return;
+            }
+            loadPage(n);
             if (d === 1) autoFocusNextPaymentRow(n);
         }
     }
@@ -1798,6 +2199,13 @@
     }
 
     function loadPage(c) {
+        // আগের গ্রাহকের ✅ flash/টিক এখনো স্ক্রিনে লেগে থাকলে সাথে সাথে সরিয়ে দেওয়া —
+        // নাহলে পরের গ্রাহকের পেজেও পুরনো টিকটা দেখা যেতে পারে, যা বিভ্রান্তিকর।
+        let prevBadge = document.querySelector('.customer-name-badge.paid-flash');
+        if (prevBadge) prevBadge.classList.remove('paid-flash');
+        let prevTick = document.getElementById('paidFlashTick');
+        if (prevTick) prevTick.classList.remove('show');
+
         let prevActiveRow = document.querySelector('#cpListBox .cp-row.active');
         cur = c;
         document.getElementById('custSelect').value = c;
@@ -1944,13 +2352,20 @@
 
         document.getElementById('newCycleBtn').style.display = isComplete ? 'inline-block' : 'none';
 
-        // গোল রিং-এ আদায়ের শতাংশ দেখানো — ছবির বদলে সংখ্যাটাই দেখায়, বৃত্তটা ঠিক তত অংশ পূরণ থাকে
+        // নামের পাশের %-ঘরে দেখানো হয় "কত টাকা লোন শোধ হয়েছে" (paid / total),
+        // আর রিং-এর রঙ নির্ধারিত হয় "মেয়াদ অনুযায়ী নিয়মিততা"-র (১০০ কর্মদিবস) ভিত্তিতে —
+        // সংখ্যাটা টাকার হিসাব, রঙটা মেয়াদ/নিয়মিততার হিসাব।
         let ringEl = document.getElementById('custProgressRing');
         let pctEl = document.getElementById('custProgressPct');
         if (ringEl && pctEl) {
-            let pct = tVal > 0 ? Math.min(100, Math.max(0, Math.round((paid / tVal) * 100))) : 0;
-            ringEl.style.background = `conic-gradient(#3fc7d6 0% ${pct}%, rgba(255,255,255,.35) ${pct}% 100%)`;
-            pctEl.textContent = pct + '%';
+            let regularInfo = calcRegularityScore(d);
+            let colorPct = regularInfo.pct; // মেয়াদ/নিয়মিততা ভিত্তিক — শুধু রঙের জন্য
+            let repayPct = tVal > 0 ? Math.min(100, Math.max(0, Math.round((paid / tVal) * 100))) : 0; // টাকা শোধের %, রিং ভরাট ও সংখ্যার জন্য
+            let ringColor = colorPct >= 90 ? '#35b86b' : colorPct >= 75 ? '#2d8cff' : colorPct >= 50 ? '#d6a300' : colorPct >= 25 ? '#f08a24' : '#d94b4b';
+            ringEl.style.background = `conic-gradient(${ringColor} 0% ${repayPct}%, rgba(255,255,255,.35) ${repayPct}% 100%)`;
+            pctEl.textContent = repayPct + '%';
+            pctEl.title = `শোধ হয়েছে: ${paid.toLocaleString('bn-BD')} / ${tVal.toLocaleString('bn-BD')} ৳ · মেয়াদ-নিয়মিততা (রঙ): ${colorPct}% (${regularInfo.paidDays.toLocaleString('bn-BD')}/${regularInfo.expectedDays.toLocaleString('bn-BD')} দিন)`;
+            updateReliabilityBadge(d, regularInfo);
         }
 
         // কিস্তি + সঞ্চয় মিলিয়ে প্রতি কিস্তিতে মোট কত টাকা লাগে, তা নামের পাশে বড় করে দেখানো
@@ -2108,6 +2523,9 @@
         if (f === 'no' || f === 'partial') {
             v = sanitizeAmount(v, f === 'no' ? 'পেমেন্ট সংখ্যা' : 'আংশিক পেমেন্ট');
         }
+        if (f === 'no') {
+            v = sanitizeInstallmentNo(v);
+        }
 
         db[c].rows[i][f] = v;
         let numV = parseFloat(v) || 0;
@@ -2126,6 +2544,14 @@
             }
         }
 
+        // আজকের তারিখে কিস্তি/আংশিক জমা সফলভাবে সেভ হলে নামের উপর flash দেখানো,
+        // এবং সাথে সাথে (একটু পরে) স্বয়ংক্রিয়ভাবে পরের গ্রাহকের পেজে চলে যাওয়া —
+        // যাতে কিস্তি পাওয়া গেলে হাতে করে "পরবর্তী" চাপা না লাগে।
+        if ((f === 'no' || f === 'partial') && numV > 0 && db[c].rows[i].date === activeWorkDate) {
+            flashPaidToday();
+            setTimeout(() => { if (cur === c) changePage(1); }, 550);
+        }
+
         let skipBadge = document.getElementById('skipBadge');
         if (skipBadge) skipBadge.style.display = (db[c].skippedDates && db[c].skippedDates[activeWorkDate]) ? 'inline-block' : 'none';
 
@@ -2138,6 +2564,838 @@
     function scheduleDashboardUpdate() {
         if (dashTimer) clearTimeout(dashTimer);
         dashTimer = setTimeout(() => { updateDashboard(); }, 350);
+    }
+
+    /*
+     * মেয়াদভিত্তিক লাভের হিসাব:
+     * - বর্তমান সাইকেলের loan = মূলধন
+     * - total = ১০০ কর্মদিবসে মোট আদায়যোগ্য (মূলধন + সুদ)
+     * - প্রতি পূর্ণ কিস্তির লাভ = (total - loan) / 100
+     * - full installment (no) থেকে শুধু সেই দিনের লাভ ধরা হয়
+     * - partial payment হলে total-এর profit-margin অনুপাতে লাভ ধরা হয়
+     * - sonchoy/সঞ্চয়কে লাভ হিসেবে ধরা হয় না; full installment-এর profit অংশ total-loan থেকে আসে
+     */
+    function calcRegularityScore(d) {
+        if (!d) return { pct: 0, paidDays: 0, expectedDays: 0 };
+
+        // গ্রাহকের loanDate থেকে আজ পর্যন্ত যত কর্মদিবস (শুক্রবার বাদ),
+        // তার মধ্যে যেসব দিনে পূর্ণ কিস্তি দেওয়া হয়েছে তার অনুপাত।
+        let start = d.loanDate ? new Date(d.loanDate + 'T00:00:00') : null;
+        if (!start || isNaN(start.getTime())) return { pct: 0, paidDays: 0, expectedDays: 0 };
+
+        let today = new Date(activeWorkDate + 'T00:00:00');
+        let end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        if (start > end) return { pct: 0, paidDays: 0, expectedDays: 0 };
+
+        let expectedDays = 0;
+        let cursor = new Date(start);
+        while (cursor <= end && expectedDays < 100) {
+            if (cursor.getDay() !== 5) expectedDays++;
+            cursor.setDate(cursor.getDate() + 1);
+        }
+
+        let paidDays = 0;
+        if (d.rows && typeof d.rows === 'object') {
+            Object.values(d.rows).forEach(r => {
+                if (!r) return;
+                let noVal = parseFloat(r.no) || 0;
+                let partialVal = parseFloat(r.partial) || 0;
+
+                // পূর্ণ কিস্তি = নিয়মিত কিস্তি। Partial payment-কে পূর্ণ কিস্তি হিসেবে ধরা হবে না।
+                if (noVal > 0) paidDays += noVal;
+                // partial থাকলে নিয়মিততার স্কোরে ০ পূর্ণ দিন যোগ হবে;
+                // এতে আংশিক/অনিয়মিত পেমেন্ট স্বয়ংক্রিয়ভাবে কম রঙ পাবে।
+            });
+        }
+
+        paidDays = Math.min(expectedDays, Math.max(0, paidDays));
+        let pct = expectedDays > 0 ? Math.round((paidDays / expectedDays) * 100) : 0;
+        return { pct, paidDays, expectedDays };
+    }
+
+    function calcTermProgress(d) {
+        if (!d) return { days: 0, pct: 0, paidAmount: 0 };
+        let days = 0, paidAmount = 0;
+        let kr = parseFloat(d.kistiRate) || 0, sr = parseFloat(d.sonchoyRate) || 0;
+        let perInstallment = kr + sr;
+        if (d.rows && typeof d.rows === 'object') {
+            for (let r of Object.values(d.rows)) {
+                if (!r) continue;
+                let noVal = parseFloat(r.no) || 0;
+                let partialVal = parseFloat(r.partial) || 0;
+                if (noVal > 0) {
+                    days += noVal;
+                    paidAmount += (parseFloat(d.kistiRate) || 0) * noVal;
+                    // safety: এক গ্রাহকের মেয়াদ ১০০ দিনের বেশি দেখাব না
+                } else if (partialVal > 0 && perInstallment > 0) {
+                    // কিস্তি + সঞ্চয় মিলিয়ে যেটাকে "১ কিস্তি" ধরা হয়, আংশিক টাকাও এখন সেই একই হারে
+                    // ভাগ করা হচ্ছে — যাতে এই সংখ্যা কাস্টমার পেজের "সমতুল্য কিস্তি" সংখ্যার সাথে মেলে।
+                    days += partialVal / perInstallment;
+                    paidAmount += partialVal;
+                }
+            }
+        }
+        days = Math.min(100, Math.max(0, days));
+        return {
+            days: roundTwo(days),
+            pct: Math.min(100, Math.max(0, Math.round(days))),
+            paidAmount: roundTwo(paidAmount)
+        };
+    }
+
+    // গ্রাহকের নামের পাশে ছোট্ট ব্যাজে পেমেন্ট-নিয়মিততা টেক্সট আকারে দেখানো —
+    // ঠিক এই তথ্যটাই এতদিন নাম-বৃত্তের (custProgressRing) রঙে (সবুজ/নীল/হলুদ/কমলা/লাল) এনকোড করা ছিল,
+    // কিন্তু মোবাইলে হোভার-টুলটিপ ছাড়া রঙের অর্থ বোঝা কঠিন। তাই calcRegularityScore-এর একই হিসাব
+    // ব্যবহার করে এখন টেক্সট আকারেও (🟢/🟡/🔴) দেখানো হচ্ছে — নতুন হিসাব-পদ্ধতি নয়, বিদ্যমানটাই দৃশ্যমান করা হলো।
+    function updateReliabilityBadge(d, precomputedInfo) {
+        let el = document.getElementById('reliabilityBadge');
+        if (!el) return;
+        if (!d || d.fugitive || !d.loanDate || !(parseFloat(d.loan) > 0)) { el.style.display = 'none'; return; }
+        let info = precomputedInfo || calcRegularityScore(d);
+        if (info.expectedDays < 5) { el.style.display = 'none'; return; } // নতুন গ্রাহক — এখনো বিচার করার মতো দিন পার হয়নি
+        let label, bg;
+        if (info.pct >= 90) { label = '🟢 নিয়মিত'; bg = 'rgba(53,184,107,.55)'; }
+        else if (info.pct >= 50) { label = '🟡 মাঝামাঝি'; bg = 'rgba(214,163,0,.55)'; }
+        else { label = '🔴 ঝুঁকিপূর্ণ'; bg = 'rgba(217,75,75,.6)'; }
+        el.innerText = label;
+        el.title = `মেয়াদ-নিয়মিততা: ${info.pct}% (${info.paidDays.toLocaleString('bn-BD')}/${info.expectedDays.toLocaleString('bn-BD')} দিন)`;
+        el.style.background = bg;
+        el.style.display = 'inline-block';
+    }
+
+    function calcCustomerEarnedProfit(d) {
+        if (!d) return { earned: 0, potential: 0, remaining: 0, days: 0, paid: 0 };
+        let loan = parseFloat(d.loan) || 0;
+        let total = parseFloat(d.total) || 0;
+        if (loan <= 0 || total <= 0) return { earned: 0, potential: 0, remaining: 0, days: 0, paid: 0 };
+
+        let potential = Math.max(0, roundTwo(total - loan));
+        let margin = total > 0 ? potential / total : 0;
+        let earned = 0;
+        let days = 0;
+        let paid = 0;
+        let kr = parseFloat(d.kistiRate) || 0, sr = parseFloat(d.sonchoyRate) || 0;
+        let perInstallment = kr + sr;
+
+        if (d.rows && typeof d.rows === 'object') {
+            for (let r of Object.values(d.rows)) {
+                if (!r) continue;
+                let noVal = parseFloat(r.no) || 0;
+                let partialVal = parseFloat(r.partial) || 0;
+
+                if (noVal > 0) {
+                    // প্রতি কিস্তিতে জমা হওয়া প্রকৃত টাকা (কিস্তি+সঞ্চয়) × মার্জিন = সেই কিস্তির লাভ
+                    // (আগে potential/100 ব্যবহার হতো যা ১০০ দিনের মেয়াদ ধরে নিতো, কিন্তু বাস্তবে
+                    //  সবাই কম দিনে (যেমন ৮০ দিনে) শোধ করে দেয় বলে তাতে লাভ কম দেখাতো)
+                    earned += perInstallment * noVal * margin;
+                    days += noVal;
+                    paid += perInstallment * noVal;
+                } else if (partialVal > 0) {
+                    // partial-এ সঞ্চয় আলাদা জানা থাকে না; তাই মোট profit margin দিয়ে conservative allocation
+                    earned += partialVal * margin;
+                    days += perInstallment > 0 ? partialVal / perInstallment : 0;
+                    paid += partialVal;
+                }
+            }
+        }
+
+        earned = Math.min(potential, Math.max(0, roundTwo(earned)));
+        let remaining = Math.max(0, roundTwo(potential - earned));
+        return {
+            earned,
+            potential,
+            remaining,
+            days: Math.min(100, Math.max(0, roundTwo(days))),
+            paid: roundTwo(paid)
+        };
+    }
+
+    let lastProfitSummary = { ready: false, net: 0 };
+
+    // ক্যাশবুক এন্ট্রিগুলো থেকে নির্বাচিত সময়সীমা (আজ/৭দিন/মাস/সব) অনুযায়ী ফিল্টার করে।
+    // "আজ" মানে এখানে ডিভাইসের প্রকৃত ক্যালেন্ডার-তারিখ নয় — অ্যাপের উপরে সেট করা
+    // "আজকের কাজের তারিখ" (activeWorkDate), যাতে অতীতের কোনো তারিখে কাজ করলেও
+    // "আজ" বাটনে সেই কাজের-তারিখের হিসাবই দেখায়।
+    function filterCashbookEntriesByRange(all, range) {
+        if (!range || range === 'all') return all;
+        let todayStr = activeWorkDate;
+        let weekRange = range === 'week' ? getWeekRangeForDate(selectedWeekDate || activeWorkDate) : null;
+        let yearMonth = range === 'month' ? (selectedYearMonth || activeWorkDate.slice(0, 7)) : null;
+        let out = {};
+        Object.keys(all || {}).forEach(dt => {
+            if (!all[dt]) return;
+            if (range === 'today') {
+                if (dt === todayStr) out[dt] = all[dt];
+            } else if (range === 'week') {
+                if (dt >= weekRange.start && dt <= weekRange.end) out[dt] = all[dt];
+            } else if (range === 'month') {
+                if (dt.slice(0, 7) === yearMonth) out[dt] = all[dt];
+            }
+        });
+        return out;
+    }
+
+    // সব ক্যাশবুক এন্ট্রির মধ্যে সবচেয়ে সাম্প্রতিক দিনের সমাপনী ব্যালেন্স থেকে
+    // "বর্তমান হাতে থাকা ক্যাশ" বের করা হয় — এটাই আসলে মূলধন + এখন পর্যন্ত জমা থাকা লাভ/আয়ের সমষ্টি।
+    function calcCurrentCashOnHand(all) {
+        let dates = Object.keys(all || {}).filter(dt => all[dt]);
+        if (!dates.length) return null;
+        dates.sort();
+        let latestDate = dates[dates.length - 1];
+        let data = all[latestDate];
+        let opening = parseFloat(data.opening) || 0;
+        let collection = (data.collectionOverride !== undefined && data.collectionOverride !== null)
+            ? (parseFloat(data.collectionOverride) || 0)
+            : calcCollectionForDate(latestDate);
+        let incomeTot = (data.incomes || []).reduce((s, n) => s + (parseFloat(n.amount) || 0), 0);
+        let loanTot = (data.loans || []).reduce((s, l) => s + (parseFloat(l.amount) || 0), 0);
+        let serviceChargeTot = (data.loans || []).reduce((s, l) => s + (parseFloat(l.serviceCharge) || 0), 0);
+        let expTot = (data.expenses || []).reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
+        let closing = roundTwo(opening + collection + incomeTot + serviceChargeTot - loanTot - expTot);
+        return { date: latestDate, closing };
+    }
+
+    let profitPeriodRange = 'today';
+    let selectedWeekDate = null;   // 'সপ্তাহ' পিরিয়ডে ব্যবহারকারীর বেছে নেওয়া তারিখ (এই তারিখ যে সপ্তাহে পড়ে সেটাই দেখানো হবে)
+    let selectedYearMonth = null;  // 'মাস' পিরিয়ডে ব্যবহারকারীর বেছে নেওয়া মাস (YYYY-MM)
+
+    // একটা তারিখ থেকে সেই সপ্তাহের শনিবার-বৃহস্পতিবার (বাংলাদেশি কর্ম-সপ্তাহ) রেঞ্জ বের করে
+    function getWeekRangeForDate(dateStr) {
+        let base = new Date((dateStr || activeWorkDate) + 'T00:00:00');
+        if (isNaN(base.getTime())) base = new Date(activeWorkDate + 'T00:00:00');
+        let daysSinceSat = (base.getDay() - 6 + 7) % 7;
+        let satDate = new Date(base);
+        satDate.setDate(base.getDate() - daysSinceSat);
+        let thuDate = new Date(satDate);
+        thuDate.setDate(satDate.getDate() + 5);
+        return { start: localDateStr(satDate), end: localDateStr(thuDate), satDate, thuDate };
+    }
+    let startingCapitalValue = null; // null মানে এখনো সেট করা হয়নি
+    let fundStartDateValue = null;   // ফান্ড কবে থেকে চালু (YYYY-MM-DD) — বার্ষিক হার হিসাবের জন্য
+    let dailyTargetValue = null; // দৈনিক কালেকশন লক্ষ্য — null মানে এখনো সেট করা হয়নি
+    let dailyTargetSavedDate = null; // এই মানটা ঠিক কোন তারিখের জন্য সেভ করা হয়েছিল
+
+    // মূলধন এডিট-বক্স খোলা/বন্ধ করা
+    function toggleCapitalEdit() {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        let row = document.getElementById('profitCapitalEditRow');
+        if (!row) return;
+        let opening = row.style.display === 'none' || row.style.display === '';
+        row.style.display = opening ? 'flex' : 'none';
+        if (opening) {
+            let input = document.getElementById('startingCapitalInput');
+            if (input) input.value = (startingCapitalValue !== null && startingCapitalValue !== undefined) ? startingCapitalValue : '';
+            let dateInput = document.getElementById('fundStartDateInput');
+            if (dateInput) dateInput.value = fundStartDateValue || '';
+        }
+    }
+
+    // প্রতিটা ফান্ডের জন্য আলাদাভাবে ফায়ারবেসে (app_settings পাথে) সেভ হয়, তাই ফান্ড পাল্টালে আলাদা মূলধন দেখাবে
+    function saveStartingCapital() {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        let inputEl = document.getElementById('startingCapitalInput');
+        let btn = document.getElementById('startingCapitalSaveBtn');
+        if (btn && btn.disabled) return; // ডাবল-ট্যাপে দুইবার রিকোয়েস্ট যাওয়া ঠেকানো
+        let raw = bnDigitsToEn(inputEl.value);
+        let val = parseFloat(raw);
+        if (isNaN(val) || val < 0) { alert('সঠিক একটা সংখ্যা দিন (০ বা তার বেশি)।'); return; }
+        val = roundTwo(val);
+
+        if (btn) { btn.disabled = true; btn.dataset.origText = btn.innerText; btn.innerText = 'সেভ হচ্ছে...'; }
+
+        let dateInputEl = document.getElementById('fundStartDateInput');
+        let dateVal = dateInputEl ? dateInputEl.value : '';
+
+        let savePromises = [firebase.database().ref('app_settings/' + currentFund + '_starting_capital').set(val)];
+        if (dateVal) {
+            savePromises.push(firebase.database().ref('app_settings/' + currentFund + '_start_date').set(dateVal));
+        }
+
+        Promise.all(savePromises).then(() => {
+            startingCapitalValue = val;
+            if (dateVal) fundStartDateValue = dateVal;
+            document.getElementById('profitCapitalEditRow').style.display = 'none';
+            updateProfitDashboard();
+        }).catch((err) => {
+            // আগে জেনেরিক এলার্ট দেখানো হতো বলে আসল কারণ (RLS পলিসি নেই, টেবিল তৈরি হয়নি,
+            // ইত্যাদি) বোঝা যেত না। এখন কনসোলে ও এলার্টে আসল এরর মেসেজ দেখানো হয়।
+            showAppSettingsHealthWarning(err);
+            let detail = (err && (err.message || err.error_description || err.hint)) || 'অজানা ত্রুটি';
+            alert(
+                '⚠️ মূলধনের তথ্যটা ফায়ারবেসে সেভ করা যায়নি।\n\n' +
+                'আসল এরর: ' + detail + '\n\n' +
+                'সাধারণত এর কারণ: (১) app_settings টেবিল তৈরি হয়নি, (২) setting_key কলামে UNIQUE/PRIMARY KEY নেই, ' +
+                'অথবা (৩) Row Level Security চালু আছে কিন্তু insert/update পলিসি নেই। ব্রাউজারে F12 চেপে Console-এও এই এরর দেখা যাবে।'
+            );
+        }).finally(() => {
+            if (btn) { btn.disabled = false; btn.innerText = btn.dataset.origText || 'সেভ'; }
+        });
+    }
+
+    // দৈনিক কালেকশন-লক্ষ্য এডিট বক্স খোলা/বন্ধ করা (মূলধন-এডিটের একই প্যাটার্নে)
+    function toggleDailyTargetEdit() {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        let input = document.getElementById('dailyTargetInput');
+        let saveBtn = document.getElementById('dailyTargetSaveBtn');
+        if (!input || !saveBtn) return;
+        let opening = input.style.display === 'none' || input.style.display === '';
+        input.style.display = opening ? 'inline-block' : 'none';
+        saveBtn.style.display = opening ? 'inline-block' : 'none';
+        if (opening) {
+            input.value = (dailyTargetSavedDate === activeWorkDate && dailyTargetValue !== null && dailyTargetValue !== undefined) ? dailyTargetValue : '';
+            input.focus();
+        }
+    }
+
+    function saveDailyTarget() {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        let inputEl = document.getElementById('dailyTargetInput');
+        let btn = document.getElementById('dailyTargetSaveBtn');
+        if (btn && btn.disabled) return;
+        let raw = bnDigitsToEn(inputEl.value);
+        let val = parseFloat(raw);
+        if (isNaN(val) || val < 0) { alert('সঠিক একটা সংখ্যা দিন (০ বা তার বেশি)।'); return; }
+        val = roundTwo(val);
+
+        if (btn) { btn.disabled = true; btn.dataset.origText = btn.innerText; btn.innerText = 'সেভ হচ্ছে...'; }
+
+        firebase.database().ref('app_settings/' + currentFund + '_daily_target').set({ value: val, date: activeWorkDate }).then(() => {
+            dailyTargetValue = val;
+            dailyTargetSavedDate = activeWorkDate;
+            toggleDailyTargetEdit();
+            updateProfitDashboard();
+        }).catch((err) => {
+            showAppSettingsHealthWarning(err);
+            let detail = (err && (err.message || err.error_description || err.hint)) || 'অজানা ত্রুটি';
+            alert('⚠️ দৈনিক লক্ষ্যটা ফায়ারবেসে সেভ করা যায়নি।\n\nআসল এরর: ' + detail);
+        }).finally(() => {
+            if (btn) { btn.disabled = false; btn.innerText = btn.dataset.origText || 'সেভ'; }
+        });
+    }
+
+    // পলাতক নন এমন সক্রিয় (লোন চলমান, সম্পন্ন হয়নি) গ্রাহকদের কিস্তি+সঞ্চয়ের যোগফল —
+    // এটাই নির্দিষ্ট তারিখে বাজার থেকে স্বাভাবিকভাবে যা আদায় হওয়ার কথা তার অটো-হিসাব।
+    // তারিখ-সচেতন: যে গ্রাহকের লোন এখনো ওই তারিখে দেওয়াই হয়নি (loanDate > dt), বা যার লোন
+    // ওই তারিখের মধ্যেই সম্পূর্ণ শোধ হয়ে গিয়েছিল — তাদের বাদ দিয়ে হিসাব হয়। ফলে প্রতিদিন
+    // নতুন গ্রাহক (ডেইলি লোন) যোগ হলে বা কারও লোন শেষ হয়ে গেলে টার্গেটও তারিখ অনুযায়ী বদলায়।
+    function calcAutoDailyTarget(dt) {
+        dt = dt || activeWorkDate;
+        let total = 0;
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d || d.fugitive) continue;
+            let loan = parseFloat(d.loan) || 0, tot = parseFloat(d.total) || 0;
+            if (loan <= 0 || tot <= 0) continue;
+            if (d.loanDate && d.loanDate > dt) continue; // এই তারিখে লোনটা এখনো দেওয়াই হয়নি
+            let kr = parseFloat(d.kistiRate) || 0, sr = parseFloat(d.sonchoyRate) || 0;
+            let paidByDate = 0;
+            if (d.rows && typeof d.rows === 'object') {
+                for (let r of Object.values(d.rows)) {
+                    if (!r || !r.date || r.date > dt) continue;
+                    let noVal = parseFloat(r.no) || 0;
+                    let partialVal = parseFloat(r.partial) || 0;
+                    if (noVal > 0) paidByDate += (kr + sr) * noVal;
+                    else if (partialVal > 0) paidByDate += partialVal;
+                }
+            }
+            if (roundTwo(tot - paidByDate) <= 0) continue; // ওই তারিখের মধ্যেই লোন সম্পন্ন হয়ে গিয়েছিল
+            total = roundTwo(total + kr + sr);
+        }
+        return roundTwo(total);
+    }
+
+    function updateAutoTargetLine() {
+        let el = document.getElementById('autoTargetText');
+        if (!el) return;
+        let val = calcAutoDailyTarget();
+        el.innerText = `🧮 পলাতক বাদে সক্রিয় গ্রাহকদের কিস্তি+সঞ্চয় (অটো): ${val.toLocaleString('bn-BD')} ৳`;
+    }
+
+    // উপরের অটো-হিসাবকৃত মানটাকে সরাসরি আজকের "দৈনিক কালেকশন লক্ষ্য" হিসেবে সেভ করে দেয়
+    function applyAutoDailyTarget() {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        let val = calcAutoDailyTarget();
+        let inputEl = document.getElementById('dailyTargetInput');
+        let saveBtn = document.getElementById('dailyTargetSaveBtn');
+        if (inputEl) { inputEl.value = val; inputEl.style.display = 'inline-block'; }
+        if (saveBtn) saveBtn.style.display = 'inline-block';
+        saveDailyTarget();
+    }
+
+    // নির্দিষ্ট সময়ের (আজ/সপ্তাহ/মাস) মধ্যে যেসব কিস্তি/আংশিক জমা পড়েছে, শুধু সেগুলো থেকে
+    // অর্জিত লাভ বের করা হয় — calcCustomerEarnedProfit-এর একই লজিক, কিন্তু তারিখ-ফিল্টার সহ।
+    // এখানেও "আজ" মানে activeWorkDate (কাজের তারিখ), ডিভাইসের প্রকৃত তারিখ নয়।
+    function calcPeriodEarnedProfit(range) {
+        if (range === 'all') return null; // caller ইতিমধ্যে গণনা করা সাইকেল-টোটাল earned ব্যবহার করবে
+        let total = 0;
+        let todayStr = activeWorkDate;
+        let weekRange = range === 'week' ? getWeekRangeForDate(selectedWeekDate || activeWorkDate) : null;
+        let yearMonth = range === 'month' ? (selectedYearMonth || activeWorkDate.slice(0, 7)) : null;
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d) continue;
+            let loan = parseFloat(d.loan) || 0, tot = parseFloat(d.total) || 0;
+            if (loan <= 0 || tot <= 0) continue;
+            let potential = Math.max(0, roundTwo(tot - loan));
+            let margin = tot > 0 ? potential / tot : 0;
+            let kr = parseFloat(d.kistiRate) || 0, sr = parseFloat(d.sonchoyRate) || 0;
+            let perInstallment = kr + sr;
+            if (d.rows && typeof d.rows === 'object') {
+                for (let r of Object.values(d.rows)) {
+                    if (!r || !r.date) continue;
+                    let inRange = false;
+                    if (range === 'today') {
+                        inRange = r.date === todayStr;
+                    } else if (range === 'week') {
+                        inRange = r.date >= weekRange.start && r.date <= weekRange.end;
+                    } else if (range === 'month') {
+                        inRange = r.date.slice(0, 7) === yearMonth;
+                    }
+                    if (!inRange) continue;
+                    let noVal = parseFloat(r.no) || 0;
+                    let partialVal = parseFloat(r.partial) || 0;
+                    // পূর্ণ কিস্তিতে প্রকৃত জমা (কিস্তি+সঞ্চয়) × মার্জিন = লাভ (আগে potential/100 ভুলভাবে ব্যবহৃত হতো)
+                    if (noVal > 0) total += perInstallment * noVal * margin;
+                    else if (partialVal > 0) total += partialVal * margin;
+                }
+            }
+        }
+        return roundTwo(total);
+    }
+
+
+    // একটা নির্দিষ্ট মাসের (YYYY-MM) জন্য অর্জিত লাভ — মাস-বনাম-মাস তুলনার জন্য ব্যবহৃত হয়
+    function calcEarnedProfitForYearMonth(yyyyMM) {
+        let total = 0;
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d) continue;
+            let loan = parseFloat(d.loan) || 0, tot = parseFloat(d.total) || 0;
+            if (loan <= 0 || tot <= 0) continue;
+            let potential = Math.max(0, roundTwo(tot - loan));
+            let margin = tot > 0 ? potential / tot : 0;
+            let kr = parseFloat(d.kistiRate) || 0, sr = parseFloat(d.sonchoyRate) || 0;
+            let perInstallment = kr + sr;
+            if (d.rows && typeof d.rows === 'object') {
+                for (let r of Object.values(d.rows)) {
+                    if (!r || !r.date || r.date.slice(0, 7) !== yyyyMM) continue;
+                    let noVal = parseFloat(r.no) || 0;
+                    let partialVal = parseFloat(r.partial) || 0;
+                    if (noVal > 0) total += perInstallment * noVal * margin;
+                    else if (partialVal > 0) total += partialVal * margin;
+                }
+            }
+        }
+        return roundTwo(total);
+    }
+
+    function getPreviousYearMonth(yyyyMM) {
+        let parts = yyyyMM.split('-').map(Number);
+        let y = parts[0], m = parts[1] - 1;
+        if (m < 1) { m = 12; y -= 1; }
+        return y + '-' + String(m).padStart(2, '0');
+    }
+
+    // "আজ / এই সপ্তাহ / এই মাস / সম্পূর্ণ সাইকেল" বাটন সিলেক্ট করলে এটা কল হয়
+    function setProfitPeriod(range) {
+        profitPeriodRange = range;
+        document.querySelectorAll('.profit-period-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-range') === range);
+        });
+        let pickerRow = document.getElementById('profitPeriodPickerRow');
+        let weekInput = document.getElementById('weekPickerInput');
+        let monthInput = document.getElementById('monthPickerInput');
+        if (pickerRow && weekInput && monthInput) {
+            if (range === 'week') {
+                pickerRow.style.display = 'block';
+                weekInput.style.display = 'inline-block';
+                monthInput.style.display = 'none';
+                weekInput.value = selectedWeekDate || activeWorkDate;
+            } else if (range === 'month') {
+                pickerRow.style.display = 'block';
+                weekInput.style.display = 'none';
+                monthInput.style.display = 'inline-block';
+                monthInput.value = selectedYearMonth || activeWorkDate.slice(0, 7);
+            } else {
+                pickerRow.style.display = 'none';
+            }
+        }
+        updateProfitDashboard();
+    }
+
+    function onWeekPickerChange(val) {
+        if (!val) return;
+        selectedWeekDate = val;
+        updateProfitDashboard();
+    }
+
+    function onMonthPickerChange(val) {
+        if (!val) return;
+        selectedYearMonth = val;
+        updateProfitDashboard();
+    }
+
+    function updateProfitDashboard() {
+        let earned = 0, potential = 0, remaining = 0;
+        let totalDays = 0, activeCustomers = 0;
+        let badDebtRemaining = 0; // পলাতক গ্রাহকদের কারণে যে "বাকি সম্ভাব্য লাভ" আদায় হওয়ার সম্ভাবনা কম
+
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d) continue;
+            let p = calcCustomerEarnedProfit(d);
+            if (p.potential > 0) {
+                activeCustomers++;
+                earned += p.earned;
+                potential += p.potential;
+                remaining += p.remaining;
+                totalDays += p.days;
+                if (d.fugitive) badDebtRemaining += p.remaining;
+            }
+        }
+
+        earned = roundTwo(earned);
+        potential = roundTwo(potential);
+        remaining = roundTwo(remaining);
+        badDebtRemaining = roundTwo(badDebtRemaining);
+
+        updateAutoTargetLine();
+
+        // "⏳ বাকি সম্ভাব্য লাভ" কার্ডের নিচে — এর মধ্যে পলাতক গ্রাহকদের কারণে কতটা আদায় অনিশ্চিত, তা আলাদা করে দেখানো
+        let badDebtEl = document.getElementById('dashBadDebtLine');
+        if (badDebtEl) {
+            if (badDebtRemaining > 0) {
+                badDebtEl.innerText = `⚠️ এর মধ্যে পলাতক গ্রাহকদের কারণে সম্ভাব্য ক্ষতি: ${badDebtRemaining.toLocaleString('bn-BD')} ৳`;
+                badDebtEl.style.display = 'block';
+            } else {
+                badDebtEl.style.display = 'none';
+            }
+        }
+
+        // মোট সম্ভাব্য লাভের কতটা অর্জিত হয়েছে তার প্রোগ্রেস বার (সবসময় সম্পূর্ণ সাইকেলের হিসাবে, পিরিয়ড-বাটনে প্রভাবিত হয় না)
+        let progressPct = potential > 0 ? Math.min(100, Math.max(0, Math.round((earned / potential) * 100))) : 0;
+        let progFill = document.getElementById('profitProgressFill');
+        let progLabel = document.getElementById('profitProgressPct');
+        if (progFill) progFill.style.width = progressPct + '%';
+        if (progLabel) progLabel.textContent = progressPct + '%';
+
+        let range = profitPeriodRange;
+        let periodEarned = range === 'all' ? earned : calcPeriodEarnedProfit(range);
+
+        // নির্বাচিত সপ্তাহ/মাসের রেঞ্জ লেবেলে দেখানো
+        let pickedLabelEl = document.getElementById('pickedRangeLabel');
+        if (pickedLabelEl) {
+            if (range === 'week') {
+                let wr = getWeekRangeForDate(selectedWeekDate || activeWorkDate);
+                pickedLabelEl.innerText = `নির্বাচিত সপ্তাহ: ${wr.satDate.toLocaleDateString('bn-BD')} - ${wr.thuDate.toLocaleDateString('bn-BD')}`;
+            } else if (range === 'month') {
+                let ym = selectedYearMonth || activeWorkDate.slice(0, 7);
+                let parts = ym.split('-').map(Number);
+                let monthLabel = (parts.length === 2 && !isNaN(parts[0])) ? new Date(parts[0], parts[1] - 1, 1).toLocaleDateString('bn-BD', { year: 'numeric', month: 'long' }) : ym;
+                pickedLabelEl.innerText = `নির্বাচিত মাস: ${monthLabel}`;
+            } else {
+                pickedLabelEl.innerText = '';
+            }
+        }
+
+        // Cashbook-এর অতিরিক্ত আয় ও খরচ, এবং প্রারম্ভিক মূলধন — লাইভ-সিঙ্কড লোকাল ক্যাশ থেকে নেওয়া হয়
+        // (initFundSettingsSync দেখুন) — প্রতিবার নতুন করে ডাউনলোড করতে হয় না।
+        // Loan disbursement এখানে expense/profit নয়—এটি মূলধন হিসেবে আলাদা থাকে।
+        if (!cachedCashbookSnap || !cachedCapitalSnap || !cachedStartDateSnap || !cachedTargetSnap) return; // প্রথমবার ফান্ড লোড হওয়ার সময় এখনো ক্যাশ প্রস্তুত হয়নি
+        Promise.resolve([cachedCashbookSnap, cachedCapitalSnap, cachedStartDateSnap, cachedTargetSnap]).then(([snap, capSnap, startDateSnap, targetSnap]) => {
+            if (currentFund !== (document.getElementById('fundSelect')?.value || currentFund)) return;
+            let all = snap.val() || {};
+
+            let capVal = capSnap.val();
+            startingCapitalValue = (capVal !== null && capVal !== undefined && capVal !== '') ? (parseFloat(capVal) || 0) : null;
+            let capEl = document.getElementById('dashStartingCapital');
+            if (capEl) capEl.innerText = (startingCapitalValue !== null) ? startingCapitalValue.toLocaleString('bn-BD') + ' ৳' : 'সেট করা হয়নি';
+
+            let startDateVal = startDateSnap.val();
+            fundStartDateValue = (startDateVal && typeof startDateVal === 'string') ? startDateVal : null;
+            let fundStartNoteEl = document.getElementById('dashFundStartDateNote');
+            if (fundStartNoteEl) {
+                fundStartNoteEl.innerText = fundStartDateValue
+                    ? `এই ফান্ডের শুরুর মূলধন ও তারিখ (${new Date(fundStartDateValue + 'T00:00:00').toLocaleDateString('bn-BD')}) — একবার সেট করলেই হবে`
+                    : 'এই ফান্ডের শুরুর মূলধন — একবার সেট করলেই হবে (বার্ষিক হার সঠিকভাবে দেখাতে "শুরুর তারিখ"-ও দিন)';
+            }
+
+            // "বর্তমান হাতে থাকা ক্যাশ" সবসময় সবচেয়ে সাম্প্রতিক দিনের হিসাবে দেখানো হয় —
+            // এটা তারিখ-ফিল্টার/পিরিয়ড-বাটন দিয়ে প্রভাবিত হয় না, কারণ এটা একটা মুহূর্তের ব্যালেন্স, পরিমাণ যোগফল নয়।
+            let cash = calcCurrentCashOnHand(all);
+            let cashEl = document.getElementById('dashCashOnHand');
+            let cashNote = document.getElementById('dashCashOnHandNote');
+            if (cashEl) {
+                if (cash) {
+                    cashEl.innerText = cash.closing.toLocaleString('bn-BD') + ' ৳';
+                    cashEl.style.color = cash.closing < 0 ? 'var(--due)' : 'var(--deep)';
+                } else {
+                    cashEl.innerText = '— ৳';
+                }
+            }
+            if (cashNote) {
+                cashNote.innerText = cash
+                    ? `সর্বশেষ ক্যাশ বই এন্ট্রি (${cash.date}) অনুযায়ী হিসাব`
+                    : 'এখনো কোনো ক্যাশ বই এন্ট্রি সেভ করা হয়নি';
+            }
+
+            // মূলধন থেকে প্রবৃদ্ধি: (হাতে থাকা ক্যাশ + বাজারে বকেয়া মূল লোন) − প্রারম্ভিক মূলধন
+            // বাজারে বিতরিত টাকা হারিয়ে যায়নি — গ্রাহকের কাছে সম্পদ হিসেবে আছে, তাই সেটাও যোগ করা হচ্ছে
+            let growthEl = document.getElementById('dashCapitalGrowth');
+            let growthCard = document.getElementById('dashGrowthCard');
+            let roiEl = document.getElementById('dashRoiPct');
+            if (growthEl) {
+                if (cash && startingCapitalValue !== null) {
+                    let marketPrincipal = calcTotalMarketPrincipalOutstanding();
+                    let growth = roundTwo((cash.closing + marketPrincipal) - startingCapitalValue);
+                    growthEl.innerText = (growth < 0 ? '−' : '+') + Math.abs(growth).toLocaleString('bn-BD') + ' ৳';
+                    if (growthCard) {
+                        growthCard.classList.toggle('loss', growth < 0);
+                        growthCard.classList.toggle('profit', growth >= 0);
+                    }
+                    // ROI% — মূলধনের উপর কত শতাংশ রিটার্ন হয়েছে
+                    if (roiEl) {
+                        if (startingCapitalValue > 0) {
+                            let roiPct = roundTwo((growth / startingCapitalValue) * 100);
+                            roiEl.innerText = `📊 ROI: ${(roiPct < 0 ? '−' : '+')}${Math.abs(roiPct).toLocaleString('bn-BD')}%`;
+                            roiEl.style.color = roiPct < 0 ? 'var(--due)' : 'var(--paid)';
+                            roiEl.style.display = 'block';
+                        } else {
+                            roiEl.style.display = 'none';
+                        }
+                    }
+                    // বার্ষিক হার (প্রকৃত গতিতে) — অনুমানের ৮০/১০০ দিন সাইকেল ধরে না, বরং
+                    // ব্যবহারকারীর দেওয়া "ফান্ড শুরুর তারিখ" থেকে আজ পর্যন্ত প্রকৃত প্রবৃদ্ধিকে বছরে
+                    // রূপান্তর (annualize) করে দেখানো হয়। এটা ক্যাশবুকের সবচেয়ে পুরনো এন্ট্রির তারিখ থেকে
+                    // আলাদা হতে পারে — কারণ ফান্ড অনেক আগে শুরু হলেও ডেটা এন্ট্রি পরে শুরু হতে পারে।
+                    // ফান্ড শুরুর তারিখ না দেওয়া থাকলে এই হিসাব দেখানো হয় না (ভুল প্রক্ষেপণ এড়াতে)।
+                    // সরল (linear) annualization ব্যবহার হচ্ছে, compounding না — যাতে অল্প দিনের ডেটায়
+                    // সংখ্যাটা অবাস্তবভাবে বিস্ফোরিত না হয়ে যায়।
+                    let annualRoiEl = document.getElementById('dashAnnualRoiPct');
+                    if (annualRoiEl) {
+                        if (startingCapitalValue > 0 && fundStartDateValue) {
+                            let firstDate = new Date(fundStartDateValue + 'T00:00:00');
+                            let lastDate = new Date(activeWorkDate + 'T00:00:00');
+                            let daysElapsed = Math.round((lastDate - firstDate) / 86400000);
+                            if (daysElapsed >= 30) {
+                                let annualPct = roundTwo((growth / startingCapitalValue) * (365 / daysElapsed) * 100);
+                                let yearsLabel = daysElapsed >= 365 ? `${roundTwo(daysElapsed / 365).toLocaleString('bn-BD')} বছরের` : `${daysElapsed.toLocaleString('bn-BD')} দিনের`;
+                                annualRoiEl.innerText = `⚡ বার্ষিক হার (${yearsLabel} প্রকৃত ডেটার ভিত্তিতে সরল প্রক্ষেপণ): ${(annualPct < 0 ? '−' : '+')}${Math.abs(annualPct).toLocaleString('bn-BD')}%`;
+                                annualRoiEl.style.color = annualPct < 0 ? 'var(--due)' : 'var(--paid)';
+                                annualRoiEl.style.display = 'block';
+                            } else {
+                                annualRoiEl.style.display = 'none';
+                            }
+                        } else {
+                            annualRoiEl.style.display = 'none';
+                        }
+                    }
+                } else {
+                    growthEl.innerText = '— ৳';
+                    if (growthCard) { growthCard.classList.remove('loss'); growthCard.classList.remove('profit'); }
+                    if (roiEl) roiEl.style.display = 'none';
+                    let annualRoiElFallback = document.getElementById('dashAnnualRoiPct');
+                    if (annualRoiElFallback) annualRoiElFallback.style.display = 'none';
+                }
+            }
+
+            // প্রকৃত নীট লাভ = (ক্যাশ + বাজারে বকেয়া মূল আসল) থেকে প্রবৃদ্ধি
+            // সঞ্চয়ের টাকা বাস্তবে প্রায় কখনো ফেরত দিতে হয় না (কিস্তি+সঞ্চয় মিলিয়ে
+            // লোন তাড়াতাড়ি শোধ হয়ে যায়), তাই এটাকে আর দায় হিসেবে বাদ দেওয়া হচ্ছে না
+            let netProfitEl = document.getElementById('dashSonchoyNetProfit');
+            let sonchoyNoteEl = document.getElementById('dashSonchoyLiabilityNote');
+            if (netProfitEl) {
+                if (cash && startingCapitalValue !== null) {
+                    let marketPrincipal = calcTotalMarketPrincipalOutstanding();
+                    let growth = roundTwo((cash.closing + marketPrincipal) - startingCapitalValue);
+                    let netProfit = growth;
+                    netProfitEl.innerText = (netProfit < 0 ? '−' : '+') + Math.abs(netProfit).toLocaleString('bn-BD') + ' ৳';
+                    netProfitEl.style.color = netProfit < 0 ? 'var(--due)' : 'var(--paid)';
+                    if (sonchoyNoteEl) sonchoyNoteEl.innerText = `সঞ্চয়ের টাকা প্রায় কখনো ফেরত দিতে হয় না বলে এটি লাভ থেকে বাদ দেওয়া হচ্ছে না — মূলধন থেকে প্রবৃদ্ধির সমান`;
+                } else {
+                    netProfitEl.innerText = '— ৳';
+                    if (sonchoyNoteEl) sonchoyNoteEl.innerText = 'সঞ্চয়ের টাকা প্রায় কখনো ফেরত দিতে হয় না বলে এটি লাভ থেকে বাদ দেওয়া হচ্ছে না — মূলধন থেকে প্রবৃদ্ধির সমান';
+                }
+            }
+
+            // দৈনিক কালেকশন-লক্ষ্য বনাম আজকের প্রকৃত কালেকশন — "🎯" লাইনে (নতুন কার্ড না বানিয়ে একটা কম্প্যাক্ট লাইনে)
+            // ম্যানুয়ালি সেভ করা না থাকলে অটো-হিসাবকৃত টার্গেটই ডিফল্ট হিসেবে ব্যবহার হয় —
+            // প্রতিদিন হাতে টার্গেট বসাতে হয় না, দরকার পড়লেই শুধু ✏️ দিয়ে বদলানো যাবে।
+            // ম্যানুয়াল মানটা শুধু যে-তারিখের জন্য সেভ করা হয়েছিল সেদিনই কার্যকর থাকে —
+            // পরদিন থেকে এমনিতেই আবার অটো-হিসাবে ফিরে যায়, প্রতিদিন হাতে বদলানোর দরকার নেই।
+            let targetVal = targetSnap.val();
+            if (targetVal && typeof targetVal === 'object') {
+                dailyTargetValue = (targetVal.value !== null && targetVal.value !== undefined && targetVal.value !== '') ? (parseFloat(targetVal.value) || 0) : null;
+                dailyTargetSavedDate = targetVal.date || null;
+            } else if (targetVal !== null && targetVal !== undefined && targetVal !== '') {
+                // পুরনো ফরম্যাটে (শুধু সংখ্যা, তারিখ ছাড়া) সেভ করা থাকলে সেটা কোন দিনের জন্য তা জানা নেই,
+                // তাই আর কার্যকর ধরা হয় না — অটো-হিসাবই ব্যবহার হবে।
+                dailyTargetValue = null;
+                dailyTargetSavedDate = null;
+            } else {
+                dailyTargetValue = null;
+                dailyTargetSavedDate = null;
+            }
+            let targetTextEl = document.getElementById('profitTargetText');
+            if (targetTextEl) {
+                let isManual = dailyTargetSavedDate === activeWorkDate && dailyTargetValue !== null && dailyTargetValue > 0;
+                let effectiveTarget = isManual ? dailyTargetValue : calcAutoDailyTarget(activeWorkDate);
+                if (effectiveTarget > 0) {
+                    let actualCollection = calcCollectionForDate(activeWorkDate);
+                    let pct = Math.round((actualCollection / effectiveTarget) * 100);
+                    let tag = isManual ? '' : ' (অটো)';
+                    targetTextEl.innerText = `🎯 আজকের কালেকশন: ${actualCollection.toLocaleString('bn-BD')} ৳ / লক্ষ্য ${effectiveTarget.toLocaleString('bn-BD')} ৳${tag} (${pct.toLocaleString('bn-BD')}%)`;
+                    targetTextEl.style.color = pct >= 100 ? 'var(--paid)' : (pct >= 60 ? 'var(--ink-soft)' : 'var(--due)');
+                } else {
+                    targetTextEl.innerText = '🎯 আজকের কালেকশন লক্ষ্য নির্ধারণ করা হয়নি';
+                    targetTextEl.style.color = 'var(--ink-soft)';
+                }
+            }
+            // দৈনিক টার্গেট লোড হওয়ার পর উপরের গোল %-ব্যাজটাও রিফ্রেশ করে দেওয়া হয়
+            let searchDateEl = document.getElementById('searchDate');
+            if (searchDateEl && searchDateEl.value && typeof calcOverall === 'function') calcOverall();
+
+            // সার্বিক (all-time) আয়/খরচ — উপরের "বর্তমান নিট লাভ/ক্ষতি" কার্ডের জন্য, পিরিয়ড-বাটনে প্রভাবিত হয় না
+            // সার্ভিস চার্জও লাভের অংশ (লোন দেওয়ার সময় আলাদা না করে একসাথেই ধরা হয়), তাই এখানে যোগ করা হচ্ছে
+            let allTimeOtherIncome = 0, allTimeExpenses = 0, allTimeServiceCharge = 0;
+            Object.values(all).forEach(entry => {
+                if (!entry) return;
+                (entry.incomes || []).forEach(x => { allTimeOtherIncome += parseFloat(x.amount) || 0; });
+                (entry.expenses || []).forEach(x => { allTimeExpenses += parseFloat(x.amount) || 0; });
+                (entry.loans || []).forEach(l => { allTimeServiceCharge += parseFloat(l.serviceCharge) || 0; });
+            });
+            allTimeOtherIncome = roundTwo(allTimeOtherIncome + allTimeServiceCharge);
+            allTimeExpenses = roundTwo(allTimeExpenses);
+            let overallNet = roundTwo(earned + allTimeOtherIncome - allTimeExpenses);
+
+            // ব্যবসা এখন লাভে না লোকসানে চলছে — এক নজরে লাল/সবুজ ব্যানার
+            let bannerEl = document.getElementById('profitStatusBanner');
+            if (bannerEl) {
+                bannerEl.classList.toggle('profit', overallNet >= 0);
+                bannerEl.classList.toggle('loss', overallNet < 0);
+                bannerEl.innerText = overallNet >= 0
+                    ? `🟢 ব্যবসা এখন লাভে চলছে (সার্বিক নিট লাভ: +${overallNet.toLocaleString('bn-BD')} ৳)`
+                    : `🔴 ব্যবসা এখন লোকসানে চলছে (সার্বিক নিট লোকসান: −${Math.abs(overallNet).toLocaleString('bn-BD')} ৳)`;
+            }
+
+            // নির্বাচিত সময়ের (আজ/সপ্তাহ/মাস/সম্পূর্ণ) আয়/খরচ — নিচের "নির্দিষ্ট সময়ের লাভ/ক্ষতি" অংশের জন্য
+            // সার্ভিস চার্জও এই সময়ের লাভের মধ্যে যোগ করা হচ্ছে
+            let filtered = filterCashbookEntriesByRange(all, range);
+            let periodIncome = 0, periodExpenses = 0, periodServiceCharge = 0;
+            Object.values(filtered).forEach(entry => {
+                if (!entry) return;
+                (entry.incomes || []).forEach(x => { periodIncome += parseFloat(x.amount) || 0; });
+                (entry.expenses || []).forEach(x => { periodExpenses += parseFloat(x.amount) || 0; });
+                (entry.loans || []).forEach(l => { periodServiceCharge += parseFloat(l.serviceCharge) || 0; });
+            });
+            periodIncome = roundTwo(periodIncome + periodServiceCharge);
+            periodExpenses = roundTwo(periodExpenses);
+            let periodNet = roundTwo(periodEarned + periodIncome - periodExpenses);
+
+            const setMoney = (id, value) => {
+                let el = document.getElementById(id);
+                if (el) el.innerText = value.toLocaleString('bn-BD') + ' ৳';
+            };
+            setMoney('dashEarnedProfit', earned);
+            setMoney('dashPotentialProfit', potential);
+            setMoney('dashRemainingProfit', remaining);
+            setMoney('dashPeriodEarned', periodEarned);
+            setMoney('dashOtherIncome', periodIncome);
+            setMoney('dashExpenses', periodExpenses);
+
+            // মাস-বনাম-মাস তুলনা — শুধু "এই মাস" পিরিয়ড সিলেক্ট করা থাকলে দেখায়, বিদ্যমান কার্ডের নিচেই ছোট্ট লাইনে
+            let periodDeltaEl = document.getElementById('dashPeriodDelta');
+            if (periodDeltaEl) {
+                if (range === 'month') {
+                    let curMonth = selectedYearMonth || activeWorkDate.slice(0, 7);
+                    let prevMonth = getPreviousYearMonth(curMonth);
+                    let prevEarned = calcEarnedProfitForYearMonth(prevMonth);
+                    if (prevEarned > 0) {
+                        let deltaPct = roundTwo(((periodEarned - prevEarned) / prevEarned) * 100);
+                        periodDeltaEl.innerText = (deltaPct >= 0 ? '▲ ' : '▼ ') + Math.abs(deltaPct).toLocaleString('bn-BD') + '% গত মাসের তুলনায়';
+                        periodDeltaEl.style.color = deltaPct >= 0 ? 'var(--paid)' : 'var(--due)';
+                        periodDeltaEl.style.display = 'block';
+                    } else if (periodEarned > 0) {
+                        periodDeltaEl.innerText = '🆕 গত মাসে কোনো লাভের রেকর্ড ছিল না';
+                        periodDeltaEl.style.color = 'var(--paid)';
+                        periodDeltaEl.style.display = 'block';
+                    } else {
+                        periodDeltaEl.style.display = 'none';
+                    }
+                } else {
+                    periodDeltaEl.style.display = 'none';
+                }
+            }
+
+            let netEl = document.getElementById('dashNetProfit');
+            let netCard = document.getElementById('dashNetProfitCard');
+            if (netEl) {
+                netEl.innerText = (overallNet < 0 ? '−' : '+') + Math.abs(overallNet).toLocaleString('bn-BD') + ' ৳';
+            }
+            if (netCard) {
+                netCard.classList.toggle('loss', overallNet < 0);
+                let title = netCard.querySelector('h5');
+                if (title) title.innerText = overallNet < 0 ? '🔴 বর্তমান নিট ক্ষতি' : '🏆 বর্তমান নিট লাভ';
+            }
+
+            let periodNetEl = document.getElementById('dashPeriodNet');
+            let periodNetCard = document.getElementById('dashPeriodNetCard');
+            if (periodNetEl) {
+                periodNetEl.innerText = (periodNet < 0 ? '−' : '+') + Math.abs(periodNet).toLocaleString('bn-BD') + ' ৳';
+            }
+            if (periodNetCard) {
+                periodNetCard.classList.toggle('loss', periodNet < 0);
+            }
+
+            let note = document.getElementById('profitDashboardNote');
+            if (note) {
+                let avgDays = activeCustomers ? roundTwo(totalDays / activeCustomers) : 0;
+                note.innerText =
+                    `সক্রিয় গ্রাহক: ${activeCustomers.toLocaleString('bn-BD')} জন · ` +
+                    `গড় মেয়াদ অগ্রগতি: ${avgDays.toLocaleString('bn-BD')} / ১০০ কর্মদিবস · ` +
+                    `শুক্রবার বাদে। ভবিষ্যতের লাভ বর্তমান লাভে যোগ করা হয়নি।`;
+            }
+
+            let updEl = document.getElementById('profitUpdatedAt');
+            if (updEl) {
+                let now = new Date();
+                let hh = String(now.getHours()).padStart(2, '0'), mm = String(now.getMinutes()).padStart(2, '0');
+                updEl.innerText = `সর্বশেষ আপডেট: ${hh}:${mm}`;
+            }
+
+            lastProfitSummary = { ready: true, net: overallNet };
+            updateProfitToggleBtnLabel();
+        }).catch((err) => {
+            // আগে এই ত্রুটিটা সম্পূর্ণ নীরবে গিলে ফেলা হতো — তাই "ক্যাশ" (অন্যান্য আয়/খরচ ও হাতে থাকা ক্যাশ)
+            // কখনো না দেখানোর আসল কারণ (RLS পলিসি, টেবিল/কলাম নাম মিসম্যাচ ইত্যাদি) বোঝার
+            // উপায় ছিল না। এখন কনসোলে আসল এরর লগ হবে এবং ঘরগুলোতে স্পষ্ট বার্তা দেখাবে।
+            console.error('cashbook ফেচ ব্যর্থ (profit dashboard):', err);
+            const setMoney = (id, value) => {
+                let el = document.getElementById(id);
+                if (el) el.innerText = value.toLocaleString('bn-BD') + ' ৳';
+            };
+            setMoney('dashEarnedProfit', earned);
+            setMoney('dashPotentialProfit', potential);
+            setMoney('dashRemainingProfit', remaining);
+            setMoney('dashPeriodEarned', periodEarned);
+            const setErr = (id) => {
+                let el = document.getElementById(id);
+                if (el) el.innerText = '⚠️ লোড ব্যর্থ';
+            };
+            setErr('dashOtherIncome');
+            setErr('dashExpenses');
+            setErr('dashCashOnHand');
+            setErr('dashStartingCapital');
+            setErr('dashCapitalGrowth');
+            let roiElErr = document.getElementById('dashRoiPct'); if (roiElErr) roiElErr.style.display = 'none';
+            let annualRoiElErr = document.getElementById('dashAnnualRoiPct'); if (annualRoiElErr) annualRoiElErr.style.display = 'none';
+            let deltaElErr = document.getElementById('dashPeriodDelta'); if (deltaElErr) deltaElErr.style.display = 'none';
+            let targetTextElErr = document.getElementById('profitTargetText'); if (targetTextElErr) targetTextElErr.innerText = '🎯 লক্ষ্য/কালেকশন লোড ব্যর্থ';
+            let bannerEl = document.getElementById('profitStatusBanner');
+            if (bannerEl) { bannerEl.classList.remove('profit', 'loss'); bannerEl.innerText = '⚠️ লোড ব্যর্থ — নিচে বিস্তারিত দেখুন'; }
+            let note = document.getElementById('profitDashboardNote');
+            if (note) note.innerText = '⚠️ ক্যাশবুক থেকে "অন্যান্য আয়/খরচ" ও "হাতে থাকা ক্যাশ" লোড করা যায়নি। ব্রাউজারে F12 চেপে Console-এ আসল এরর মেসেজটা দেখুন (সাধারণত Firebase Realtime Database-এর Rules পারমিশন সমস্যার কারণে এমন হয়)।';
+        });
     }
 
     function updateDashboard() {
@@ -2190,6 +3448,7 @@
         document.getElementById('dashCompleteCount').innerText = completeCnt.toLocaleString('bn-BD');
         document.getElementById('defList').innerHTML = defCnt > 0 ? defHtml : `<div style="text-align:center; color:var(--paid);">সব পরিশোধ সম্পন্ন!</div>`;
         calcOverall();
+        updateProfitDashboard();
         if (document.getElementById('loanAuditBox').style.display !== 'none') renderLoanAudit();
     }
 
@@ -2239,12 +3498,44 @@
             }
         }
         document.getElementById('overallCollection').innerText = roundTwo(total).toLocaleString('bn-BD') + " ৳";
+        updateOverallTargetBadge(total, dt);
         document.getElementById('collectionListBox').innerHTML = cnt > 0 ? html : `<div style="text-align:center; color:var(--due);">এই তারিখে কোনো কালেকশন নেই</div>`;
         let dParts = dt.split('-').map(Number);
         if (dParts.length === 3 && !isNaN(dParts[0])) {
             document.getElementById('collectionDateLabel').innerText = new Date(dParts[0], dParts[1] - 1, dParts[2]).toLocaleDateString('bn-BD');
         } else {
             document.getElementById('collectionDateLabel').innerText = '';
+        }
+    }
+
+    // "মোট" (নির্বাচিত তারিখের কালেকশন) ব্যাজের পাশে গোল ব্যাজে টার্গেটের কত % আদায় হলো এবং
+    // টার্গেট কত টাকা ছিল তা দেখায়। যেকোনো তারিখের জন্যই দেখাবে (শুধু আজকের জন্য না) —
+    // প্রতিটা তারিখের জন্য তারিখ-সচেতন অটো-টার্গেট ব্যবহার হয় (নতুন গ্রাহক/লোন যোগ হলে বদলাবে),
+    // শুধু যেদিন ম্যানুয়ালি সেভ করা হয়েছিল ঠিক সেদিনই ম্যানুয়াল মানটা প্রাধান্য পাবে।
+    function updateOverallTargetBadge(total, dt) {
+        let badge = document.getElementById('overallTargetBadge');
+        let amountEl = document.getElementById('overallTargetAmount');
+        let mainBadge = document.getElementById('overallCollection');
+        if (!badge) return;
+        let target = (dailyTargetSavedDate === dt && dailyTargetValue !== null && dailyTargetValue !== undefined && dailyTargetValue > 0)
+            ? dailyTargetValue
+            : calcAutoDailyTarget(dt);
+        if (!target || target <= 0) {
+            badge.style.display = 'none';
+            if (amountEl) amountEl.style.display = 'none';
+            if (mainBadge) mainBadge.style.background = 'var(--paid)';
+            return;
+        }
+        let pct = Math.round((total / target) * 100);
+        let tierColor = pct >= 100 ? 'var(--paid)' : (pct >= 60 ? '#c07a00' : 'var(--due)');
+        badge.innerText = pct.toLocaleString('bn-BD') + '%';
+        badge.style.background = tierColor;
+        badge.title = `আদায়: ${roundTwo(total).toLocaleString('bn-BD')} ৳ / টার্গেট: ${target.toLocaleString('bn-BD')} ৳`;
+        badge.style.display = 'inline-flex';
+        if (mainBadge) mainBadge.style.background = tierColor;
+        if (amountEl) {
+            amountEl.innerText = `🎯 টার্গেট: ${target.toLocaleString('bn-BD')} ৳`;
+            amountEl.style.display = 'inline-block';
         }
     }
 
@@ -2300,7 +3591,7 @@
                     document.getElementById('cbOpening').value = (data.opening !== undefined && data.opening !== null) ? data.opening : 0;
                     document.getElementById('cbCollection').value = (data.collectionOverride !== undefined && data.collectionOverride !== null) ? data.collectionOverride : calcCollectionForDate(dt);
                     cashbookIncomes = Array.isArray(data.incomes) ? data.incomes.map(n => ({ desc: n.desc || '', amount: n.amount ?? '' })) : [];
-                    cashbookLoans = Array.isArray(data.loans) ? data.loans.map(l => ({ name: l.name || '', amount: l.amount ?? '' })) : [];
+                    cashbookLoans = Array.isArray(data.loans) ? data.loans.map(l => ({ name: l.name || '', amount: l.amount ?? '', serviceCharge: l.serviceCharge ?? '', custIndex: l.custIndex || null })) : [];
                     cashbookExpenses = Array.isArray(data.expenses) ? data.expenses.map(e => ({ desc: e.desc || '', amount: e.amount ?? '' })) : [];
                     renderCashbookRows();
                     renderCashbookTotals();
@@ -2327,8 +3618,9 @@
                 let coll = (data.collectionOverride !== undefined && data.collectionOverride !== null) ? parseFloat(data.collectionOverride) || 0 : calcCollectionForDate(prevStr);
                 let incomeTot = (data.incomes || []).reduce((s, n) => s + (parseFloat(n.amount) || 0), 0);
                 let loanTot = (data.loans || []).reduce((s, l) => s + (parseFloat(l.amount) || 0), 0);
+                let serviceChargeTot = (data.loans || []).reduce((s, l) => s + (parseFloat(l.serviceCharge) || 0), 0);
                 let expTot = (data.expenses || []).reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
-                let closing = roundTwo((parseFloat(data.opening) || 0) + coll + incomeTot - loanTot - expTot);
+                let closing = roundTwo((parseFloat(data.opening) || 0) + coll + incomeTot + serviceChargeTot - loanTot - expTot);
                 document.getElementById('cbOpening').value = closing;
                 renderCashbookTotals();
                 if (msgEl) {
@@ -2353,9 +3645,11 @@
 
         document.getElementById('cbLoanRows').innerHTML = cashbookLoans.length ? cashbookLoans.map((l, idx) => `
             <div class="cb-item-row">
-                <input type="text" placeholder="গ্রাহকের নাম" value="${(l.name || '').replace(/"/g, '&quot;')}" onfocus="reqPin(event)" oninput="updateCashbookField('loan', ${idx}, 'name', this.value)">
-                <input type="number" placeholder="টাকা" min="0" value="${l.amount || ''}" data-sanity="বিতরণকৃত লোন" onfocus="reqPin(event)" oninput="updateCashbookField('loan', ${idx}, 'amount', this.value)">
+                <input type="text" placeholder="গ্রাহকের নাম" value="${(l.name || '').replace(/"/g, '&quot;')}" onfocus="reqPin(event)" onchange="updateCashbookField('loan', ${idx}, 'name', this.value)">
+                <input type="number" placeholder="লোনের টাকা" min="0" value="${l.amount || ''}" data-sanity="বিতরণকৃত লোন" onfocus="reqPin(event)" oninput="updateCashbookField('loan', ${idx}, 'amount', this.value)">
+                <input type="number" placeholder="সার্ভিস চার্জ" min="0" value="${l.serviceCharge || ''}" data-sanity="সার্ভিস চার্জ" onfocus="reqPin(event)" oninput="updateCashbookField('loan', ${idx}, 'serviceCharge', this.value)">
                 <button class="cb-remove-btn" onclick="removeCashbookRow('loan', ${idx})">✕</button>
+                ${l.custIndex ? `<span class="cb-link-note">✅ গ্রাহক #${l.custIndex} প্রোফাইল সংযুক্ত — সেভ করলে নাম/লোন সিঙ্ক হবে</span>` : (l._touched ? `<span class="cb-link-note" style="color:var(--gold);">🆕 সেভ করলে ফাঁকা নম্বরে নতুন গ্রাহক প্রোফাইল তৈরি হবে</span>` : '')}
             </div>
         `).join('') : '<div class="cb-empty">আজ কোনো নতুন লোন দেওয়া হয়নি</div>';
 
@@ -2370,7 +3664,7 @@
 
     function addCashbookRow(type) {
         if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
-        if (type === 'loan') cashbookLoans.push({ name: '', amount: '' });
+        if (type === 'loan') cashbookLoans.push({ name: '', amount: '', serviceCharge: '', custIndex: null });
         else if (type === 'income') cashbookIncomes.push({ desc: '', amount: '' });
         else cashbookExpenses.push({ desc: '', amount: '' });
         renderCashbookRows();
@@ -2386,11 +3680,21 @@
     }
 
     function updateCashbookField(type, idx, field, val) {
-        if (field === 'amount') val = clampAmountSilent(val) || 0;
-        if (type === 'loan') cashbookLoans[idx][field] = val;
+        if (field === 'amount' || field === 'serviceCharge') val = clampAmountSilent(val) || 0;
+        if (type === 'loan') {
+            cashbookLoans[idx][field] = val;
+            // নাম ফিল্ড ইউজার নিজে হাতে লিখলে/বদলালে, আর আগে থেকে কোনো গ্রাহকের সাথে যুক্ত না থাকলে —
+            // এই সিগন্যাল রাখা হয় যাতে সেভের সময় বোঝা যায় এটার জন্য নতুন প্রোফাইল বানানো দরকার।
+            // পুরনো (আগে থেকে সেভ করা, এই সেশনে স্পর্শ করা হয়নি) এন্ট্রিগুলো এড়িয়ে যাওয়া হয়, যাতে
+            // পুরনো ডেটা আবার সেভ করলে ভুলবশত ডুপ্লিকেট গ্রাহক প্রোফাইল তৈরি না হয়।
+            if (field === 'name' && val && val.trim() && !cashbookLoans[idx].custIndex) {
+                cashbookLoans[idx]._touched = true;
+            }
+        }
         else if (type === 'income') cashbookIncomes[idx][field] = val;
         else cashbookExpenses[idx][field] = val;
         renderCashbookTotals();
+        if (type === 'loan' && field === 'name') renderCashbookRows();
     }
 
     function renderCashbookTotals() {
@@ -2398,14 +3702,27 @@
         let collection = parseFloat(document.getElementById('cbCollection').value) || 0;
         let incomeTotal = cashbookIncomes.reduce((s, n) => s + (parseFloat(n.amount) || 0), 0);
         let loanTotal = cashbookLoans.reduce((s, l) => s + (parseFloat(l.amount) || 0), 0);
+        let serviceChargeTotal = cashbookLoans.reduce((s, l) => s + (parseFloat(l.serviceCharge) || 0), 0);
         let expTotal = cashbookExpenses.reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
-        let closing = roundTwo(opening + collection + incomeTotal - loanTotal - expTotal);
+        // সার্ভিস চার্জ লাভ হিসেবে ক্যাশে যোগ হয় (লোন বিতরণের বিপরীতে আলাদাভাবে আদায় করা ধরা হচ্ছে)
+        let closing = roundTwo(opening + collection + incomeTotal + serviceChargeTotal - loanTotal - expTotal);
         document.getElementById('cbIncomeTotal').innerText = roundTwo(incomeTotal).toLocaleString('bn-BD') + " ৳";
         document.getElementById('cbLoanTotal').innerText = roundTwo(loanTotal).toLocaleString('bn-BD') + " ৳";
+        document.getElementById('cbServiceChargeTotal').innerText = roundTwo(serviceChargeTotal).toLocaleString('bn-BD') + " ৳";
         document.getElementById('cbExpenseTotal').innerText = roundTwo(expTotal).toLocaleString('bn-BD') + " ৳";
         let closingEl = document.getElementById('cbClosing');
         closingEl.innerText = closing.toLocaleString('bn-BD') + " ৳";
         closingEl.style.color = closing < 0 ? 'var(--due)' : 'var(--paid)';
+    }
+
+    // গ্রাহক তালিকায় (১-৩০০) সবচেয়ে ছোট নম্বরের ফাঁকা স্লট খুঁজে বের করে —
+    // নাম নেই, লোনও নেই, মোট দেনাও নেই — এমন স্লটকেই "ফাঁকা" ধরা হয়
+    function findNextEmptyCustSlot() {
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d || (!((d.name || '').trim()) && !(parseFloat(d.loan) || 0) && !(parseFloat(d.total) || 0))) return i;
+        }
+        return null;
     }
 
     function saveCashbook() {
@@ -2419,26 +3736,68 @@
             .map(n => ({ desc: (n.desc || '').trim(), amount: parseFloat(n.amount) || 0 }))
             .filter(n => n.desc || n.amount > 0);
         let cleanLoans = cashbookLoans
-            .map(l => ({ name: (l.name || '').trim(), amount: parseFloat(l.amount) || 0 }))
-            .filter(l => l.name || l.amount > 0);
+            .map(l => ({ name: (l.name || '').trim(), amount: parseFloat(l.amount) || 0, serviceCharge: parseFloat(l.serviceCharge) || 0, custIndex: l.custIndex || null, _touched: l._touched || false }))
+            .filter(l => l.name || l.amount > 0 || l.serviceCharge > 0);
         let cleanExpenses = cashbookExpenses
             .map(e => ({ desc: (e.desc || '').trim(), amount: parseFloat(e.amount) || 0 }))
             .filter(e => e.desc || e.amount > 0);
+
+        // নাম আছে এমন প্রতিটা লোন-এন্ট্রির জন্য গ্রাহক প্রোফাইল অটো তৈরি/সিঙ্ক করা হয় —
+        // আগে থেকে সংযুক্ত থাকলে (custIndex) সেই গ্রাহকের নাম/লোন আপডেট হয়, নতুন করে তৈরি হয় না।
+        // পুরনো (এই সেশনে স্পর্শ না করা) এন্ট্রি বাদ যায়, যাতে পুরনো ডেটা রিসেভ করলে ডুপ্লিকেট প্রোফাইল না বনে।
+        let custWritePromises = [];
+        let newCustCount = 0;
+        cleanLoans.forEach(l => {
+            if (!l.name) return;
+            let idx = l.custIndex;
+            let isNewSlot = false;
+            if (!idx || !db[idx]) {
+                if (!l._touched) return; // পুরনো, অস্পর্শিত এন্ট্রি — এড়িয়ে যাওয়া হচ্ছে
+                idx = findNextEmptyCustSlot();
+                if (!idx) return; // সবগুলো স্লট (১-৩০০) ভর্তি
+                isNewSlot = true;
+            }
+            let existing = db[idx] || {};
+            let rate = (parseFloat(existing.rate) || 0) || 20;
+            let tot = l.amount > 0 ? roundTwo(l.amount + (l.amount * (rate / 100))) : (parseFloat(existing.total) || '');
+            let kRate = tot !== '' ? roundTwo(tot / 100) : (existing.kistiRate || '');
+            let newData = Object.assign({}, existing, {
+                name: l.name,
+                loan: l.amount,
+                rate: rate,
+                loanDate: existing.loanDate || dt,
+                total: tot,
+                kistiRate: kRate,
+                sonchoyRate: existing.sonchoyRate !== undefined && existing.sonchoyRate !== '' ? existing.sonchoyRate : 0,
+                cycle: existing.cycle || 1,
+                rows: existing.rows || {}
+            });
+            db[idx] = newData;
+            l.custIndex = idx;
+            delete l._touched;
+            if (isNewSlot) newCustCount++;
+            custWritePromises.push(firebase.database().ref(currentFund + '_data').child(idx).set(newData));
+        });
+
         let data = {
             opening: opening,
             collectionOverride: collectionVal,
             incomes: cleanIncomes,
-            loans: cleanLoans,
+            loans: cleanLoans.map(l => ({ name: l.name, amount: l.amount, serviceCharge: l.serviceCharge, custIndex: l.custIndex || null })),
             expenses: cleanExpenses
         };
-        firebase.database().ref(currentFund + '_cashbook').child(dt).set(data).then(() => {
+        Promise.all(custWritePromises).then(() => {
+            return firebase.database().ref(currentFund + '_cashbook').child(dt).set(data);
+        }).then(() => {
             cashbookIncomes = cleanIncomes;
             cashbookLoans = cleanLoans;
             cashbookExpenses = cleanExpenses;
             renderCashbookRows();
+            renderCashbookTotals();
+            scheduleDropdownUpdate();
             msgEl.style.color = 'var(--paid)';
-            msgEl.innerText = '✅ ক্যাশ হিসাব সেভ হয়েছে!';
-            setTimeout(() => { if (msgEl.innerText.includes('সেভ হয়েছে')) msgEl.innerText = ''; }, 3000);
+            msgEl.innerText = '✅ ক্যাশ হিসাব সেভ হয়েছে!' + (newCustCount ? ` (${newCustCount.toLocaleString('bn-BD')} জন নতুন গ্রাহকের প্রোফাইল অটো তৈরি হয়েছে)` : '');
+            setTimeout(() => { if (msgEl.innerText.includes('সেভ হয়েছে')) msgEl.innerText = ''; }, 4000);
             loadMonthlySummary();
         }).catch(() => {
             msgEl.style.color = 'var(--due)';
@@ -2460,14 +3819,17 @@
                 box.innerHTML = '<div class="cb-empty">এই মাসে কোনো ক্যাশ বই এন্ট্রি নেই</div>';
                 return;
             }
-            let totalCollection = 0, totalIncome = 0, totalLoans = 0, totalExpenses = 0;
+            let totalCollection = 0, totalIncome = 0, totalLoans = 0, totalServiceCharge = 0, totalExpenses = 0;
             let expenseItems = [];
             dates.forEach(dt => {
                 let entry = all[dt] || {};
                 let coll = (entry.collectionOverride !== undefined && entry.collectionOverride !== null) ? (parseFloat(entry.collectionOverride) || 0) : calcCollectionForDate(dt);
                 totalCollection = roundTwo(totalCollection + coll);
                 (entry.incomes || []).forEach(n => { totalIncome = roundTwo(totalIncome + (parseFloat(n.amount) || 0)); });
-                (entry.loans || []).forEach(l => { totalLoans = roundTwo(totalLoans + (parseFloat(l.amount) || 0)); });
+                (entry.loans || []).forEach(l => {
+                    totalLoans = roundTwo(totalLoans + (parseFloat(l.amount) || 0));
+                    totalServiceCharge = roundTwo(totalServiceCharge + (parseFloat(l.serviceCharge) || 0));
+                });
                 (entry.expenses || []).forEach(e => {
                     let amt = parseFloat(e.amount) || 0;
                     totalExpenses = roundTwo(totalExpenses + amt);
@@ -2479,8 +3841,9 @@
             let lastColl = (lastEntry.collectionOverride !== undefined && lastEntry.collectionOverride !== null) ? (parseFloat(lastEntry.collectionOverride) || 0) : calcCollectionForDate(lastDate);
             let lastIncomeTot = (lastEntry.incomes || []).reduce((s, n) => s + (parseFloat(n.amount) || 0), 0);
             let lastLoanTot = (lastEntry.loans || []).reduce((s, l) => s + (parseFloat(l.amount) || 0), 0);
+            let lastServiceChargeTot = (lastEntry.loans || []).reduce((s, l) => s + (parseFloat(l.serviceCharge) || 0), 0);
             let lastExpTot = (lastEntry.expenses || []).reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
-            let monthClosing = roundTwo((parseFloat(lastEntry.opening) || 0) + lastColl + lastIncomeTot - lastLoanTot - lastExpTot);
+            let monthClosing = roundTwo((parseFloat(lastEntry.opening) || 0) + lastColl + lastIncomeTot + lastServiceChargeTot - lastLoanTot - lastExpTot);
 
             let itemsHtml = expenseItems.length ? expenseItems.map(it => {
                 let dParts = it.date.split('-').map(Number);
@@ -2493,6 +3856,7 @@
                     <div class="dash-card"><h5>মোট কালেকশন</h5><div class="dash-val">${totalCollection.toLocaleString('bn-BD')} ৳</div></div>
                     <div class="dash-card"><h5>মোট আয়/লাভ</h5><div class="dash-val" style="color:var(--paid);">${totalIncome.toLocaleString('bn-BD')} ৳</div></div>
                     <div class="dash-card"><h5>মোট লোন প্রদান</h5><div class="dash-val" style="color:var(--gold);">${totalLoans.toLocaleString('bn-BD')} ৳</div></div>
+                    <div class="dash-card"><h5>মোট সার্ভিস চার্জ</h5><div class="dash-val" style="color:var(--paid);">${totalServiceCharge.toLocaleString('bn-BD')} ৳</div></div>
                     <div class="dash-card"><h5>মোট খরচ</h5><div class="dash-val" style="color:var(--due);">${totalExpenses.toLocaleString('bn-BD')} ৳</div></div>
                     <div class="dash-card"><h5>শেষ এন্ট্রি অনুযায়ী ক্যাশ ব্যালেন্স</h5><div class="dash-val">${monthClosing.toLocaleString('bn-BD')} ৳</div></div>
                 </div>
@@ -2514,6 +3878,33 @@
         if (id === 'weekContainer' && el.style.display === 'block') genWeekly();
         if (id === 'cashbookContainer' && el.style.display === 'block') openCashbookPanel();
     }
+    // মোবাইলে লাভ/ক্ষতি ড্যাশবোর্ড বাটনের ভেতরে থাকে (ডিফল্ট বন্ধ); পিসিতে এই ফাংশনের
+    // প্রভাব নেই কারণ CSS মিডিয়া-কোয়েরি ৭৬৮px-এর উপরে বাটন লুকিয়ে রাখে ও ড্যাশবোর্ড সবসময় খোলা রাখে।
+    function toggleProfitDashboard() {
+        let el = document.getElementById('profitDashboard');
+        if (!el) return;
+        let isOpening = !el.classList.contains('profit-open');
+        el.classList.toggle('profit-open', isOpening);
+        updateProfitToggleBtnLabel();
+    }
+
+    // মোবাইল বাটনের লেখায় নিট লাভ/ক্ষতির সংখ্যাটা এক নজরে দেখানো হয়, যাতে না খুলেও বোঝা যায়।
+    function updateProfitToggleBtnLabel() {
+        let btn = document.getElementById('profitToggleBtn');
+        let el = document.getElementById('profitDashboard');
+        if (!btn || !el) return;
+        let isOpen = el.classList.contains('profit-open');
+        if (!lastProfitSummary.ready) {
+            btn.textContent = isOpen ? '💹 লাভ/ক্ষতি ড্যাশবোর্ড লুকান' : '💹 লাভ/ক্ষতি ড্যাশবোর্ড দেখুন';
+            return;
+        }
+        let net = lastProfitSummary.net;
+        let netStr = (net < 0 ? '−' : '+') + Math.abs(net).toLocaleString('bn-BD') + ' ৳';
+        btn.textContent = isOpen
+            ? `💹 লুকান (নিট: ${netStr})`
+            : `💹 নিট লাভ/ক্ষতি: ${netStr} — বিস্তারিত দেখুন`;
+    }
+
 
     function genWeekly() {
         let today = new Date();
@@ -2790,11 +4181,86 @@
         }).length;
     }
 
+    // ==========================================
+    // মোট অপরিশোধিত সঞ্চয়ের দায় (Sonchoy Liability)
+    // ------------------------------------------------
+    // প্রতিটি গ্রাহকের sonchoyRate × যত পূর্ণ কিস্তি দিয়েছে = তার জমা সঞ্চয়
+    // (আংশিক কিস্তির ক্ষেত্রে সঞ্চয়/কিস্তির অনুপাত অনুযায়ী ভাগ করা হয়)
+    // এই টাকাটা সংস্থার লাভ না — গ্রাহকের প্রাপ্য, তাই "প্রকৃত নীট লাভ"
+    // বের করতে ক্যাশ-প্রবৃদ্ধি থেকে এটা বাদ দিতে হবে।
+    // ==========================================
+    function calcTotalSonchoyLiability() {
+        let total = 0;
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d) continue;
+            let kr = parseFloat(d.kistiRate) || 0;
+            let sr = parseFloat(d.sonchoyRate) || 0;
+            if (sr <= 0) continue;
+            if (d.rows && typeof d.rows === 'object') {
+                for (let r of Object.values(d.rows)) {
+                    if (!r) continue;
+                    let noVal = parseFloat(r.no) || 0;
+                    let partialVal = parseFloat(r.partial) || 0;
+                    if (noVal > 0) {
+                        total += sr * noVal;
+                    } else if (partialVal > 0 && (kr + sr) > 0) {
+                        // আংশিক কিস্তি হলে, কিস্তি ও সঞ্চয়ের অনুপাত অনুযায়ী ভাগ
+                        total += partialVal * (sr / (kr + sr));
+                    }
+                }
+            }
+        }
+        return roundTwo(total);
+    }
+
+    // ==========================================
+    // বাজারে বকেয়া থাকা মূল লোনের (আসল/principal) মোট পরিমাণ
+    // ------------------------------------------------
+    // লোন দেওয়ার সময় ক্যাশ কমে যায়, কিন্তু সেই টাকা হারিয়ে যায় না —
+    // গ্রাহকের কাছে সম্পদ (receivable) হিসেবে থেকে যায়। তাই শুধু
+    // "হাতে থাকা ক্যাশ" দিয়ে প্রবৃদ্ধি/লাভ হিসাব করলে এই সম্পদটা বাদ পড়ে যায়
+    // এবং মূলধন/লাভ ভুলভাবে মাইনাস দেখাতে পারে।
+    //
+    // প্রতিটি গ্রাহকের ক্ষেত্রে:
+    //   অবশিষ্ট (loan+profit) = total − কিস্তি-অংশের জমা (সঞ্চয় বাদে)
+    //   অবশিষ্ট আসল = অবশিষ্ট (loan+profit) × (loan / total)   [আসল ও লাভের একই অনুপাত বজায় রেখে]
+    // ==========================================
+    function calcTotalMarketPrincipalOutstanding() {
+        let total = 0;
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d) continue;
+            let loan = parseFloat(d.loan) || 0;
+            let tot = parseFloat(d.total) || 0;
+            if (loan <= 0 || tot <= 0) continue;
+            let kr = parseFloat(d.kistiRate) || 0;
+            let sr = parseFloat(d.sonchoyRate) || 0;
+            let kistiPaidOnly = 0;
+            if (d.rows && typeof d.rows === 'object') {
+                for (let r of Object.values(d.rows)) {
+                    if (!r) continue;
+                    let noVal = parseFloat(r.no) || 0;
+                    let partialVal = parseFloat(r.partial) || 0;
+                    if (noVal > 0) {
+                        kistiPaidOnly += kr * noVal;
+                    } else if (partialVal > 0) {
+                        kistiPaidOnly += (kr + sr) > 0 ? partialVal * (kr / (kr + sr)) : partialVal;
+                    }
+                }
+            }
+            let remainingTotal = Math.max(0, roundTwo(tot - kistiPaidOnly));
+            let principalOutstanding = remainingTotal * (loan / tot);
+            total += principalOutstanding;
+        }
+        return roundTwo(total);
+    }
+
     function importBackup(e) {
-        if (!unlocked) { alert("\u0986\u0997\u09c7 \u0986\u09a8\u09b2\u0995 \u0995\u09b0\u09c1\u09a8!"); e.target.value = ''; return; }
+        if (!unlocked) { alert("আগে আনলক করুন!"); e.target.value = ''; return; }
         let file = e.target.files[0];
         if (!file) return;
-        if (!confirm("\u26a0\ufe0f \u098f\u099f\u09bf \u09ac\u09b0\u09cd\u09a4\u09ae\u09be\u09a8 \u09ab\u09be\u09a8\u09cd\u09a1\u099f\u09bf\u09b0 \u09b8\u09ac \u09a1\u09c7\u099f\u09be (\u0997\u09cd\u09b0\u09be\u09b9\u0995 \u09b9\u09bf\u09b8\u09be\u09ac \u0993 \u0995\u09cd\u09af\u09be\u09b6 \u09ac\u0987 \u0989\u09ad\u09df\u0987) \u09ae\u09c1\u099b\u09c7 \u09aa\u09c1\u09b0\u09a8\u09cb \u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa \u09a6\u09bf\u09df\u09c7 \u09aa\u09cd\u09b0\u09a4\u09bf\u09b8\u09cd\u09a5\u09be\u09aa\u09a8 \u0995\u09b0\u09ac\u09c7\u0964 \u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0\u09c7\u09b0 \u0986\u0997\u09c7 \u09ac\u09b0\u09cd\u09a4\u09ae\u09be\u09a8 \u09a1\u09c7\u099f\u09be\u09b0 \u098f\u0995\u099f\u09be \u09b8\u09c7\u09ab\u099f\u09bf-\u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa \u09b8\u09cd\u09ac\u09df\u0982\u0995\u09cd\u09b0\u09bf\u09df\u09ad\u09be\u09ac\u09c7 \u09a8\u09c7\u0993\u09df\u09be \u09b9\u09ac\u09c7\u0964 \u0986\u09aa\u09a8\u09bf \u0995\u09bf \u09a8\u09bf\u09b6\u09cd\u099a\u09bf\u09a4?")) {
+        if (!confirm("⚠️ এটি বর্তমান ফান্ডটির সব ডেটা (গ্রাহক হিসাব ও ক্যাশ বই উভয়ই) মুছে পুরনো ব্যাকআপ দিয়ে প্রতিস্থাপন করবে। রিস্টোরের আগে বর্তমান ডেটার একটা সেফটি-ব্যাকআপ স্বয়ংক্রিয়ভাবে নেওয়া হবে। আপনি কি নিশ্চিত?")) {
             e.target.value = '';
             return;
         }
@@ -2804,10 +4270,24 @@
         let restoreDbRef = currentDbRef;
         let restoreCashbookRef = firebase.database().ref(restoreFund + '_cashbook');
 
-        restoreCashbookRef.once('value').then(cbSnap => {
-            let currentCashbook = cbSnap.val() || {};
-            return currentBackupRef.child(safetyKey).set({ customers: db, cashbook: currentCashbook });
-        }).then(() => {
+        function downloadLocalSafetyCopy(customersSnapshot, cashbookSnapshot) {
+            try {
+                let blob = new Blob([JSON.stringify({ customers: customersSnapshot, cashbook: cashbookSnapshot }, null, 2)], { type: 'application/json' });
+                let url = URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = `safety-${safetyKey}.json`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 2000);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        function proceedWithRestore() {
             let reader = new FileReader();
             reader.onload = function(evt) {
                 try {
@@ -2823,12 +4303,12 @@
                     let curCount = countRealCustomers(db);
 
                     if (newCount === 0) {
-                        if (!confirm(`\u26a0\ufe0f \u09ac\u09dc \u09b8\u09a4\u09b0\u09cd\u0995\u09a4\u09be: \u098f\u0987 \u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa \u09ab\u09be\u0987\u09b2\u09c7 \u0995\u09cb\u09a8\u09cb \u09ac\u09be\u09b8\u09cd\u09a4\u09ac \u0997\u09cd\u09b0\u09be\u09b9\u0995 \u09a1\u09c7\u099f\u09be \u09aa\u09be\u0993\u09df\u09be \u09af\u09be\u09df\u09a8\u09bf (\u09e6 \u099c\u09a8)! \u09ac\u09b0\u09cd\u09a4\u09ae\u09be\u09a8\u09c7 "${restoreFund}"-\u098f \u09b8\u0995\u09cd\u09b0\u09bf\u09df \u0986\u099b\u09c7 ${curCount} \u099c\u09a8 \u0997\u09cd\u09b0\u09be\u09b9\u0995\u09c7\u09b0 \u09a4\u09a5\u09cd\u09af\u0964 \u098f\u0987 \u0996\u09be\u09b2\u09bf \u09ab\u09be\u0987\u09b2 \u09a6\u09bf\u09df\u09c7 \u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0 \u0995\u09b0\u09b2\u09c7 \u09ac\u09b0\u09cd\u09a4\u09ae\u09be\u09a8 \u09b8\u09ac \u09a1\u09c7\u099f\u09be \u09ae\u09c1\u099b\u09c7 \u09af\u09be\u09ac\u09c7\u0964 \u09ab\u09be\u0987\u09b2\u099f\u09be \u09b8\u09a0\u09bf\u0995 \u0995\u09bf\u09a8\u09be \u0986\u09ac\u09be\u09b0 \u09af\u09be\u099a\u09be\u0987 \u0995\u09b0\u09c1\u09a8\u0964 \u09a4\u09ac\u09c1\u0993 \u0995\u09bf \u098f\u0997\u09bf\u09df\u09c7 \u09af\u09c7\u09a4\u09c7 \u099a\u09be\u09a8?`)) {
+                        if (!confirm(`⚠️ বড় সতর্কতা: এই ব্যাকআপ ফাইলে কোনো বাস্তব গ্রাহক ডেটা পাওয়া যায়নি (০ জন)! বর্তমানে "${restoreFund}"-এ সক্রিয় আছে ${curCount} জন গ্রাহকের তথ্য। এই খালি ফাইল দিয়ে রিস্টোর করলে বর্তমান সব ডেটা মুছে যাবে। ফাইলটা সঠিক কিনা আবার যাচাই করুন। তবুও কি এগিয়ে যেতে চান?`)) {
                             e.target.value = '';
                             return;
                         }
                     } else if (curCount > 0 && newCount < curCount * 0.5) {
-                        if (!confirm(`\u26a0\ufe0f \u098f\u0987 \u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa \u09ab\u09be\u0987\u09b2\u09c7 \u09ae\u09be\u09a4\u09cd\u09b0 ${newCount} \u099c\u09a8 \u0997\u09cd\u09b0\u09be\u09b9\u0995\u09c7\u09b0 \u09a4\u09a5\u09cd\u09af \u0986\u099b\u09c7, \u0995\u09bf\u09a8\u09cd\u09a4\u09c1 \u09ac\u09b0\u09cd\u09a4\u09ae\u09be\u09a8\u09c7 "${restoreFund}"-\u098f \u09b8\u0995\u09cd\u09b0\u09bf\u09df \u0986\u099b\u09c7 ${curCount} \u099c\u09a8\u0964 \u098f\u099f\u09be \u0995\u09bf \u09b8\u09a0\u09bf\u0995/\u09b8\u09be\u09ae\u09cd\u09aa\u09cd\u09b0\u09a4\u09bf\u0995 \u09ab\u09be\u0987\u09b2? \u098f\u0997\u09bf\u09df\u09c7 \u0997\u09c7\u09b2\u09c7 \u09ac\u09b0\u09cd\u09a4\u09ae\u09be\u09a8 ${curCount} \u099c\u09a8\u09c7\u09b0 \u09a4\u09a5\u09cd\u09af \u098f\u0987 ${newCount} \u099c\u09a8 \u09a6\u09bf\u09df\u09c7 \u09aa\u09cd\u09b0\u09a4\u09bf\u09b8\u09cd\u09a5\u09be\u09aa\u09bf\u09a4 \u09b9\u09df\u09c7 \u09af\u09be\u09ac\u09c7\u0964 \u0986\u09aa\u09a8\u09bf \u0995\u09bf \u09a8\u09bf\u09b6\u09cd\u099a\u09bf\u09a4?`)) {
+                        if (!confirm(`⚠️ এই ব্যাকআপ ফাইলে মাত্র ${newCount} জন গ্রাহকের তথ্য আছে, কিন্তু বর্তমানে "${restoreFund}"-এ সক্রিয় আছে ${curCount} জন। এটা কি সঠিক/সাম্প্রতিক ফাইল? এগিয়ে গেলে বর্তমান ${curCount} জনের তথ্য এই ${newCount} জন দিয়ে প্রতিস্থাপিত হয়ে যাবে। আপনি কি নিশ্চিত?`)) {
                             e.target.value = '';
                             return;
                         }
@@ -2840,19 +4320,37 @@
                         }
                     }).then(() => {
                         let cashbookNote = cashbookRestoreData !== null
-                            ? " \u0995\u09cd\u09af\u09be\u09b6 \u09ac\u0987\u09df\u09c7\u09b0 \u09b9\u09bf\u09b8\u09be\u09ac\u0993 \u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0 \u09b9\u09df\u09c7\u099b\u09c7\u0964"
-                            : " (\u098f\u0987 \u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa\u09c7 \u0995\u09cd\u09af\u09be\u09b6 \u09ac\u0987 \u099b\u09bf\u09b2 \u09a8\u09be, \u09a4\u09be\u0987 \u0995\u09cd\u09af\u09be\u09b6 \u09ac\u0987 \u0985\u09aa\u09b0\u09bf\u09ac\u09b0\u09cd\u09a4\u09bf\u09a4 \u0986\u099b\u09c7\u0964)";
-                        alert(`\u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0 \u09b8\u09ab\u09b2! (${newCount} \u099c\u09a8 \u0997\u09cd\u09b0\u09be\u09b9\u0995\u09c7\u09b0 \u09a4\u09a5\u09cd\u09af \u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0 \u09b9\u09df\u09c7\u099b\u09c7\u0964${cashbookNote} \u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0\u09c7\u09b0 \u0986\u0997\u09c7\u09b0 \u09a1\u09c7\u099f\u09be "${safetyKey}" \u09a8\u09be\u09ae\u09c7 \u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa\u09c7 \u09b8\u0982\u09b0\u0995\u09cd\u09b7\u09bf\u09a4 \u09b9\u09df\u09c7\u099b\u09c7)`);
-                    }).catch(() => alert("\u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0 \u09ac\u09cd\u09af\u09b0\u09cd\u09a5 \u09b9\u09df\u09c7\u099b\u09c7!"));
+                            ? " ক্যাশ বইয়ের হিসাবও রিস্টোর হয়েছে।"
+                            : " (এই ব্যাকআপে ক্যাশ বই ছিল না, তাই ক্যাশ বই অপরিবর্তিত আছে।)";
+                        alert(`রিস্টোর সফল! (${newCount} জন গ্রাহকের তথ্য রিস্টোর হয়েছে।${cashbookNote} রিস্টোরের আগের ডেটা "${safetyKey}" নামে ব্যাকআপে সংরক্ষিত হয়েছে)`);
+                    }).catch(() => alert("রিস্টোর ব্যর্থ হয়েছে!"));
                 } catch (err) {
-                    alert("\u09ab\u09be\u0987\u09b2\u099f\u09bf \u09b8\u0983\u09a0\u09bf\u0995 \u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa \u09ab\u09b0\u09ae\u09cd\u09af\u09be\u099f\u09c7 \u09a8\u09c7\u0987!");
+                    alert("ফাইলটি সঠিক ব্যাকআপ ফরম্যাটে নেই!");
                 }
             };
             reader.readAsText(file);
+        }
+
+        restoreCashbookRef.once('value').then(cbSnap => {
+            let currentCashbook = cbSnap.val() || {};
+            return currentBackupRef.child(safetyKey).set({ customers: db, cashbook: currentCashbook }).then(() => {
+                proceedWithRestore();
+            }).catch(() => {
+                // ক্লাউডে সেফটি-ব্যাকআপ সেভ করা যায়নি (যেমন backup_date কলামের টাইপ সমস্যা) —
+                // তাই রিস্টোর আটকে না রেখে ডিভাইসেই একটা সেফটি-কপি ডাউনলোড করে দেওয়া হচ্ছে, তারপর রিস্টোর চালিয়ে যাওয়া হচ্ছে।
+                let localOk = downloadLocalSafetyCopy(db, currentCashbook);
+                if (localOk) {
+                    alert("⚠️ ক্লাউডে সেফটি-ব্যাকআপ সেভ করা যায়নি (সম্ভবত ডাটাবেজ সেটআপে সমস্যা — app_backups টেবিলের backup_date কলামের টাইপ চেক করুন), তাই একটা সেফটি-কপি আপনার ডিভাইসে ডাউনলোড করা হলো (safety-" + safetyKey + ".json)। এখন রিস্টোর চালিয়ে যাওয়া হচ্ছে...");
+                    proceedWithRestore();
+                } else {
+                    alert("সেফটি-ব্যাকআপ নিতে ব্যর্থ হয়েছে (ক্লাউড ও লোকাল দুই জায়গাতেই), তাই রিস্টোর বাতিল করা হলো।");
+                    e.target.value = '';
+                }
+            });
         }).catch(() => {
-            alert("\u09b8\u09c7\u09ab\u099f\u09bf-\u09ac\u09cd\u09af\u09be\u0995\u0986\u09aa \u09a8\u09bf\u09a4\u09c7 \u09ac\u09cd\u09af\u09b0\u09cd\u09a5 \u09b9\u09df\u09c7\u099b\u09c7, \u09a4\u09be\u0987 \u09b0\u09bf\u09b8\u09cd\u099f\u09cb\u09b0 \u09ac\u09be\u09a4\u09bf\u09b2 \u0995\u09b0\u09be \u09b9\u09b2\u09cb\u0964");
+            alert("বর্তমান ক্যাশবুক পড়তে ব্যর্থ হয়েছে, তাই রিস্টোর বাতিল করা হলো।");
+            e.target.value = '';
         });
-        e.target.value = '';
     }
 
     function flushAllPending() {
