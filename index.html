@@ -291,6 +291,17 @@
         @keyframes cpShine { 0% { left: -60%; } 55% { left: 130%; } 100% { left: 130%; } }
         @keyframes cpBlink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.72); } }
         @media (prefers-reduced-motion: reduce) { .cp-row.active::after, .cp-row.active .cp-glow-dot { animation: none; } }
+
+        /* --- তালিকায় কুইক কল/হোয়াটসঅ্যাপ আইকন --- */
+        .cp-quick-actions { display: flex; gap: 6px; margin-left: auto; flex-shrink: 0; position: relative; z-index: 2; }
+        .cp-quick-btn {
+            width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-size: 14px;
+            flex-shrink: 0; padding: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+        }
+        .cp-quick-call { background: #1976d2; }
+        .cp-quick-wa { background: #25D366; }
+        .cp-row.active .cp-quick-btn { box-shadow: 0 1px 6px rgba(0,0,0,0.35); }
         .voice-search-btn { min-height: 44px; min-width: 44px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--card); font-size: 18px; cursor: pointer; flex-shrink: 0; }
         .voice-search-btn.listening { background: #c0392b; border-color: #c0392b; animation: micPulse 1s infinite; }
         @keyframes micPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -378,18 +389,16 @@
         .collection-toggle-btn { background-color: var(--info); color: white; border: none; padding: 11px 8px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600; flex: 1; min-height: 44px; }
         .cashbook-toggle-btn { background-color: var(--gold); color: white; border: none; padding: 11px 8px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600; flex: 1; min-height: 44px; }
 
-        /* ---- লাভ ড্যাশবোর্ড: মোবাইলে বাটনের ভেতরে, পিসিতে সবসময় খোলা ---- */
-        .profit-toggle-btn { display: none; }
-        @media (max-width: 768px) {
-            .profit-toggle-btn {
-                display: flex; align-items: center; justify-content: center; gap: 6px;
-                width: 100%; background-color: var(--paid); color: #fff; border: none;
-                padding: 12px 10px; border-radius: 8px; font-size: 13.5px; font-weight: 700;
-                cursor: pointer; min-height: 46px; margin-bottom: 8px;
-            }
-            #profitDashboard { display: none; margin-top: 0 !important; }
-            #profitDashboard.profit-open { display: block; margin-top: 8px !important; }
+        /* ---- লাভ ড্যাশবোর্ড: এখন মোবাইল ও পিসি উভয় জায়গাতেই ড্রপডাউন/টগল বাটনের ভেতরে থাকে
+           (ডিফল্ট বন্ধ), যাতে হিসাব করার সময় স্ক্রিনে হিজিবিজি না লাগে। ---- */
+        .profit-toggle-btn {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            width: 100%; background-color: var(--paid); color: #fff; border: none;
+            padding: 12px 10px; border-radius: 8px; font-size: 13.5px; font-weight: 700;
+            cursor: pointer; min-height: 46px; margin-bottom: 8px;
         }
+        #profitDashboard { display: none; margin-top: 0 !important; }
+        #profitDashboard.profit-open { display: block; margin-top: 8px !important; }
 
         /* ---- ক্যাশ বই ---- */
         .cashbook-box { background: var(--card); border: 1.5px solid var(--gold); border-radius: 8px; padding: 12px; }
@@ -400,7 +409,21 @@
         .cb-item-row input[type="text"] { flex: 2; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13px; min-height: 40px; background: var(--paper); color: var(--ink); min-width: 110px; }
         .cb-item-row input[type="number"] { flex: 1; padding: 8px; border: 1.5px solid var(--line); border-radius: 6px; font-size: 13px; text-align: right; min-height: 40px; background: var(--paper); color: var(--ink); min-width: 90px; }
         .cb-item-row .cb-link-note { flex-basis: 100%; font-size: 11px; color: var(--paid); font-weight: 700; }
+        .cb-item-row .cb-link-suggest-btn { flex-basis: 100%; font-size: 11.5px; font-weight: 700; color: #7a4a00; background: #fff3cf; border: 1px solid #e0b84a; border-radius: 8px; padding: 6px 10px; text-align: left; cursor: pointer; margin-top: 2px; }
+        .cb-item-row .cb-link-suggest-btn:active { background: #ffe6a3; }
         .cb-remove-btn { background: var(--due-soft); color: var(--due); border: 1.5px solid var(--due); border-radius: 6px; width: 36px; height: 36px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+        .cb-partial-toggle { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--due); background: var(--due-soft); padding: 7px 10px; border-radius: 6px; border: 1.5px solid var(--due); cursor: pointer; flex-shrink: 0; white-space: nowrap; user-select: none; }
+        .cb-partial-toggle input { width: 16px; height: 16px; cursor: pointer; margin: 0; accent-color: var(--due); }
+        .cb-partial-note { flex-basis: 100%; font-size: 11px; color: var(--due); font-weight: 700; }
+        .undo-toast {
+            position: fixed; top: 10px; left: 50%; transform: translateX(-50%) translateY(-14px);
+            background: var(--deep); color: #fff; padding: 12px 20px; border-radius: 10px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.32); font-size: 13.5px; font-weight: 700;
+            z-index: 10000; max-width: 92%; text-align: center; cursor: pointer;
+            opacity: 0; visibility: hidden; transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .undo-toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .undo-toast.redo-toast { background: var(--plum); }
         .cb-add-btn { background: var(--paper-2); color: var(--deep); border: 1.5px dashed var(--deep); border-radius: 6px; padding: 8px 12px; font-size: 12.5px; font-weight: 700; cursor: pointer; width: 100%; min-height: 40px; }
         .cb-empty { text-align: center; color: var(--ink-soft); font-size: 12px; padding: 6px 0; }
         .cashbook-summary { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--ink-soft); display: flex; flex-direction: column; gap: 5px; }
@@ -557,6 +580,8 @@
     })();
 </script>
 
+<div id="undoToast" class="undo-toast" onclick="hideUndoToast()"></div>
+
 <div id="pinOverlay">
     <div class="pin-card">
         <h3>🔐 পিন কোড দিন</h3>
@@ -689,7 +714,6 @@
         <span>🌙 আজকের কাজের তারিখ:</span>
         <input type="date" id="workDateInput" class="input-date" style="width:140px;" onchange="activeWorkDate=this.value; if (typeof updateProfitDashboard === 'function') updateProfitDashboard();">
         <button type="button" class="tool-btn" style="padding:6px 10px; min-height:36px; font-size:12px; background:var(--gold);" onclick="setTodayWorkDate()" title="আজকের তারিখ সেট করুন">আজ</button>
-        <span id="saveStatus" style="color: var(--paid); font-weight: bold; background: var(--paid-soft); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--paid);">✅ সংরক্ষিত</span>
     </div>
 
     <span id="syncStatus" class="status-badge">🔄 ফায়ারবেস কানেক্ট হচ্ছে...</span>
@@ -861,7 +885,10 @@
             <div class="cashbook-box">
                 <div class="cashbook-row">
                     <label>তারিখ:</label>
+                    <button type="button" class="tool-btn" style="padding:6px 10px; min-height:38px; font-size:14px;" onclick="shiftCashbookDate(-1)" title="আগের দিন">❮</button>
                     <input type="date" id="cashbookDate" class="input-date" style="width:140px;" onfocus="reqPin(event)" onchange="loadCashbook()">
+                    <button type="button" class="tool-btn" style="padding:6px 10px; min-height:38px; font-size:14px;" onclick="shiftCashbookDate(1)" title="পরের দিন">❯</button>
+                    <button type="button" class="tool-btn" style="padding:6px 10px; min-height:38px; font-size:12px; background:var(--gold);" onclick="jumpCashbookToday()" title="আজকের তারিখ">আজ</button>
                 </div>
                 <div class="cashbook-row">
                     <span>🔵 প্রারম্ভিক ব্যালেন্স (আগের দিনের ক্যাশ):</span>
@@ -910,10 +937,13 @@
     <div class="cust-header">
         <div class="cust-main-bar">
             <button class="nav-btn" onclick="changePage(-1)">❮ পূর্ববর্তী</button>
+            <button class="nav-btn" id="undoBtn" style="font-size:13px; padding:8px 10px;" onclick="undo()" disabled title="সর্বশেষ কিস্তি-এন্ট্রি/স্কিপ ফিরিয়ে আনুন">↩️ Undo</button>
+            <button class="nav-btn" id="redoBtn" style="font-size:13px; padding:8px 10px;" onclick="redo()" disabled title="Undo করা এন্ট্রি আবার প্রয়োগ করুন">↪️ Redo</button>
             <div class="cust-name-wrapper">
                 <span class="cust-installment-badge" id="custInstallmentBadge" style="display:none;" title="প্রতি কিস্তিতে (কিস্তি + সঞ্চয়) মোট কত টাকা">৳ ০ / কিস্তি</span>
                 <span id="completeBadge" class="complete-badge" style="display:none;">✅ সম্পন্ন</span>
                 <span id="skipBadge" class="cycle-badge" style="display:none; background: var(--due-soft); color: var(--due); border-color: var(--due);">⏭️ আজ স্কিপ করা হয়েছে</span>
+                <span id="partialLoanBadge" class="cycle-badge" style="display:none; background: var(--due-soft); color: var(--due); border-color: var(--due);" title="ক্যাশবইয়ে এই গ্রাহকের লোন এখনো আংশিক দেখানো হয়েছে — বাকি টাকা দেওয়ার সময় 'আংশিক' টিক আনচেক রেখে সেভ করলে এটা সরে যাবে">🟡 আংশিক লোন বিতরণ</span>
                 <span class="customer-name-badge">
                     <span class="cnb-ring" id="custProgressRing">
                         <span class="cnb-ring-inner" id="custProgressPct">0%</span>
@@ -932,6 +962,7 @@
                 </span>
                 <span class="paid-flash-tick" id="paidFlashTick">✅</span>
             </div>
+            <button class="nav-btn" style="background: var(--paid);" onclick="oneClickKisti()">✅ এক-ক্লিকে কিস্তি জমা</button>
             <button class="nav-btn" style="background: var(--due);" onclick="skipToday()">⏭️ আজ স্কিপ</button>
             <button class="nav-btn" id="fugitiveBtn" style="background:#7a1f1f; font-size:11px; padding:6px 9px;" onclick="toggleFugitive()">🚩 পলাতক চিহ্নিত করুন</button>
             <button class="nav-btn" style="font-size:18px; padding:14px 26px; font-weight:800;" onclick="changePage(1)">পরবর্তী ❯</button>
@@ -964,6 +995,7 @@
         </div>
         <div class="partial-summary-box">
             <span id="pMoney">আংশিক মোট: ০ ৳</span>
+            <span id="saveStatus" style="color: var(--paid); font-weight: bold; background: var(--paid-soft); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--paid); white-space:nowrap;">✅ সংরক্ষিত</span>
             <span class="collection-date-inline">
                 <label style="font-size:11px;">তারিখ কালেকশন:</label>
                 <input type="date" id="searchDate" class="input-date" style="width:130px;" onchange="calcOverall()">
@@ -1288,14 +1320,16 @@
             let address = d.address || '-';
             let due = roundTwo((parseFloat(d.total) || 0) - calcPaidAmount(d));
             let tagVal = (d.tag || '').replace(/"/g, '&quot;');
-            html += `<div class="overdue-item" style="border-left-color:${tier.barColor};" onclick="if(!event.target.closest('.overdue-tag-input')){document.getElementById('overdueOverlay').style.display='none'; jump(${i});}">
+            let quickActions = buildQuickActionsHtml(d.phone);
+            html += `<div class="overdue-item" style="border-left-color:${tier.barColor};" onclick="if(!event.target.closest('.overdue-tag-input') && !event.target.closest('.cp-quick-btn')){document.getElementById('overdueOverlay').style.display='none'; jump(${i});}">
                 <div class="od-top">
                     <div class="od-name">👤 #${i} - ${name}</div>
                     <div class="od-days" style="background:${tier.badgeBg}; color:${tier.badgeColor};">${tier.label} · ${days.toLocaleString('bn-BD')} কর্মদিবস বন্ধ</div>
                 </div>
-                <div class="od-meta">
-                    📞 ${phone} &nbsp;|&nbsp; 🏠 ${address}<br>
-                    📅 শেষ কিস্তি/লোনের তারিখ: ${lastDate || '-'} &nbsp;|&nbsp; 💰 বাকি: ${Math.max(0, due).toLocaleString('bn-BD')} ৳
+                <div class="od-meta" style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
+                    <span>📞 ${phone} &nbsp;|&nbsp; 🏠 ${address}<br>
+                    📅 শেষ কিস্তি/লোনের তারিখ: ${lastDate || '-'} &nbsp;|&nbsp; 💰 বাকি: ${Math.max(0, due).toLocaleString('bn-BD')} ৳</span>
+                    ${quickActions}
                 </div>
                 <input type="text" class="overdue-tag-input" placeholder="🏷️ নোট/ট্যাগ লিখুন (যেমন: সমস্যাযুক্ত, পলাতক, বাড়িতে নেই...)" value="${tagVal}" onchange="setCustomerTag(${i}, this.value)">
             </div>`;
@@ -1397,14 +1431,16 @@
             let due = Math.max(0, roundTwo((parseFloat(d.total) || 0) - calcPaidAmount(d)));
             totalDue = roundTwo(totalDue + due);
             let lastDate = getLastActivityDate(d) || '-';
-            html += `<div class="overdue-item" onclick="if(!event.target.closest('.fugitive-unmark-btn')){document.getElementById('fugitiveOverlay').style.display='none'; jump(${i});}">
+            let quickActions = buildQuickActionsHtml(d.phone);
+            html += `<div class="overdue-item" onclick="if(!event.target.closest('.fugitive-unmark-btn') && !event.target.closest('.cp-quick-btn')){document.getElementById('fugitiveOverlay').style.display='none'; jump(${i});}">
                 <div class="od-top">
                     <div class="od-name">👤 #${i} - ${name}</div>
                     <div class="od-days">📅 শেষ কার্যকলাপ: ${lastDate}</div>
                 </div>
-                <div class="od-meta">
-                    📞 ${phone} &nbsp;|&nbsp; 🏠 ${address}<br>
-                    💰 বাকি: ${due.toLocaleString('bn-BD')} ৳
+                <div class="od-meta" style="display:flex; align-items:center; flex-wrap:wrap; gap:4px;">
+                    <span>📞 ${phone} &nbsp;|&nbsp; 🏠 ${address}<br>
+                    💰 বাকি: ${due.toLocaleString('bn-BD')} ৳</span>
+                    ${quickActions}
                 </div>
                 <button type="button" class="fugitive-unmark-btn tool-btn" style="margin-top:7px; width:100%; background: var(--paid);" onclick="unmarkFugitiveFromList(${i})">✅ পলাতক তালিকা থেকে বাদ দিন (ফিরে এসেছে/কিস্তি দিয়েছে)</button>
             </div>`;
@@ -1446,38 +1482,114 @@
     let syncSettleTimer = null;
 
     // ============================================================
-    // ডাউনলোড ব্যান্ডউইথ অপটিমাইজেশন: cashbook/starting-capital/start-date/
-    // daily-target — এই ৪টা প্রতিবার updateProfitDashboard() চলার সময়
-    // (যা প্রতিটা এডিটের পর ৩৫০ms ডিবাউন্স হয়ে ট্রিগার হয়) আলাদাভাবে
-    // .once('value') দিয়ে নতুন করে ডাউনলোড হতো। এখন ফান্ড লোড হওয়ার
-    // সময় একবারই .on('value') লাইভ লিসেনার বসানো হয় — তারপর থেকে শুধু
-    // আসল পরিবর্তন হলেই (অন্য ডিভাইস থেকে বা নিজের সেভ থেকে) নতুন ডেটা
-    // আসে, বাকি সময় লোকাল ক্যাশ থেকেই কাজ চলে — বারবার নেটওয়ার্ক
-    // রিকোয়েস্ট যায় না।
-    let cachedCashbookSnap = null;
+    // Undo/Redo: কিস্তি এন্ট্রি বা "আজ স্কিপ" ভুল করে বসে গেলে ফিরিয়ে আনার জন্য।
+    // প্রতিটা এন্ট্রির আগে সেই গ্রাহকের সম্পূর্ণ ডেটার একটা কপি (snapshot) রাখা হয়,
+    // undo চাপলে সেই কপি ফিরিয়ে আনা হয় এবং সেই গ্রাহকের পেজে নিয়ে যাওয়া হয়
+    // (যদি ইতিমধ্যে অন্য পেজে চলে যাওয়া হয়ে থাকে, যেমন অটো-নেক্সটের পর)।
+    let undoStack = [];
+    let redoStack = [];
+    const MAX_UNDO_STACK = 30;
+
+    function snapshotCustomer(c) {
+        return db[c] ? JSON.parse(JSON.stringify(db[c])) : null;
+    }
+
+    function pushUndoSnapshot(c, label) {
+        undoStack.push({ fund: currentFund, cust: c, data: snapshotCustomer(c), label: label || 'একটা পরিবর্তন' });
+        if (undoStack.length > MAX_UNDO_STACK) undoStack.shift();
+        redoStack = [];
+        updateUndoRedoButtons();
+    }
+
+    function updateUndoRedoButtons() {
+        let uBtn = document.getElementById('undoBtn');
+        let rBtn = document.getElementById('redoBtn');
+        if (uBtn) uBtn.disabled = (undoStack.length === 0);
+        if (rBtn) rBtn.disabled = (redoStack.length === 0);
+    }
+
+    // Undo/Redo চাপলে ঠিক কী ফিরিয়ে আনা হলো/আবার প্রয়োগ হলো সেটা স্পষ্টভাবে জানানোর জন্য
+    // একটা টোস্ট মেসেজ দেখানো হয় — যাতে ভুলবশত ক্লিক পড়ে গেলে সেটা নীরবে চলে না যায়,
+    // ব্যবহারকারী সাথে সাথে বুঝতে পারেন কী বদলালো এবং প্রয়োজনে আবার চাপ দিয়ে ঠিক করতে পারেন।
+    let undoToastTimer = null;
+    function showUndoToast(message, isRedo) {
+        let el = document.getElementById('undoToast');
+        if (!el) return;
+        el.innerText = message + ' (আবার চাপলে টোস্টটা বন্ধ হবে)';
+        el.classList.toggle('redo-toast', !!isRedo);
+        el.classList.add('show');
+        if (undoToastTimer) clearTimeout(undoToastTimer);
+        undoToastTimer = setTimeout(hideUndoToast, 5000);
+    }
+    function hideUndoToast() {
+        let el = document.getElementById('undoToast');
+        if (el) el.classList.remove('show');
+        if (undoToastTimer) { clearTimeout(undoToastTimer); undoToastTimer = null; }
+    }
+
+    function undo() {
+        if (undoStack.length === 0) return;
+        let entry = undoStack.pop();
+        if (entry.fund !== currentFund) {
+            alert('⚠️ এই এন্ট্রিটা অন্য ফান্ডের ("' + entry.fund + '") — Undo করতে হলে আগে সেই ফান্ডে যান।');
+            undoStack.push(entry); // ফেরত রাখা হলো, ফান্ড পাল্টে আবার Undo চাপলে কাজ করবে
+            return;
+        }
+        redoStack.push({ fund: entry.fund, cust: entry.cust, data: snapshotCustomer(entry.cust), label: entry.label });
+        db[entry.cust] = entry.data;
+        if (cur !== entry.cust) loadPage(entry.cust); else renderRows(entry.cust);
+        scheduleDashboardUpdate();
+        autoSave();
+        updateUndoRedoButtons();
+        let custName = (entry.data && entry.data.name) || `গ্রাহক-${entry.cust}`;
+        showUndoToast(`↩️ Undo হয়েছে: ${entry.label} — গ্রাহক #${entry.cust} (${custName})`, false);
+    }
+
+    function redo() {
+        if (redoStack.length === 0) return;
+        let entry = redoStack.pop();
+        if (entry.fund !== currentFund) {
+            alert('⚠️ এই এন্ট্রিটা অন্য ফান্ডের ("' + entry.fund + '") — Redo করতে হলে আগে সেই ফান্ডে যান।');
+            redoStack.push(entry);
+            return;
+        }
+        undoStack.push({ fund: entry.fund, cust: entry.cust, data: snapshotCustomer(entry.cust), label: entry.label });
+        db[entry.cust] = entry.data;
+        if (cur !== entry.cust) loadPage(entry.cust); else renderRows(entry.cust);
+        scheduleDashboardUpdate();
+        autoSave();
+        updateUndoRedoButtons();
+        let custName = (entry.data && entry.data.name) || `গ্রাহক-${entry.cust}`;
+        showUndoToast(`↪️ Redo হয়েছে: ${entry.label} — গ্রাহক #${entry.cust} (${custName})`, true);
+    }
+
+    // ============================================================
+    // ডাউনলোড ব্যান্ডউইথ অপটিমাইজেশন: starting-capital/start-date/daily-target —
+    // এই ৩টা ছোট, একক মান — ফান্ড লোড হওয়ার সময় একবারই .on('value') লাইভ
+    // লিসেনার বসিয়ে ক্যাশে রাখা হয়, বারবার .once() দিয়ে আনতে হয় না।
+    // (cashbook ইচ্ছাকৃতভাবে এখানে লাইভ-লিসেন করা হয় না — cashbook বড়/ঘনঘন
+    // পরিবর্তনশীল হওয়ায় স্থায়ী 'value' লিসেনার প্রতিটা এন্ট্রি পরিবর্তনে পুরো
+    // অবজেক্ট আবার ডাউনলোড করাতো, যা কানেকশন ধীর করছিল ও রিয়েলটাইম
+    // ডাটাবেজে বাড়তি চাপ ফেলছিল — তাই সেটা আগের মতো প্রয়োজন-ভিত্তিক once()-এই রাখা হয়েছে।)
     let cachedCapitalSnap = null;
     let cachedStartDateSnap = null;
     let cachedTargetSnap = null;
-    let fundSettingsRefs = { cashbook: null, capital: null, startDate: null, target: null };
+    let fundSettingsRefs = { capital: null, startDate: null, target: null };
 
     function initFundSettingsSync() {
         // আগের ফান্ডের লিসেনার বন্ধ করা এবং ক্যাশ রিসেট (নতুন ফান্ড না লোড হওয়া পর্যন্ত
         // পুরনো ফান্ডের সংখ্যা দিয়ে ভুল হিসাব দেখানো এড়াতে)
-        if (fundSettingsRefs.cashbook) fundSettingsRefs.cashbook.off('value');
         if (fundSettingsRefs.capital) fundSettingsRefs.capital.off('value');
         if (fundSettingsRefs.startDate) fundSettingsRefs.startDate.off('value');
         if (fundSettingsRefs.target) fundSettingsRefs.target.off('value');
-        cachedCashbookSnap = null;
         cachedCapitalSnap = null;
         cachedStartDateSnap = null;
         cachedTargetSnap = null;
 
-        fundSettingsRefs.cashbook = firebase.database().ref(currentFund + '_cashbook');
         fundSettingsRefs.capital = firebase.database().ref('app_settings/' + currentFund + '_starting_capital');
         fundSettingsRefs.startDate = firebase.database().ref('app_settings/' + currentFund + '_start_date');
         fundSettingsRefs.target = firebase.database().ref('app_settings/' + currentFund + '_daily_target');
 
-        fundSettingsRefs.cashbook.on('value', snap => { cachedCashbookSnap = snap; scheduleDashboardUpdate(); });
         fundSettingsRefs.capital.on('value', snap => { cachedCapitalSnap = snap; scheduleDashboardUpdate(); });
         fundSettingsRefs.startDate.on('value', snap => { cachedStartDateSnap = snap; scheduleDashboardUpdate(); });
         fundSettingsRefs.target.on('value', snap => { cachedTargetSnap = snap; scheduleDashboardUpdate(); });
@@ -1579,6 +1691,30 @@
         window.open("https://wa.me/" + cleanP, '_blank');
     }
 
+    // ---- তালিকার (কাস্টমার লিস্ট/বকেয়া/পলাতক) ভেতরে দেখানো কুইক কল/হোয়াটসঅ্যাপ আইকন ----
+    // এগুলো পেজ না খুলেই সরাসরি নম্বরে কল/হোয়াটসঅ্যাপ চালু করে।
+    function buildQuickActionsHtml(phone) {
+        phone = (phone || '').trim();
+        if (!phone) return '';
+        let safe = phone.replace(/'/g, '');
+        return `<span class="cp-quick-actions">
+            <button type="button" class="cp-quick-btn cp-quick-call" title="কল করুন" onclick="event.stopPropagation(); quickCall('${safe}')">📞</button>
+            <button type="button" class="cp-quick-btn cp-quick-wa" title="হোয়াটসঅ্যাপ" onclick="event.stopPropagation(); quickWhatsapp('${safe}')">💬</button>
+        </span>`;
+    }
+
+    function quickCall(phone) {
+        if (!phone) { alert("এই গ্রাহকের মোবাইল নম্বর দেওয়া নেই!"); return; }
+        window.location.href = "tel:" + phone;
+    }
+
+    function quickWhatsapp(phone) {
+        if (!phone) { alert("এই গ্রাহকের মোবাইল নম্বর দেওয়া নেই!"); return; }
+        let cleanP = phone.replace(/[^0-9]/g, '');
+        if (cleanP.startsWith('0')) cleanP = '88' + cleanP;
+        window.open("https://wa.me/" + cleanP, '_blank');
+    }
+
     // আগে এই ফাংশনটা "fire-and-forget" ছিল — সেভ ফেইল করলেও (নেটওয়ার্ক সমস্যা, RLS ইত্যাদি)
     // কোনো Promise/এরর ফেরত না দেওয়ায় caller (changePage/switchFund) সেটা টেরই পেত না,
     // আর তারপরই db রিসেট/নেভিগেট হয়ে গেলে ডেটা চিরতরে হারিয়ে যেত। এখন এটা একটা Promise ফেরত দেয়
@@ -1614,6 +1750,9 @@
             return;
         }
         currentFund = fundKey;
+        undoStack = [];
+        redoStack = [];
+        updateUndoRedoButtons();
         document.getElementById('fundTitleDisplay').innerText = "৩০০ জন গ্রাহকের হিসাব (" + selectEl.options[selectEl.selectedIndex].text + ")";
         cur = 1;
         forceReloadOnSnapshot = true;
@@ -1920,16 +2059,18 @@
         let cycle = (d.cycle || 1) > 1 ? `<span class="cp-tag">সাইকেল ${(d.cycle || 1).toLocaleString('bn-BD')}</span>` : '';
         let tag = (d.tag && d.tag.trim()) ? `<span class="cp-tag" style="background: var(--plum-soft); color: var(--plum);">🏷️ ${d.tag.trim()}</span>` : '';
         let fugitive = d.fugitive ? `<span class="cp-tag" style="background:#4a1010; color:#ff8a80;">🚩 পলাতক</span>` : '';
+        let partialLoan = d.loanPartial ? `<span class="cp-tag" style="background: var(--due-soft); color: var(--due);">🟡 আংশিক লোন</span>` : '';
         let sub = (d.address ? d.address : '') + phoneStr;
         let dot = isActive ? '<span class="cp-glow-dot"></span>' : '';
-        return `<div class="cp-row${isActive ? ' active' : ''}${d.fugitive ? ' fugitive' : ''}" data-i="${i}" onclick="pickCust(${i})">
+        let quickActions = buildQuickActionsHtml(d.phone);
+        return `<div class="cp-row${isActive ? ' active' : ''}${d.fugitive ? ' fugitive' : ''}" data-i="${i}" onclick="if(!event.target.closest('.cp-quick-btn')) pickCust(${i})">
             <span class="cp-avatar">${avatar}</span>
             <span class="cp-num-badge">${mark}গ্রাহক #${i}</span>
             <span class="cp-info">
                 <span class="cp-name">${name}</span>
                 ${sub ? `<span class="cp-sub">${sub}</span>` : ''}
             </span>
-            ${dot}${cycle}${tag}${fugitive}
+            ${dot}${cycle}${tag}${partialLoan}${fugitive}${quickActions}
         </div>`;
     }
 
@@ -2125,10 +2266,11 @@
         }
     }
 
-    // এখন async — পাতা পাল্টানোর আগে বর্তমান গ্রাহকের সেভ সত্যিই সফল হয়েছে কিনা নিশ্চিত হয়ে
-    // তারপর নেভিগেট করে। এটা বিশেষভাবে জরুরি কিস্তি তোলার পর অটো-নেক্সট-পেজ ফিচারের জন্য —
-    // আগে সেভ ব্যর্থ হলেও নিঃশব্দে পরের গ্রাহকের পাতায় চলে যেত।
-    async function changePage(d) {
+    // এখন নেভিগেশন সেভ শেষ হওয়ার অপেক্ষা করে না — সাথে সাথে পরের পাতায় চলে যায় (ফাস্ট),
+    // আর সেভটা ব্যাকগ্রাউন্ডে চলতে থাকে। ব্যর্থ হলে (যেমন ইন্টারনেট না থাকলে) নিচে
+    // সতর্কবার্তা দেখানো হবে, কোন গ্রাহকের ডেটা আটকেছে তা জানিয়ে — কিন্তু ততক্ষণে
+    // পরের গ্রাহকের পাতায় চলে যাওয়া নিয়ে অপেক্ষা করাবে না।
+    function changePage(d) {
         let n = cur + d;
         // পলাতক হিসেবে চিহ্নিত গ্রাহক এবং নাম-এন্ট্রি-না-থাকা খালি স্লট — দুটোই এড়িয়ে পরের/আগেরজনে চলে যাওয়া
         let steps = 0;
@@ -2137,17 +2279,14 @@
             steps++;
         }
         if (n >= 1 && n <= 300) {
-            try {
-                await flushCurrentCustSave();
-            } catch (err) {
+            let savingCustNo = cur;
+            let savingCustName = (db[cur] && db[cur].name) || ('গ্রাহক #' + cur);
+            flushCurrentCustSave().catch((err) => {
                 alert(
-                    '⚠️ বর্তমান গ্রাহকের তথ্য ফায়ারবেসে সেভ করা যায়নি (ইন্টারনেট চেক করুন)!\n\n' +
-                    'ডেটা হারিয়ে যাওয়া ঠেকাতে পাতা পাল্টানো বাতিল করা হলো — একই পাতায় থাকা হলো। আবার চেষ্টা করুন।\n\nএরর: ' + ((err && err.message) || 'অজানা')
+                    '⚠️ "' + savingCustName + '" (#' + savingCustNo + ')-এর তথ্য ফায়ারবেসে সেভ করা যায়নি (ইন্টারনেট চেক করুন)!\n\n' +
+                    'ইন্টারনেট ঠিক হলে ' + savingCustNo + ' নম্বর গ্রাহকের পাতায় গিয়ে একবার এডিট করে সেভ নিশ্চিত করুন।\n\nএরর: ' + ((err && err.message) || 'অজানা')
                 );
-                let s = document.getElementById('saveStatus');
-                if (s) { s.innerText = "⚠️ ফেইল্ড ঠিক করুন"; s.style.color = "#a23c26"; s.style.borderColor = "#a23c26"; }
-                return;
-            }
+            });
             loadPage(n);
             if (d === 1) autoFocusNextPaymentRow(n);
         }
@@ -2160,9 +2299,47 @@
         }
         if (!db[cur]) db[cur] = {};
         if (!db[cur].skippedDates) db[cur].skippedDates = {};
+        pushUndoSnapshot(cur, `⏭️ আজ (${activeWorkDate}) স্কিপ করা`);
         db[cur].skippedDates[activeWorkDate] = true;
         autoSave();
         changePage(1);
+    }
+
+    // এক-ক্লিকে আজকের কিস্তি জমা করা — ম্যানুয়ালি সারি খুঁজে তারিখ/সংখ্যা টাইপ করার ঝামেলা ছাড়াই,
+    // এক ক্লিকেই পরবর্তী ফাঁকা সারিতে ১টা কিস্তি (আজকের তারিখে) জমা করে দেয়।
+    function oneClickKisti() {
+        if (!unlocked) {
+            document.getElementById('pinOverlay').style.display = 'flex';
+            return;
+        }
+        let d = db[cur];
+        if (!d) return;
+
+        let alreadyDoneToday = !!(d.skippedDates && d.skippedDates[activeWorkDate]);
+        if (!alreadyDoneToday && d.rows) {
+            for (let i = 1; i <= 100; i++) {
+                let r = d.rows[i];
+                if (r && r.date === activeWorkDate) { alreadyDoneToday = true; break; }
+            }
+        }
+        if (alreadyDoneToday) {
+            alert(`আজ (${activeWorkDate}) এই গ্রাহকের কিস্তি ইতিমধ্যে জমা/স্কিপ করা হয়েছে!`);
+            return;
+        }
+
+        let targetRow = null;
+        for (let i = 1; i <= 100; i++) {
+            let r = d.rows?.[i];
+            let noVal = r ? (parseFloat(r.no) || 0) : 0;
+            let partialVal = r ? (parseFloat(r.partial) || 0) : 0;
+            if (noVal <= 0 && partialVal <= 0) { targetRow = i; break; }
+        }
+        if (!targetRow) {
+            alert("কোনো ফাঁকা কিস্তি সারি পাওয়া যায়নি! (হয়তো সব সারি পূরণ হয়ে গেছে)");
+            return;
+        }
+
+        updateRow(cur, targetRow, 'no', 1);
     }
 
     function autoFocusNextPaymentRow(c) {
@@ -2243,6 +2420,9 @@
         
         let skipBadge = document.getElementById('skipBadge');
         skipBadge.style.display = (d.skippedDates && d.skippedDates[activeWorkDate]) ? 'inline-block' : 'none';
+
+        let partialLoanBadge = document.getElementById('partialLoanBadge');
+        if (partialLoanBadge) partialLoanBadge.style.display = d.loanPartial ? 'inline-block' : 'none';
 
         let tagBadge = document.getElementById('tagBadge');
         if (d.tag && d.tag.trim()) {
@@ -2446,6 +2626,7 @@
         d.kistiRate = '';
         d.sonchoyRate = '';
         d.rows = {};
+        d.loanPartial = false; // নতুন সাইকেল শুরু হলে আগের সাইকেলের "আংশিক বিতরণ" ফ্ল্যাগ আর প্রাসঙ্গিক না
 
         currentDbRef.child(cur).set(d).then(() => {
             document.getElementById('newCycleOverlay').style.display = 'none';
@@ -2519,6 +2700,9 @@
         if (!db[c]) db[c] = {};
         if (!db[c].rows) db[c].rows = {};
         if (!db[c].rows[i]) db[c].rows[i] = { date: '', no: '', partial: '' };
+
+        let rowFieldLabel = f === 'date' ? 'তারিখ' : (f === 'no' ? 'পেমেন্ট সংখ্যা' : 'আংশিক পেমেন্ট');
+        pushUndoSnapshot(c, `কিস্তি সারি #${i} এর "${rowFieldLabel}" এন্ট্রি`);
 
         if (f === 'no' || f === 'partial') {
             v = sanitizeAmount(v, f === 'no' ? 'পেমেন্ট সংখ্যা' : 'আংশিক পেমেন্ট');
@@ -3098,11 +3282,13 @@
             }
         }
 
-        // Cashbook-এর অতিরিক্ত আয় ও খরচ, এবং প্রারম্ভিক মূলধন — লাইভ-সিঙ্কড লোকাল ক্যাশ থেকে নেওয়া হয়
-        // (initFundSettingsSync দেখুন) — প্রতিবার নতুন করে ডাউনলোড করতে হয় না।
+        // Cashbook-এর অতিরিক্ত আয় ও খরচ — প্রয়োজন-ভিত্তিক ভাবে আনা হয় (লাইভ লিসেন করা হয় না,
+        // কারণ cashbook ঘনঘন/বড় আকারে পরিবর্তন হতে পারে)। মূলধন/শুরুর তারিখ/দৈনিক লক্ষ্য —
+        // এই ৩টা ছোট মান লাইভ-সিঙ্কড ক্যাশ (initFundSettingsSync দেখুন) থেকে নেওয়া হয়।
         // Loan disbursement এখানে expense/profit নয়—এটি মূলধন হিসেবে আলাদা থাকে।
-        if (!cachedCashbookSnap || !cachedCapitalSnap || !cachedStartDateSnap || !cachedTargetSnap) return; // প্রথমবার ফান্ড লোড হওয়ার সময় এখনো ক্যাশ প্রস্তুত হয়নি
-        Promise.resolve([cachedCashbookSnap, cachedCapitalSnap, cachedStartDateSnap, cachedTargetSnap]).then(([snap, capSnap, startDateSnap, targetSnap]) => {
+        if (!cachedCapitalSnap || !cachedStartDateSnap || !cachedTargetSnap) return; // প্রথমবার ফান্ড লোড হওয়ার সময় এখনো সেটিংস-ক্যাশ প্রস্তুত হয়নি
+        let cashbookPromise = firebase.database().ref(currentFund + '_cashbook').once('value');
+        Promise.all([cashbookPromise, Promise.resolve(cachedCapitalSnap), Promise.resolve(cachedStartDateSnap), Promise.resolve(cachedTargetSnap)]).then(([snap, capSnap, startDateSnap, targetSnap]) => {
             if (currentFund !== (document.getElementById('fundSelect')?.value || currentFund)) return;
             let all = snap.val() || {};
 
@@ -3591,7 +3777,7 @@
                     document.getElementById('cbOpening').value = (data.opening !== undefined && data.opening !== null) ? data.opening : 0;
                     document.getElementById('cbCollection').value = (data.collectionOverride !== undefined && data.collectionOverride !== null) ? data.collectionOverride : calcCollectionForDate(dt);
                     cashbookIncomes = Array.isArray(data.incomes) ? data.incomes.map(n => ({ desc: n.desc || '', amount: n.amount ?? '' })) : [];
-                    cashbookLoans = Array.isArray(data.loans) ? data.loans.map(l => ({ name: l.name || '', amount: l.amount ?? '', serviceCharge: l.serviceCharge ?? '', custIndex: l.custIndex || null })) : [];
+                    cashbookLoans = Array.isArray(data.loans) ? data.loans.map(l => ({ name: l.name || '', amount: l.amount ?? '', serviceCharge: l.serviceCharge ?? '', custIndex: l.custIndex || null, partial: l.partial || false })) : [];
                     cashbookExpenses = Array.isArray(data.expenses) ? data.expenses.map(e => ({ desc: e.desc || '', amount: e.amount ?? '' })) : [];
                     renderCashbookRows();
                     renderCashbookTotals();
@@ -3605,6 +3791,32 @@
     function dEl_stillSameDate(dt) {
         let dEl = document.getElementById('cashbookDate');
         return dEl && dEl.value === dt;
+    }
+
+    // ক্যাশবই-এর তারিখ ইনপুটে বার বার ক্যালেন্ডার খুলে তারিখ বাছাই না করে
+    // ❮ / ❯ চেপে সরাসরি আগের/পরের দিনে যাওয়ার জন্য। স্ট্রিং থেকে তারিখ বানানোর সময়
+    // local Date কনস্ট্রাক্টর ব্যবহার করা হচ্ছে (নতুন Date('YYYY-MM-DD') না) — তা না হলে
+    // কিছু টাইমজোনে UTC পার্সিং-এর কারণে একদিন এদিক-ওদিক হয়ে যেতে পারে।
+    function shiftCashbookDate(delta) {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        let dEl = document.getElementById('cashbookDate');
+        let cur = dEl.value;
+        let base;
+        if (cur) {
+            let parts = cur.split('-');
+            base = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        } else {
+            base = new Date();
+        }
+        base.setDate(base.getDate() + delta);
+        dEl.value = localDateStr(base);
+        loadCashbook();
+    }
+
+    function jumpCashbookToday() {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        document.getElementById('cashbookDate').value = localDateStr();
+        loadCashbook();
     }
 
     function suggestOpeningBalance(dt) {
@@ -3634,6 +3846,38 @@
         }).catch(() => {});
     }
 
+    // একই নামে আগে থেকে থাকা গ্রাহক খোঁজা — শুধু তাদেরই বিবেচনা করা হয় যাদের এখনো
+    // কোনো কিস্তি/আংশিক জমা শুরু হয়নি (অর্থাৎ লোন এখনো "চলমান বিতরণ" পর্যায়ে আছে,
+    // ধাপে ধাপে ক্যাশের অভাবে আংশিক-আংশিক দেওয়া হচ্ছে) — যাতে ইতিমধ্যে চলমান
+    // (কিস্তি শুরু হয়ে যাওয়া) কোনো পুরনো গ্রাহকের সাথে ভুলবশত মিশে না যায়।
+    function findPossibleLoanTopupMatches(name) {
+        let target = (name || '').trim().toLowerCase();
+        if (!target) return [];
+        let matches = [];
+        for (let i = 1; i <= 300; i++) {
+            let d = db[i];
+            if (!d || !d.name || d.fugitive) continue;
+            if ((d.name || '').trim().toLowerCase() !== target) continue;
+            let hasStartedPaying = d.rows && Object.values(d.rows).some(r => r && (r.date || (parseFloat(r.no) || 0) > 0 || (parseFloat(r.partial) || 0) > 0));
+            if (hasStartedPaying) continue;
+            matches.push(i);
+        }
+        return matches;
+    }
+
+    // ক্যাশবই-এ নাম লেখা লোন-এন্ট্রিকে আগে থেকে থাকা কোনো (এখনো কিস্তি শুরু হয়নি এমন) গ্রাহকের
+    // সাথে যুক্ত করে দেয় — নতুন প্রোফাইল না বানিয়ে সেভের সময় সেই গ্রাহকের লোনের সাথে টাকাটা
+    // যোগ হবে (টপ-আপ), যেমন আজ ১৫,০০০ + গতকালের ১৫,০০০ = ৩০,০০০।
+    function linkCashbookLoanToExisting(loanRowIdx, custIdx) {
+        if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
+        cashbookLoans[loanRowIdx].custIndex = custIdx;
+        cashbookLoans[loanRowIdx]._topUp = true;
+        delete cashbookLoans[loanRowIdx]._touched;
+        delete cashbookLoans[loanRowIdx]._matches;
+        renderCashbookRows();
+        renderCashbookTotals();
+    }
+
     function renderCashbookRows() {
         document.getElementById('cbIncomeRows').innerHTML = cashbookIncomes.length ? cashbookIncomes.map((n, idx) => `
             <div class="cb-item-row">
@@ -3648,8 +3892,15 @@
                 <input type="text" placeholder="গ্রাহকের নাম" value="${(l.name || '').replace(/"/g, '&quot;')}" onfocus="reqPin(event)" onchange="updateCashbookField('loan', ${idx}, 'name', this.value)">
                 <input type="number" placeholder="লোনের টাকা" min="0" value="${l.amount || ''}" data-sanity="বিতরণকৃত লোন" onfocus="reqPin(event)" oninput="updateCashbookField('loan', ${idx}, 'amount', this.value)">
                 <input type="number" placeholder="সার্ভিস চার্জ" min="0" value="${l.serviceCharge || ''}" data-sanity="সার্ভিস চার্জ" onfocus="reqPin(event)" oninput="updateCashbookField('loan', ${idx}, 'serviceCharge', this.value)">
+                <label class="cb-partial-toggle" title="এই লোনটা আজ পুরোপুরি না দিয়ে আংশিক দেওয়া হচ্ছে — বাকিটা পরে দেওয়া হবে">
+                    <input type="checkbox" ${l.partial ? 'checked' : ''} onchange="toggleCashbookLoanPartial(${idx}, this.checked, this)">
+                    🟡 আংশিক
+                </label>
                 <button class="cb-remove-btn" onclick="removeCashbookRow('loan', ${idx})">✕</button>
-                ${l.custIndex ? `<span class="cb-link-note">✅ গ্রাহক #${l.custIndex} প্রোফাইল সংযুক্ত — সেভ করলে নাম/লোন সিঙ্ক হবে</span>` : (l._touched ? `<span class="cb-link-note" style="color:var(--gold);">🆕 সেভ করলে ফাঁকা নম্বরে নতুন গ্রাহক প্রোফাইল তৈরি হবে</span>` : '')}
+                ${l.custIndex ? `<span class="cb-link-note">✅ গ্রাহক #${l.custIndex} প্রোফাইল সংযুক্ত — সেভ করলে ${l._topUp ? 'আগের অসম্পূর্ণ লোনের সাথে এই টাকা যোগ হবে (টপ-আপ)' : 'নাম/লোন সিঙ্ক হবে'}</span>`
+                  : (l._matches && l._matches.length ? l._matches.map(mi => `<button type="button" class="cb-link-suggest-btn" onclick="linkCashbookLoanToExisting(${idx}, ${mi})">🔗 "${(db[mi].name || '').replace(/"/g, '&quot;')}" (#${mi}) নামে আগে থেকেই একজন গ্রাহক আছে যার কিস্তি এখনো শুরু হয়নি (আগের লোন ৳${roundTwo(parseFloat(db[mi].loan) || 0).toLocaleString('bn-BD')}) — নতুন প্রোফাইল না বানিয়ে এর সাথে টাকাটা যোগ করতে চাপুন</button>`).join('')
+                  : (l._touched ? `<span class="cb-link-note" style="color:var(--gold);">🆕 সেভ করলে ফাঁকা নম্বরে নতুন গ্রাহক প্রোফাইল তৈরি হবে</span>` : ''))}
+                ${(l.custIndex && db[l.custIndex] && db[l.custIndex].loanPartial) ? `<span class="cb-partial-note">🟡 এই গ্রাহকের লোন এখনো আংশিক হিসেবে চিহ্নিত — বাকি টাকা এখন দিয়ে দিলে "আংশিক" টিক আনচেক রেখে সেভ করুন, তাহলে এটা সম্পন্ন হয়ে যাবে</span>` : ''}
             </div>
         `).join('') : '<div class="cb-empty">আজ কোনো নতুন লোন দেওয়া হয়নি</div>';
 
@@ -3664,7 +3915,7 @@
 
     function addCashbookRow(type) {
         if (!unlocked) { document.getElementById('pinOverlay').style.display = 'flex'; return; }
-        if (type === 'loan') cashbookLoans.push({ name: '', amount: '', serviceCharge: '', custIndex: null });
+        if (type === 'loan') cashbookLoans.push({ name: '', amount: '', serviceCharge: '', custIndex: null, partial: false });
         else if (type === 'income') cashbookIncomes.push({ desc: '', amount: '' });
         else cashbookExpenses.push({ desc: '', amount: '' });
         renderCashbookRows();
@@ -3689,12 +3940,27 @@
             // পুরনো ডেটা আবার সেভ করলে ভুলবশত ডুপ্লিকেট গ্রাহক প্রোফাইল তৈরি না হয়।
             if (field === 'name' && val && val.trim() && !cashbookLoans[idx].custIndex) {
                 cashbookLoans[idx]._touched = true;
+                cashbookLoans[idx]._matches = findPossibleLoanTopupMatches(val);
+            } else if (field === 'name') {
+                cashbookLoans[idx]._matches = [];
             }
         }
         else if (type === 'income') cashbookIncomes[idx][field] = val;
         else cashbookExpenses[idx][field] = val;
         renderCashbookTotals();
         if (type === 'loan' && field === 'name') renderCashbookRows();
+    }
+
+    // চেকবক্স ক্লিকে সাথে সাথে টিক বদলে যায় (টাইপ-করা ইনপুটের মতো ফোকাস ধরে রাখা লাগে না),
+    // তাই বাকি ইনপুটের মতো শুধু onfocus="reqPin(event)"-এর উপর নির্ভর করলে লক থাকা অবস্থাতেও
+    // চেকবক্সের ভ্যালু বদলে যেতে পারে — তাই এখানে remove/add বাটনের মতোই সরাসরি unlocked চেক করা হচ্ছে।
+    function toggleCashbookLoanPartial(idx, checked, el) {
+        if (!unlocked) {
+            el.checked = !checked;
+            document.getElementById('pinOverlay').style.display = 'flex';
+            return;
+        }
+        updateCashbookField('loan', idx, 'partial', checked);
     }
 
     function renderCashbookTotals() {
@@ -3736,7 +4002,7 @@
             .map(n => ({ desc: (n.desc || '').trim(), amount: parseFloat(n.amount) || 0 }))
             .filter(n => n.desc || n.amount > 0);
         let cleanLoans = cashbookLoans
-            .map(l => ({ name: (l.name || '').trim(), amount: parseFloat(l.amount) || 0, serviceCharge: parseFloat(l.serviceCharge) || 0, custIndex: l.custIndex || null, _touched: l._touched || false }))
+            .map(l => ({ name: (l.name || '').trim(), amount: parseFloat(l.amount) || 0, serviceCharge: parseFloat(l.serviceCharge) || 0, custIndex: l.custIndex || null, partial: !!l.partial, _touched: l._touched || false, _topUp: l._topUp || false }))
             .filter(l => l.name || l.amount > 0 || l.serviceCharge > 0);
         let cleanExpenses = cashbookExpenses
             .map(e => ({ desc: (e.desc || '').trim(), amount: parseFloat(e.amount) || 0 }))
@@ -3747,6 +4013,7 @@
         // পুরনো (এই সেশনে স্পর্শ না করা) এন্ট্রি বাদ যায়, যাতে পুরনো ডেটা রিসেভ করলে ডুপ্লিকেট প্রোফাইল না বনে।
         let custWritePromises = [];
         let newCustCount = 0;
+        let lastNewCustIdx = null;
         cleanLoans.forEach(l => {
             if (!l.name) return;
             let idx = l.custIndex;
@@ -3759,23 +4026,30 @@
             }
             let existing = db[idx] || {};
             let rate = (parseFloat(existing.rate) || 0) || 20;
-            let tot = l.amount > 0 ? roundTwo(l.amount + (l.amount * (rate / 100))) : (parseFloat(existing.total) || '');
+            // টপ-আপ হলে (আগে থেকে চলমান একটা অসম্পূর্ণ বিতরণে ধাপে ধাপে টাকা দেওয়া হচ্ছে) —
+            // আজকের টাকাটা আগের লোনের সাথে যোগ হবে, নতুন করে ওভাররাইট হবে না।
+            let finalLoanAmount = l._topUp ? roundTwo((parseFloat(existing.loan) || 0) + l.amount) : l.amount;
+            let tot = finalLoanAmount > 0 ? roundTwo(finalLoanAmount + (finalLoanAmount * (rate / 100))) : (parseFloat(existing.total) || '');
             let kRate = tot !== '' ? roundTwo(tot / 100) : (existing.kistiRate || '');
             let newData = Object.assign({}, existing, {
                 name: l.name,
-                loan: l.amount,
+                loan: finalLoanAmount,
                 rate: rate,
                 loanDate: existing.loanDate || dt,
                 total: tot,
                 kistiRate: kRate,
                 sonchoyRate: existing.sonchoyRate !== undefined && existing.sonchoyRate !== '' ? existing.sonchoyRate : 0,
                 cycle: existing.cycle || 1,
-                rows: existing.rows || {}
+                rows: existing.rows || {},
+                // "আংশিক" টিক দেওয়া থাকলে এই লোনটা এখনো পুরোপুরি দেওয়া হয়নি বলে চিহ্নিত থাকবে;
+                // পরে বাকি টাকা দেওয়ার সময় টিক আনচেক রেখে সেভ করলে এই ফ্ল্যাগ নিজে থেকেই সরে যাবে।
+                loanPartial: l.partial || false
             });
             db[idx] = newData;
             l.custIndex = idx;
             delete l._touched;
-            if (isNewSlot) newCustCount++;
+            delete l._topUp;
+            if (isNewSlot) { newCustCount++; lastNewCustIdx = idx; }
             custWritePromises.push(firebase.database().ref(currentFund + '_data').child(idx).set(newData));
         });
 
@@ -3783,25 +4057,37 @@
             opening: opening,
             collectionOverride: collectionVal,
             incomes: cleanIncomes,
-            loans: cleanLoans.map(l => ({ name: l.name, amount: l.amount, serviceCharge: l.serviceCharge, custIndex: l.custIndex || null })),
+            loans: cleanLoans.map(l => ({ name: l.name, amount: l.amount, serviceCharge: l.serviceCharge, custIndex: l.custIndex || null, partial: l.partial || false })),
             expenses: cleanExpenses
         };
-        Promise.all(custWritePromises).then(() => {
-            return firebase.database().ref(currentFund + '_cashbook').child(dt).set(data);
-        }).then(() => {
-            cashbookIncomes = cleanIncomes;
-            cashbookLoans = cleanLoans;
-            cashbookExpenses = cleanExpenses;
-            renderCashbookRows();
-            renderCashbookTotals();
-            scheduleDropdownUpdate();
-            msgEl.style.color = 'var(--paid)';
-            msgEl.innerText = '✅ ক্যাশ হিসাব সেভ হয়েছে!' + (newCustCount ? ` (${newCustCount.toLocaleString('bn-BD')} জন নতুন গ্রাহকের প্রোফাইল অটো তৈরি হয়েছে)` : '');
-            setTimeout(() => { if (msgEl.innerText.includes('সেভ হয়েছে')) msgEl.innerText = ''; }, 4000);
-            loadMonthlySummary();
-        }).catch(() => {
-            msgEl.style.color = 'var(--due)';
-            msgEl.innerText = '❌ সেভ ব্যর্থ হয়েছে, আবার চেষ্টা করুন';
+        let cashbookWritePromise = firebase.database().ref(currentFund + '_cashbook').child(dt).set(data);
+
+        // অপটিমিস্টিক UI: নেটওয়ার্ক রাইট শেষ হওয়ার অপেক্ষা না করেই সাথে সাথে UI আপডেট ও নেভিগেট করা হয়
+        // (গ্রাহকের প্রোফাইল ও কালেকশন-টোটাল ইতিমধ্যে লোকাল db-তে বসানো আছে) — সব রাইট ব্যাকগ্রাউন্ডে
+        // সমান্তরালে (parallel, একটার পর একটা নয়) চলতে থাকে। ব্যর্থ হলে নিচে সতর্কবার্তা দেখানো হবে।
+        cashbookIncomes = cleanIncomes;
+        cashbookLoans = cleanLoans;
+        cashbookExpenses = cleanExpenses;
+        renderCashbookRows();
+        renderCashbookTotals();
+        scheduleDropdownUpdate();
+        msgEl.style.color = 'var(--paid)';
+        msgEl.innerText = '✅ ক্যাশ হিসাব সেভ হয়েছে!' + (newCustCount ? ` (${newCustCount.toLocaleString('bn-BD')} জন নতুন গ্রাহকের প্রোফাইল অটো তৈরি হয়েছে)` : '');
+        setTimeout(() => { if (msgEl.innerText.includes('সেভ হয়েছে')) msgEl.innerText = ''; }, 4000);
+        loadMonthlySummary();
+        // নতুন গ্রাহক প্রোফাইল অটো তৈরি হলে সরাসরি সেই গ্রাহকের পেজে নিয়ে যাওয়া হচ্ছে,
+        // যাতে ব্যবহারকারী তাৎক্ষণিকভাবে দেখে/দরকার হলে ঠিকানা-মোবাইল ইত্যাদি যোগ করতে পারেন।
+        if (lastNewCustIdx) {
+            loadPage(lastNewCustIdx);
+            let custHeaderEl = document.querySelector('.cust-header');
+            if (custHeaderEl) custHeaderEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        Promise.all([...custWritePromises, cashbookWritePromise]).catch((err) => {
+            alert(
+                '⚠️ ' + dt + ' তারিখের ক্যাশ হিসাব ফায়ারবেসে সেভ করতে সমস্যা হয়েছে (ইন্টারনেট চেক করুন)!\n\n' +
+                'ইন্টারনেট ঠিক হলে এই তারিখে গিয়ে আরেকবার "ক্যাশ হিসাব সেভ করুন" চাপুন।\n\nএরর: ' + ((err && err.message) || 'অজানা')
+            );
         });
     }
 
@@ -3878,8 +4164,7 @@
         if (id === 'weekContainer' && el.style.display === 'block') genWeekly();
         if (id === 'cashbookContainer' && el.style.display === 'block') openCashbookPanel();
     }
-    // মোবাইলে লাভ/ক্ষতি ড্যাশবোর্ড বাটনের ভেতরে থাকে (ডিফল্ট বন্ধ); পিসিতে এই ফাংশনের
-    // প্রভাব নেই কারণ CSS মিডিয়া-কোয়েরি ৭৬৮px-এর উপরে বাটন লুকিয়ে রাখে ও ড্যাশবোর্ড সবসময় খোলা রাখে।
+    // মোবাইল ও পিসি — উভয় জায়গাতেই লাভ/ক্ষতি ড্যাশবোর্ড এই বাটনের ভেতরে থাকে (ডিফল্ট বন্ধ)।
     function toggleProfitDashboard() {
         let el = document.getElementById('profitDashboard');
         if (!el) return;
@@ -3888,7 +4173,7 @@
         updateProfitToggleBtnLabel();
     }
 
-    // মোবাইল বাটনের লেখায় নিট লাভ/ক্ষতির সংখ্যাটা এক নজরে দেখানো হয়, যাতে না খুলেও বোঝা যায়।
+    // বাটনের লেখায় নিট লাভ/ক্ষতির সংখ্যাটা এক নজরে দেখানো হয়, যাতে না খুলেও বোঝা যায় (মোবাইল ও পিসি উভয়ই)।
     function updateProfitToggleBtnLabel() {
         let btn = document.getElementById('profitToggleBtn');
         let el = document.getElementById('profitDashboard');
@@ -3972,6 +4257,10 @@
         }
         document.getElementById('clearPageOverlay').style.display = 'none';
         let oldData = db[cur];
+        // এই একশন undo করা যায় এমন করার জন্য পুরনো ডেটার স্ন্যাপশট undo-স্ট্যাকে রাখা হচ্ছে —
+        // পেজ ফাঁকা করার পর ভুল হলে সরাসরি ↩️ Undo বাটনে চাপলেই আগের সব তথ্য ফিরে আসবে
+        // (আলাদাভাবে 📜 আর্কাইভেও একটা কপি থেকেই যাচ্ছে, সেটা দীর্ঘমেয়াদী রেকর্ডের জন্য)।
+        pushUndoSnapshot(cur, '🗑️ পুরো পেজ ফাঁকা করা');
         let hasRealData = oldData && (oldData.name && !new RegExp(`^\u0997\u09cd\u09b0\u09be\u09b9\u0995-${cur}$`).test(oldData.name) || oldData.phone || (parseFloat(oldData.loan) || 0) > 0 || (oldData.rows && Object.keys(oldData.rows).length > 0));
         let archiveSave = hasRealData
             ? firebase.database().ref(currentFund + '_archive').push({ slot: cur, clearedDate: localDateStr(), data: oldData })
